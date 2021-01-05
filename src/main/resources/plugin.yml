@@ -1,0 +1,17 @@
+name: DudeUtils
+main: net.thedudemc.dudeutils.DudeUtils
+version: 1.1.1
+api-version: 1.13
+commands:
+  dude:
+    description: Dude.
+    usage: /dude
+  slime:
+    description: Tells the player if they are standing in a slime chunk.
+    usage: /slime
+  ally:
+    description: Adds or removes allies from your ally group.
+    usage: /ally add/remove <PlayerName>
+  config:
+    description: Change or save config settings.
+    usage: /config save /config set <setting> <value>
