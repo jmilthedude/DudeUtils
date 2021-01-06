@@ -27,8 +27,8 @@ public class SleepEvent implements Listener {
         Player player = event.getPlayer();
         World world = player.getWorld();
         if (world.getEnvironment() != World.Environment.NORMAL) return;
-
-        if (isNight(world)) {
+        PlayerBedEnterEvent.BedEnterResult result = event.getBedEnterResult();
+        if (isNight(world) && result == PlayerBedEnterEvent.BedEnterResult.OK) {
             DudeUtils.getInstance().getServer().broadcastMessage(getSleepMessage(player.getName()));
             sleepingPlayers.add(player.getName());
         } else if (world.isThundering()) {
