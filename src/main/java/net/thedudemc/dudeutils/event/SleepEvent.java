@@ -16,14 +16,11 @@ import java.util.List;
 
 public class SleepEvent implements Listener {
 
-    private static long night = 13000;
-    private static long day = 23600;
+    private static long night = 12542;
+    private static long day = 23460;
 
     private static List<String> sleepingPlayers = new ArrayList<>();
 
-    public static void run() {
-        DudeUtils.getInstance().getServer().getScheduler().scheduleSyncRepeatingTask(DudeUtils.getInstance(), new SleepRunnable(), 0L, 20L);
-    }
 
     @EventHandler
     public void onSleep(PlayerBedEnterEvent event) {
@@ -45,6 +42,11 @@ public class SleepEvent implements Listener {
         }
     }
 
+    private boolean isNight(World world) {
+        long time = world.getTime();
+        return time >= night && time < day;
+    }
+
     private String getSleepMessage(String name) {
         Team team = DudeUtils.getInstance().getServer().getScoreboardManager().getMainScoreboard().getEntryTeam(name);
         if (team == null) return name + " is sleeping!";
@@ -63,37 +65,22 @@ public class SleepEvent implements Listener {
         sleepingPlayers.remove(event.getPlayer().getName());
     }
 
-    public static class SleepRunnable implements Runnable {
-        @Override
-        public void run() {
-            if (sleepingPlayers.isEmpty()) return;
-
-            World world = DudeUtils.getInstance().getServer().getWorlds().get(0);
-            setTime(world, getNextTime(world));
-        }
-
-        private long getNextTime(World world) {
-            long nextTime = world.getFullTime() + 1000L;
-            if (isNight(nextTime % 24000L)) {
-                return nextTime;
-            } else {
-                long difference = (nextTime % 24000L) - 23600L;
-                return world.getFullTime() + 1000 - difference;
+    public static void run() {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(DudeUtils.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                if (sleepingPlayers.isEmpty()) return;
+                World world = DudeUtils.getInstance().getServer().getWorlds().get(0);
+                setTime(world, getNextTime(world));
             }
-        }
 
-        private boolean isNight(long time) {
-            return time >= 13000 && time < 23600;
-        }
+            private long getNextTime(World world) {
+                return world.getFullTime() + 100L;
+            }
 
-        private void setTime(World world, long time) {
-            world.setFullTime(time);
-        }
-
-    }
-
-    private boolean isNight(World world) {
-        long time = world.getTime();
-        return time >= night && time < day;
+            private void setTime(World world, long time) {
+                world.setFullTime(time);
+            }
+        }, 0L, 1L);
     }
 }
