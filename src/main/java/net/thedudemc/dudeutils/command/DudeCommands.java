@@ -3,21 +3,35 @@ package net.thedudemc.dudeutils.command;
 import net.thedudemc.dudeutils.DudeUtils;
 import net.thedudemc.dudeutils.features.allies.AllyGroup;
 import net.thedudemc.dudeutils.init.PluginData;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
+import org.bukkit.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class DudeCommands implements CommandExecutor {
+public class DudeCommands implements CommandExecutor, TabCompleter {
+
+    private static List<String> colors = new ArrayList<>();
 
     public void initCommands() {
         DudeUtils.INSTANCE.getCommand("dude").setExecutor(this);
         DudeUtils.INSTANCE.getCommand("slime").setExecutor(this);
         DudeUtils.INSTANCE.getCommand("ally").setExecutor(this);
+        DudeUtils.INSTANCE.getCommand("color").setExecutor(this);
+        DudeUtils.INSTANCE.getCommand("color").setTabCompleter(this);
+
+        Bukkit.getScoreboardManager().getMainScoreboard().getTeams().forEach(t -> {
+            colors.add(t.getName());
+        });
     }
 
     @Override
@@ -75,9 +89,30 @@ public class DudeCommands implements CommandExecutor {
                     sender.sendMessage("\"/ally add <PlayerName>\"");
                     sender.sendMessage("\"/ally remove <PlayerName>\"");
                 }
+            } else if (command.getName().equalsIgnoreCase("color")) {
+                if (args.length == 1) {
+                    String teamColor = args[0];
+                    Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+                    Team team = scoreboard.getTeam(teamColor);
+                    if (team == null) {
+                        sender.sendMessage("Invalid Color Name...");
+                        return true;
+                    }
+                    if (scoreboard.getEntryTeam(p.getName()) != null) {
+                        scoreboard.getEntryTeam(p.getName()).removeEntry(p.getName());
+                    }
+                    team.addEntry(p.getName());
+                }
             }
         }
         return true;
     }
 
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        if (command.getName().equalsIgnoreCase("color")) {
+            return StringUtil.copyPartialMatches(args[0], colors, new ArrayList<>(colors.size()));
+        }
+        return null;
+    }
 }

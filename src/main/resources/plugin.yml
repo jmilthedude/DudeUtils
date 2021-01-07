@@ -15,3 +15,6 @@ commands:
   config:
     description: Change or save config settings.
     usage: /config save /config set <setting> <value>
+  color:
+    description: Change your color.
+    usage: /color <colorName>
