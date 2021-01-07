@@ -28,17 +28,15 @@ public class SleepEvent implements Listener {
         World world = player.getWorld();
         if (world.getEnvironment() != World.Environment.NORMAL) return;
         PlayerBedEnterEvent.BedEnterResult result = event.getBedEnterResult();
-        if (isNight(world) && result == PlayerBedEnterEvent.BedEnterResult.OK) {
+        if (isNight(world) || world.isThundering() && result == PlayerBedEnterEvent.BedEnterResult.OK) {
             DudeUtils.getInstance().getServer().broadcastMessage(getSleepMessage(player.getName()));
             sleepingPlayers.add(player.getName());
-        } else if (world.isThundering()) {
-            DudeUtils.getInstance().getServer().broadcastMessage(getRainMessage(player.getName()));
             Bukkit.getScheduler().scheduleSyncDelayedTask(DudeUtils.getInstance(), () -> {
                 world.setWeatherDuration(0);
                 world.setThunderDuration(0);
                 world.setThundering(false);
                 world.setStorm(false);
-            });
+            }, 5L);
         }
     }
 
