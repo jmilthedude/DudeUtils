@@ -11,15 +11,14 @@ import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.scoreboard.Team;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 public class SleepEvent implements Listener {
 
     private static long night = 12542;
     private static long day = 23460;
 
-    private static List<String> sleepingPlayers = new ArrayList<>();
+    private static HashSet<String> sleepingPlayers = new HashSet<>();
 
 
     @EventHandler
