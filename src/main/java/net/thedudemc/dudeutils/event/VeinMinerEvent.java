@@ -1,5 +1,6 @@
 package net.thedudemc.dudeutils.event;
 
+import net.thedudemc.dudeutils.init.PluginConfigs;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
@@ -16,37 +17,38 @@ import java.util.*;
 
 public class VeinMinerEvent implements Listener {
 
-    public static final HashSet<Material> ORES = new HashSet<Material>() {
-        {
-            add(Material.COAL_ORE);
-            add(Material.DIAMOND_ORE);
-            add(Material.EMERALD_ORE);
-            add(Material.IRON_ORE);
-            add(Material.GOLD_ORE);
-            add(Material.LAPIS_ORE);
-            add(Material.REDSTONE_ORE);
-            add(Material.NETHER_GOLD_ORE);
-            add(Material.NETHER_QUARTZ_ORE);
-            add(Material.NETHERITE_SCRAP);
-        }
-    };
-
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void onBlockBreak(BlockBreakEvent event) {
-        if (!event.getPlayer().isSneaking() || event.getPlayer().getGameMode() == GameMode.CREATIVE) return;
-
+        if (!PluginConfigs.VEINMINER.isEnabled()) return;
         Player player = event.getPlayer();
+
+        if (!player.isSneaking() || player.getGameMode() == GameMode.CREATIVE) return;
+
+        ItemStack heldItem = player.getInventory().getItemInMainHand();
+        if (!canVeinMine(heldItem)) return;
+
         Block block = event.getBlock();
         World world = block.getWorld();
         Location location = block.getLocation();
 
-        if (!ORES.contains(block.getType())) {
+        if (!PluginConfigs.VEINMINER.getMaterials().contains(block.getType())) {
             return;
         }
 
-        if (mineBlocks(player, world, block.getType(), location, 50)) {
+        if (mineBlocks(player, world, block.getType(), location, PluginConfigs.VEINMINER.getBlockLimit())) {
             event.setCancelled(true);
         }
+    }
+
+    private boolean canVeinMine(ItemStack stack) {
+        ItemMeta meta = stack.getItemMeta();
+        if (meta != null) {
+            if (meta.hasLore()) {
+                List<String> lore = meta.getLore();
+                return lore.contains("VeinMiner!");
+            }
+        }
+        return false;
     }
 
     private boolean mineBlocks(Player player, World world, Material material, Location location, int limit) {
