@@ -2,6 +2,7 @@ package net.thedudemc.dudeutils.event;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -90,7 +91,10 @@ public class VeinMinerEvent implements Listener {
                 }
             }
         }
-        itemDrops.forEach(stack -> world.dropItemNaturally(player.getLocation(), stack));
+        itemDrops.forEach(stack -> {
+            Item droppedItem = world.dropItemNaturally(player.getLocation(), stack);
+            droppedItem.setPickupDelay(0);
+        });
         return true;
 
     }
