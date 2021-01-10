@@ -13,5 +13,6 @@ public class PluginEvents {
         plugin.getServer().getPluginManager().registerEvents(new InventoryEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PlayerEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new SleepEvent(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new VeinMinerEvent(), plugin);
     }
 }
