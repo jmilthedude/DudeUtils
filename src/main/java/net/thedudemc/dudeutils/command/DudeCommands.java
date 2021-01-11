@@ -1,6 +1,7 @@
 package net.thedudemc.dudeutils.command;
 
 import net.thedudemc.dudeutils.DudeUtils;
+import net.thedudemc.dudeutils.config.VeinMinerConfig;
 import net.thedudemc.dudeutils.features.allies.AllyGroup;
 import net.thedudemc.dudeutils.init.PluginData;
 import org.bukkit.Bukkit;
@@ -11,6 +12,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import org.bukkit.util.StringUtil;
@@ -27,6 +29,7 @@ public class DudeCommands implements CommandExecutor, TabCompleter {
         DudeUtils.INSTANCE.getCommand("slime").setExecutor(this);
         DudeUtils.INSTANCE.getCommand("ally").setExecutor(this);
         DudeUtils.INSTANCE.getCommand("color").setExecutor(this);
+        DudeUtils.INSTANCE.getCommand("veinminer").setExecutor(this);
         DudeUtils.INSTANCE.getCommand("color").setTabCompleter(this);
 
         Bukkit.getScoreboardManager().getMainScoreboard().getTeams().forEach(t -> {
@@ -102,6 +105,11 @@ public class DudeCommands implements CommandExecutor, TabCompleter {
                         scoreboard.getEntryTeam(p.getName()).removeEntry(p.getName());
                     }
                     team.addEntry(p.getName());
+                }
+            } else if (command.getName().equalsIgnoreCase("veinminer")) {
+                if (p.isOp()) {
+                    ItemStack heldItem = p.getInventory().getItemInMainHand();
+                    VeinMinerConfig.applyOrRemoveVeinMinerUpgrade(heldItem);
                 }
             }
         }
