@@ -8,8 +8,25 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.player.PlayerCommandSendEvent;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class PlayerEvents implements Listener {
+
+    @EventHandler
+    public void onCommandSend(PlayerCommandSendEvent event) {
+        if (!event.getPlayer().isOp()) {
+            List<String> blocked = Arrays.asList(
+                    "veinminer",
+                    "dude",
+                    "dudeutils:veinminer",
+                    "dudeutils:dude"
+            );
+            event.getCommands().removeAll(blocked);
+        }
+    }
 
     @EventHandler
     public void onTarget(EntityTargetEvent event) {
@@ -24,14 +41,7 @@ public class PlayerEvents implements Listener {
     }
 
     private boolean isHostile(Entity entity) {
-        if (entity instanceof Monster) {
-            return true;
-        } else if (entity.getType() == EntityType.SLIME) {
-            return true;
-        } else if (entity.getType() == EntityType.PHANTOM) {
-            return true;
-        }
-        return false;
+        return entity instanceof Monster || entity.getType() == EntityType.SLIME || entity.getType() == EntityType.PHANTOM;
     }
 
 }
