@@ -1,13 +1,9 @@
 package net.thedudemc.dudeutils;
 
-import net.thedudemc.dudeutils.command.DudeCommands;
 import net.thedudemc.dudeutils.event.SleepEvent;
 import net.thedudemc.dudeutils.features.magnet.MagnetHelper;
 import net.thedudemc.dudeutils.features.portal.PortalParticles;
-import net.thedudemc.dudeutils.init.PluginConfigs;
-import net.thedudemc.dudeutils.init.PluginData;
-import net.thedudemc.dudeutils.init.PluginEvents;
-import net.thedudemc.dudeutils.init.PluginRecipes;
+import net.thedudemc.dudeutils.init.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -18,7 +14,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class DudeUtils extends JavaPlugin implements Listener {
 
     public static DudeUtils INSTANCE;
-    public DudeCommands commands = new DudeCommands();
 
     @Override
     public void onEnable() {
@@ -29,9 +24,7 @@ public class DudeUtils extends JavaPlugin implements Listener {
         PluginRecipes.register(this);
         PluginRecipes.removeDisabled(this);
         PluginEvents.register(this);
-
-
-        commands.initCommands();
+        PluginCommands.register();
 
         if (PluginConfigs.PORTAL_UTILITY.SPAWN_PARTICLES) PortalParticles.runSpawner();
         if (PluginConfigs.MAGNET.ENABLE) MagnetHelper.runMagnet();
