@@ -40,11 +40,6 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
 
     public abstract void execute(CommandSender sender, String[] args) throws CommandException;
 
-    protected boolean sendError(CommandSender sender, String error) {
-        sender.sendMessage(ChatColor.RED + error);
-        return true;
-    }
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         try {
