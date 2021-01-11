@@ -85,9 +85,18 @@ public class VeinMinerEvent implements Listener {
                         );
 
                         if (world.getBlockAt(currentLocation).getType() == material) {
-                            itemDrops.addAll(destroyBlockAs(world, player, currentLocation));
+
+                            Collection<? extends ItemStack> drops = destroyBlockAs(world, player, currentLocation);
+                            if (drops.isEmpty()) break floodLoop;
+                            itemDrops.addAll(drops);
                             locationQueue.add(currentLocation);
                             traversedBlocks++;
+                            if (traversedBlocks % PluginConfigs.VEINMINER.getBlocksPerFood() == 0) {
+                                if (player.getSaturation() >= 0.0f)
+                                    player.setSaturation(player.getSaturation() - 1.0f);
+                                else
+                                    player.setFoodLevel(player.getFoodLevel() - 1);
+                            }
                         }
                     }
                 }
@@ -107,16 +116,16 @@ public class VeinMinerEvent implements Listener {
         Damageable item = (Damageable) meta;
 
         if (item != null) {
-            if (item.getDamage() >= heldItem.getType().getMaxDurability()) {
+            int damage = PluginConfigs.VEINMINER.getDamagePerBlock();
+            if ((item.getDamage() + damage) >= heldItem.getType().getMaxDurability()) {
                 heldItem.setAmount(0);
                 player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1, 1);
                 return Collections.emptyList();
+            } else {
+                item.setDamage(item.getDamage() + damage);
+                heldItem.setItemMeta(meta);
             }
-
-            item.setDamage(item.getDamage() + 1);
-            heldItem.setItemMeta(meta);
         }
-
         Collection<ItemStack> drops = world.getBlockAt(location).getDrops(heldItem);
         world.getBlockAt(location).setType(Material.AIR);
         return drops;

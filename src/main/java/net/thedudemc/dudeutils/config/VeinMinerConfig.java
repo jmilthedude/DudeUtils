@@ -20,6 +20,10 @@ public class VeinMinerConfig extends Config {
     private List<String> MATERIALS;
     @Expose
     private String REQUIRED_LORE;
+    @Expose
+    private int DAMAGE_PER_BLOCK;
+    @Expose
+    private int BLOCKS_PER_FOOD;
 
     @Override
     public String getName() {
@@ -43,6 +47,8 @@ public class VeinMinerConfig extends Config {
                 "NETHERITE_SCRAP"
         );
         REQUIRED_LORE = "VeinMiner!";
+        DAMAGE_PER_BLOCK = 4;
+        BLOCKS_PER_FOOD = 4;
     }
 
     public boolean isEnabled() {
@@ -66,16 +72,31 @@ public class VeinMinerConfig extends Config {
         return REQUIRED_LORE;
     }
 
-    public static final ItemStack applyVeinMinerUpgrade(ItemStack stack) {
+    public static ItemStack applyOrRemoveVeinMinerUpgrade(ItemStack stack) {
         ItemMeta meta = stack.getItemMeta();
         if (meta != null) {
+            String requiredLore = PluginConfigs.VEINMINER.getRequiredLore();
             if (meta.hasLore()) {
-                meta.getLore().add(PluginConfigs.VEINMINER.getRequiredLore());
+                List<String> lore = meta.getLore();
+                if (lore.contains(requiredLore)) {
+                    lore.remove(requiredLore);
+                } else {
+                    lore.add(requiredLore);
+                }
+                meta.setLore(lore);
             } else {
-                meta.setLore(Arrays.asList(PluginConfigs.VEINMINER.getRequiredLore()));
+                meta.setLore(Arrays.asList(requiredLore));
             }
             stack.setItemMeta(meta);
         }
         return stack;
+    }
+
+    public int getDamagePerBlock() {
+        return DAMAGE_PER_BLOCK;
+    }
+
+    public int getBlocksPerFood() {
+        return BLOCKS_PER_FOOD;
     }
 }
