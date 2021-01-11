@@ -51,7 +51,7 @@ public class AllyEvents implements Listener {
     }
 
     private boolean isAlly(String owner, String target) {
-        AllyGroup group = PluginData.ALLY_DATA.getAllyGroup(owner);
+        AllyGroup group = PluginData.ALLY_DATA.getOrCreateGroup(owner);
         if (group == null) {
             return false;
         }

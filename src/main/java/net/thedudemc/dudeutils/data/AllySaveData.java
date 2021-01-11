@@ -1,12 +1,10 @@
 package net.thedudemc.dudeutils.data;
 
+import com.google.gson.annotations.Expose;
+import net.thedudemc.dudeutils.features.allies.AllyGroup;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-
-import com.google.gson.annotations.Expose;
-
-import net.thedudemc.dudeutils.features.allies.AllyGroup;
 
 public class AllySaveData extends SaveData {
 
@@ -30,12 +28,12 @@ public class AllySaveData extends SaveData {
                 .addAlliedPlayer("player6"));
     }
 
-    public AllyGroup getAllyGroup(String owner) {
+    public AllyGroup getOrCreateGroup(String owner) {
         for (AllyGroup group : ALLY_GROUPS) {
             if (group.getOwner().equalsIgnoreCase(owner))
                 return group;
         }
-        return null;
+        return new AllyGroup(owner);
     }
 
     public void addAllyGroup(AllyGroup group) {
