@@ -10,6 +10,7 @@ public class PluginConfigs {
     public static RecipeConfig RECIPES;
     public static SpecialConfig SPECIAL;
     public static VeinMinerConfig VEINMINER;
+    public static NetherWaterConfig NETHER_WATER;
 
     public static void register() {
 
@@ -19,6 +20,7 @@ public class PluginConfigs {
         RECIPES = (RecipeConfig) new RecipeConfig().readConfig();
         SPECIAL = (SpecialConfig) new SpecialConfig().readConfig();
         VEINMINER = (VeinMinerConfig) new VeinMinerConfig().readConfig();
+        NETHER_WATER = (NetherWaterConfig) new NetherWaterConfig().readConfig();
 
     }
 }

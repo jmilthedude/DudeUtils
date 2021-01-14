@@ -13,17 +13,17 @@ import java.util.List;
 public class VeinMinerConfig extends Config {
 
     @Expose
-    private boolean ENABLED;
+    public boolean ENABLED;
     @Expose
-    private int BLOCK_LIMIT;
+    public int BLOCK_LIMIT;
     @Expose
     private List<String> MATERIALS;
     @Expose
     private String REQUIRED_LORE;
     @Expose
-    private int DAMAGE_PER_BLOCK;
+    public int DAMAGE_PER_BLOCK;
     @Expose
-    private int BLOCKS_PER_FOOD;
+    public int BLOCKS_PER_FOOD;
 
     @Override
     public String getName() {
