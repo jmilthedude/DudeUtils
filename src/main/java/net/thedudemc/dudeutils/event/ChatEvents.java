@@ -1,6 +1,5 @@
 package net.thedudemc.dudeutils.event;
 
-import net.thedudemc.dudeutils.init.PluginConfigs;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,14 +17,13 @@ public class ChatEvents implements Listener {
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
-        if (PluginConfigs.CHAT.ENABLE_NAME_COLORS) {
-            Player p = event.getPlayer();
-            Team team = p.getScoreboard().getEntryTeam(p.getName());
-            if (team != null) {
-                ChatColor color = team.getColor();
-                event.setFormat(ChatColor.WHITE + "<" + color + "%s" + ChatColor.WHITE + ">" + ChatColor.RESET + " %s");
-            }
+        Player p = event.getPlayer();
+        Team team = p.getScoreboard().getEntryTeam(p.getName());
+        if (team != null) {
+            ChatColor color = team.getColor();
+            event.setFormat(ChatColor.WHITE + "<" + color + "%s" + ChatColor.WHITE + ">" + ChatColor.RESET + " %s");
         }
     }
+
 
 }

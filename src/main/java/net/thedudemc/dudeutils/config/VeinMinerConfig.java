@@ -11,9 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class VeinMinerConfig extends Config {
-
-    @Expose
-    public boolean ENABLED;
     @Expose
     public int BLOCK_LIMIT;
     @Expose
@@ -32,7 +29,6 @@ public class VeinMinerConfig extends Config {
 
     @Override
     protected void reset() {
-        ENABLED = false;
         BLOCK_LIMIT = 32;
         MATERIALS = Arrays.asList(
                 "COAL_ORE",
@@ -49,10 +45,6 @@ public class VeinMinerConfig extends Config {
         REQUIRED_LORE = "VeinMiner!";
         DAMAGE_PER_BLOCK = 4;
         BLOCKS_PER_FOOD = 4;
-    }
-
-    public boolean isEnabled() {
-        return ENABLED;
     }
 
     public int getBlockLimit() {

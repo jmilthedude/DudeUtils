@@ -2,7 +2,6 @@ package net.thedudemc.dudeutils.event;
 
 import net.thedudemc.dudeutils.DudeUtils;
 import net.thedudemc.dudeutils.features.portal.PortalHelper;
-import net.thedudemc.dudeutils.init.PluginConfigs;
 import net.thedudemc.dudeutils.util.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -30,9 +29,6 @@ public class PortalEvents implements Listener {
 
     @EventHandler
     public void onPortalClicked(PlayerInteractEvent event) {
-        if (!PluginConfigs.PORTAL_UTILITY.ENABLE) {
-            return;
-        }
         if (event.getHand() == null || event.getHand() != EquipmentSlot.HAND)
             return;
 

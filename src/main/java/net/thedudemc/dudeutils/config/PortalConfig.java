@@ -5,7 +5,6 @@ import com.google.gson.annotations.Expose;
 public class PortalConfig extends Config {
 
 
-    @Expose public boolean ENABLE;
     @Expose public boolean SPAWN_PARTICLES;
 
     @Override
@@ -15,7 +14,6 @@ public class PortalConfig extends Config {
 
     @Override
     protected void reset() {
-        ENABLE = true;
         SPAWN_PARTICLES = true;
     }
 }

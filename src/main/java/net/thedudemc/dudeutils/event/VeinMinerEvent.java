@@ -19,7 +19,6 @@ public class VeinMinerEvent implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void onBlockBreak(BlockBreakEvent event) {
-        if (!PluginConfigs.VEINMINER.isEnabled()) return;
         Player player = event.getPlayer();
 
         if (!player.isSneaking() || player.getGameMode() == GameMode.CREATIVE) return;

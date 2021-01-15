@@ -16,8 +16,8 @@ public class PluginCommands {
         DUDE = (DudeCommand) registerCommand(new DudeCommand()).opOnly();
         SLIME = (SlimeCommand) registerCommand(new SlimeCommand().playerOnly());
         ALLY = (AllyCommand) registerCommand(new AllyCommand().playerOnly());
-        COLOR = (ColorCommand) registerCommand(new ColorCommand().playerOnly());
-        VEIN_MINER = (VeinMinerCommand) registerCommand(new VeinMinerCommand().playerOnly().opOnly());
+        if (PluginConfigs.FEATURES.ENABLED.get("ChatNameColor")) COLOR = (ColorCommand) registerCommand(new ColorCommand().playerOnly());
+        if (PluginConfigs.FEATURES.ENABLED.get("VeinMiner")) VEIN_MINER = (VeinMinerCommand) registerCommand(new VeinMinerCommand().playerOnly().opOnly());
 
     }
 

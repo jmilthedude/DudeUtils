@@ -27,7 +27,7 @@ public class DudeUtils extends JavaPlugin implements Listener {
         PluginCommands.register();
 
         if (PluginConfigs.PORTAL_UTILITY.SPAWN_PARTICLES) PortalParticles.runSpawner();
-        if (PluginConfigs.MAGNET.ENABLE) MagnetHelper.runMagnet();
+        if (PluginConfigs.FEATURES.ENABLED.get("Magnet")) MagnetHelper.runMagnet();
 
         SleepEvent.run();
     }
