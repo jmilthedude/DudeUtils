@@ -29,7 +29,7 @@ public class DudeUtils extends JavaPlugin implements Listener {
         if (PluginConfigs.PORTAL_UTILITY.SPAWN_PARTICLES) PortalParticles.runSpawner();
         if (PluginConfigs.FEATURES.ENABLED.get("Magnet")) MagnetHelper.runMagnet();
 
-        SleepEvent.run();
+        if (PluginConfigs.FEATURES.ENABLED.get("SinglePlayerSleep")) SleepEvent.run();
     }
 
     @Override

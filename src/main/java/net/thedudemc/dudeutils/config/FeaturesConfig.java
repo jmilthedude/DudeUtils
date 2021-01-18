@@ -22,5 +22,6 @@ public class FeaturesConfig extends Config {
         ENABLED.put("PortalUtility", true);
         ENABLED.put("VeinMiner", false);
         ENABLED.put("VillagerUtility", true);
+        ENABLED.put("SinglePlayerSleep", true);
     }
 }

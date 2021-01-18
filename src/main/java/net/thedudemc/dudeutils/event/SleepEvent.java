@@ -47,7 +47,6 @@ public class SleepEvent implements Listener {
     private String getSleepMessage(String name) {
         Team team = DudeUtils.getInstance().getServer().getScoreboardManager().getMainScoreboard().getEntryTeam(name);
         if (team == null) return name + " is sleeping!";
-        Math.random();
         return team.getColor() + name + ChatColor.RESET + " is sleeping!";
     }
 

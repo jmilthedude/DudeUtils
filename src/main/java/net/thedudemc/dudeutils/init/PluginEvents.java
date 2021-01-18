@@ -13,7 +13,7 @@ public class PluginEvents {
         plugin.getServer().getPluginManager().registerEvents(new AllyEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new InventoryEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PlayerEvents(), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new SleepEvent(), plugin);
+        if (PluginConfigs.FEATURES.ENABLED.get("SinglePlayerSleep")) plugin.getServer().getPluginManager().registerEvents(new SleepEvent(), plugin);
         if(PluginConfigs.FEATURES.ENABLED.get("VeinMiner")) plugin.getServer().getPluginManager().registerEvents(new VeinMinerEvent(), plugin);
         if(PluginConfigs.FEATURES.ENABLED.get("NetherWater")) plugin.getServer().getPluginManager().registerEvents(new NetherWaterEvent(), plugin);
         if(PluginConfigs.FEATURES.ENABLED.get("VillagerUtility")) plugin.getServer().getPluginManager().registerEvents(new VillagerEvents(), plugin);
