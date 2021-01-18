@@ -14,6 +14,7 @@ public class PluginConfigs {
     public static void register() {
 
         FEATURES = (FeaturesConfig) new FeaturesConfig().readConfig();
+
         MAGNET = (MagnetConfig) new MagnetConfig().readConfig();
         PORTAL_UTILITY = (PortalConfig) new PortalConfig().readConfig();
         RECIPES = (RecipeConfig) new RecipeConfig().readConfig();

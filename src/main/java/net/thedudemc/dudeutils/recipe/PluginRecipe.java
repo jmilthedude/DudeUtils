@@ -15,7 +15,9 @@ public abstract class PluginRecipe {
         this.key = key;
     }
 
-    public NamespacedKey getKey() { return key; }
+    public NamespacedKey getKey() {
+        return key;
+    }
 
     public abstract Recipe get();
 
@@ -32,6 +34,15 @@ public abstract class PluginRecipe {
         ShapelessRecipe recipe = new ShapelessRecipe(key, new ItemStack(material, amount));
         for (Material ingredient : ingredients) {
             recipe.addIngredient(ingredient);
+        }
+        return recipe;
+    }
+
+    public ShapedRecipe getShapedCustom(NamespacedKey key, ItemStack stack, Ingredient[] ingredients, String... shape) {
+        ShapedRecipe recipe = new ShapedRecipe(key, stack);
+        recipe.shape(shape);
+        for (Ingredient ingredient : ingredients) {
+            recipe.setIngredient(ingredient.getKey(), ingredient.getMaterial());
         }
         return recipe;
     }

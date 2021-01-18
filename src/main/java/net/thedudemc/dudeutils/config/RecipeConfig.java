@@ -17,5 +17,6 @@ public class RecipeConfig extends Config {
     @Override
     protected void reset() {
         CUSTOM_RECIPES.put("dudeutils:blackstone", true);
+        CUSTOM_RECIPES.put("dudeutils:alternator", true);
     }
 }

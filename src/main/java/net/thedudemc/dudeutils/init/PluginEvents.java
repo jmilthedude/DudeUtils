@@ -16,6 +16,7 @@ public class PluginEvents {
         if (PluginConfigs.FEATURES.ENABLED.get("VeinMiner")) plugin.getServer().getPluginManager().registerEvents(new VeinMinerEvent(), plugin);
         if (PluginConfigs.FEATURES.ENABLED.get("NetherWater")) plugin.getServer().getPluginManager().registerEvents(new NetherWaterEvent(), plugin);
         if (PluginConfigs.FEATURES.ENABLED.get("VillagerUtility")) plugin.getServer().getPluginManager().registerEvents(new VillagerEvents(), plugin);
+        if (PluginConfigs.FEATURES.ENABLED.get("Alternator")) plugin.getServer().getPluginManager().registerEvents(new AlternatorEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PlayerEvents(), plugin);
     }
 }

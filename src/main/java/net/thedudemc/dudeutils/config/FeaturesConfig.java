@@ -27,5 +27,6 @@ public class FeaturesConfig extends Config {
         ENABLED.put("Allies", true);
         ENABLED.put("InventorySorter", true);
         ENABLED.put("SlimeChunkCheck", true);
+        ENABLED.put("Alternator", true);
     }
 }
