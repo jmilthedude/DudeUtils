@@ -21,7 +21,7 @@ allprojects {
     
 	processResources {
     	from(sourceSets.main.resources.srcDirs) {
-        	filter ReplaceTokens, tokens: [version: version]
+        	filter ReplaceTokens, tokens: [version: pluginVersion]
 		filter ReplaceTokens, tokens: [name: pluginName]
 		filter ReplaceTokens, tokens: [groupId: pluginGroup]
 		filter ReplaceTokens, tokens: [author: pluginAuthor]
