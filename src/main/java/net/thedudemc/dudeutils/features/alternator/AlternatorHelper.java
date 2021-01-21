@@ -40,7 +40,6 @@ public class AlternatorHelper {
     }
 
     public static ItemStack changeAlternatorMode(ItemStack alternator) {
-        System.out.println("Changing mode..");
         ItemMeta meta = alternator.getItemMeta();
         if (meta != null) {
             if (!meta.getPersistentDataContainer().has(ALTERNATOR_MODE, PersistentDataType.INTEGER)) return alternator;

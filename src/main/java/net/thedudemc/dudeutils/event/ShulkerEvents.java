@@ -12,7 +12,6 @@ public class ShulkerEvents implements Listener {
 
     @EventHandler
     public void onShulkerKilled(EntityDeathEvent event) {
-        System.out.println("Kileld shulker!");
         if (event.getEntityType() != EntityType.SHULKER) return;
         Player player = event.getEntity().getKiller();
         if (player == null) return;
