@@ -17,6 +17,7 @@ public class PluginEvents {
         if (PluginConfigs.FEATURES.ENABLED.get("NetherWater")) plugin.getServer().getPluginManager().registerEvents(new NetherWaterEvent(), plugin);
         if (PluginConfigs.FEATURES.ENABLED.get("VillagerUtility")) plugin.getServer().getPluginManager().registerEvents(new VillagerEvents(), plugin);
         if (PluginConfigs.FEATURES.ENABLED.get("Alternator")) plugin.getServer().getPluginManager().registerEvents(new AlternatorEvents(), plugin);
+        if (PluginConfigs.FEATURES.ENABLED.get("ShulkerDropsTwo")) plugin.getServer().getPluginManager().registerEvents(new ShulkerEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PlayerEvents(), plugin);
     }
 }
