@@ -1,5 +1,6 @@
 package net.thedudemc.dudeutils.event;
 
+import net.thedudemc.dudeutils.features.alternator.AlternatorHelper;
 import net.thedudemc.dudeutils.gui.BlacklistGui;
 import net.thedudemc.dudeutils.init.PluginData;
 import org.bukkit.Material;
@@ -41,13 +42,14 @@ public class BlacklistEvents implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryOpen(PlayerInteractEvent event) {
-        if (event.isCancelled()) return;
         if (event.getHand() != EquipmentSlot.HAND || !event.getPlayer().isSneaking()) {
             return;
         }
         if (event.getItem() == null || event.getItem().getType() != Material.STICK || event.getAction() != Action.RIGHT_CLICK_AIR) {
             return;
         }
+        if (AlternatorHelper.isAlternatorItem(event.getItem())) return;
+
         event.setCancelled(true);
 
         Player player = event.getPlayer();

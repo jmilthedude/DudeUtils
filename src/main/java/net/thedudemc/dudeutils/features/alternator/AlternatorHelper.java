@@ -22,7 +22,7 @@ public class AlternatorHelper {
 
         meta.getPersistentDataContainer().set(ALTERNATOR_MODE, PersistentDataType.INTEGER, mode.ordinal());
         meta.setLore(getAlternatorLore(mode));
-        meta.setDisplayName("Alternator (" + mode.getName() + ")");
+        meta.setDisplayName(ChatColor.AQUA + "Alternator " + ChatColor.RESET + "(" + ChatColor.GREEN + mode.getName() + ChatColor.RESET + ")");
         stack.setItemMeta(meta);
 
         return stack;
