@@ -27,7 +27,8 @@ public class SleepEvent implements Listener {
         World world = player.getWorld();
         if (world.getEnvironment() != World.Environment.NORMAL) return;
         PlayerBedEnterEvent.BedEnterResult result = event.getBedEnterResult();
-        if (isNight(world) || world.isThundering() && result == PlayerBedEnterEvent.BedEnterResult.OK) {
+        if (isNight(world) || world.isThundering()) {
+            if (result != PlayerBedEnterEvent.BedEnterResult.OK) return;
             DudeUtils.getInstance().getServer().broadcastMessage(getSleepMessage(player.getName()));
             sleepingPlayers.add(player.getName());
             Bukkit.getScheduler().scheduleSyncDelayedTask(DudeUtils.getInstance(), () -> {
@@ -39,7 +40,7 @@ public class SleepEvent implements Listener {
         }
     }
 
-    private boolean isNight(World world) {
+    private static boolean isNight(World world) {
         long time = world.getTime();
         return time >= night && time < day;
     }
@@ -65,9 +66,18 @@ public class SleepEvent implements Listener {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(DudeUtils.getInstance(), new Runnable() {
             @Override
             public void run() {
-                if (sleepingPlayers.isEmpty()) return;
                 World world = DudeUtils.getInstance().getServer().getWorlds().get(0);
-                setTime(world, getNextTime(world));
+                if (!sleepingPlayers.isEmpty()) {
+                    boolean shouldClearPlayers = false;
+                    if (!isNight(world)) {
+                        shouldClearPlayers = !world.isThundering();
+                    }
+
+                    if (shouldClearPlayers) sleepingPlayers.clear(); // this is all to fix some weird bug
+
+                }
+
+                if (!sleepingPlayers.isEmpty()) setTime(world, getNextTime(world));
             }
 
             private long getNextTime(World world) {
