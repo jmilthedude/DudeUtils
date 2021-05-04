@@ -1,10 +1,7 @@
 package net.thedudemc.dudeutils.event;
 
 import net.thedudemc.dudeutils.init.PluginConfigs;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Monster;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTargetEvent;
@@ -41,7 +38,11 @@ public class PlayerEvents implements Listener {
     }
 
     private boolean isHostile(Entity entity) {
-        return entity instanceof Monster || entity.getType() == EntityType.SLIME || entity.getType() == EntityType.PHANTOM;
+        return entity instanceof Monster ||
+                entity instanceof Slime ||
+                entity instanceof Phantom ||
+                entity instanceof Hoglin ||
+                entity instanceof Shulker;
     }
 
 }
