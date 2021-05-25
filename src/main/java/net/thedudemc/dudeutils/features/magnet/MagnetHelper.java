@@ -49,7 +49,7 @@ public class MagnetHelper {
 
     static Predicate<Entity> filter = e -> e.getType() == EntityType.DROPPED_ITEM;
 
-    public static void runMagnet() {
+    public static void run() {
         task = Bukkit.getScheduler().runTaskTimer(DudeUtils.INSTANCE, () -> {
             Collection<? extends Player> players = Bukkit.getOnlinePlayers();
             for (Player p : players) {

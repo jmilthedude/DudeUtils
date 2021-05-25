@@ -8,7 +8,9 @@ import java.io.*;
 
 public abstract class SaveData {
 
-    private static Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
+    private boolean isDirty = false;
+
+    private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
     protected File root = new File(DudeUtils.getInstance().getDataFolder(), "data/");
     protected String extension = ".json";
 
@@ -35,6 +37,7 @@ public abstract class SaveData {
     }
 
     public void writeData() {
+        if (!this.isDirty) return;
         try {
             if (!root.exists() && !root.mkdirs()) return;
             if (!this.getDataFile().exists() && !this.getDataFile().createNewFile()) return;
@@ -44,10 +47,10 @@ public abstract class SaveData {
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-
         }
     }
 
-
+    public void markDirty() {
+        this.isDirty = true;
+    }
 }

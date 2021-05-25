@@ -1,8 +1,5 @@
 package net.thedudemc.dudeutils;
 
-import net.thedudemc.dudeutils.event.SleepEvent;
-import net.thedudemc.dudeutils.features.magnet.MagnetHelper;
-import net.thedudemc.dudeutils.features.portal.PortalParticles;
 import net.thedudemc.dudeutils.init.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,6 +12,10 @@ public class DudeUtils extends JavaPlugin implements Listener {
 
     public static DudeUtils INSTANCE;
 
+    public static DudeUtils getInstance() {
+        return INSTANCE;
+    }
+
     @Override
     public void onEnable() {
 
@@ -25,11 +26,8 @@ public class DudeUtils extends JavaPlugin implements Listener {
         PluginRecipes.removeDisabled(this);
         PluginEvents.register(this);
         PluginCommands.register();
+        PluginTasks.run();
 
-        if (PluginConfigs.PORTAL_UTILITY.SPAWN_PARTICLES) PortalParticles.runSpawner();
-        if (PluginConfigs.FEATURES.ENABLED.get("Magnet")) MagnetHelper.runMagnet();
-
-        if (PluginConfigs.FEATURES.ENABLED.get("SinglePlayerSleep")) SleepEvent.run();
     }
 
     @Override
@@ -38,13 +36,8 @@ public class DudeUtils extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onSave(WorldSaveEvent event) {
-        PluginData.save();
-    }
+    public void onSave(WorldSaveEvent event) { PluginData.save(); }
 
-    public static DudeUtils getInstance() {
-        return INSTANCE;
-    }
 
     public static void logInfo(String msg) {
         StringBuilder sb = new StringBuilder();

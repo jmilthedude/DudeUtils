@@ -28,12 +28,12 @@ public class BlacklistSaveData extends SaveData {
                 Material.ROTTEN_FLESH.toString(),
                 Material.DEAD_BUSH.toString()
         });
+        this.markDirty();
     }
 
     public boolean hasItems(String name) {
         return BLACKLIST.containsKey(name);
     }
-
 
 
     @Nonnull
@@ -48,9 +48,10 @@ public class BlacklistSaveData extends SaveData {
     public void addItems(String name, Material[] materials) {
         String[] mats = new String[materials.length];
         int i = 0;
-        for(Material m : materials) {
+        for (Material m : materials) {
             mats[i++] = m.toString();
         }
         BLACKLIST.put(name, mats);
+        this.markDirty();
     }
 }

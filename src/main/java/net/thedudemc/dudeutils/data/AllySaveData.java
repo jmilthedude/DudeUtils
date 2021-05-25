@@ -26,14 +26,20 @@ public class AllySaveData extends SaveData {
         ALLY_GROUPS.add(new AllyGroup("player4")
                 .addAlliedPlayer("player5")
                 .addAlliedPlayer("player6"));
+        this.markDirty();
     }
 
     public AllyGroup getOrCreateGroup(String owner) {
-        for (AllyGroup group : ALLY_GROUPS) {
-            if (group.getOwner().equalsIgnoreCase(owner))
-                return group;
+        AllyGroup group = null;
+        for (AllyGroup g : ALLY_GROUPS) {
+            if (g.getOwner().equalsIgnoreCase(owner)) {
+                group = g;
+                break;
+            }
         }
-        return new AllyGroup(owner);
+        if (group == null) group = new AllyGroup(owner);
+        this.markDirty();
+        return group;
     }
 
     public void addAllyGroup(AllyGroup group) {
@@ -42,6 +48,7 @@ public class AllySaveData extends SaveData {
                 return;
         }
         ALLY_GROUPS.add(group);
+        this.markDirty();
     }
 
 }

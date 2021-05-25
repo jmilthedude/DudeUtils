@@ -16,7 +16,7 @@ public class PortalParticles {
 
     private static BukkitTask task;
 
-    public static void runSpawner() {
+    public static void run() {
         task = Bukkit.getScheduler().runTaskTimer(DudeUtils.INSTANCE, new Runnable() {
             @Override
             public void run() {
