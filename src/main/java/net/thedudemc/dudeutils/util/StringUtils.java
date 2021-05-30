@@ -11,8 +11,15 @@ public class StringUtils {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("" + ChatColor.YELLOW + location.getBlockX() + ChatColor.GRAY + "x" + ChatColor.RESET + ", " + ChatColor.YELLOW + location.getBlockY() + ChatColor.GRAY + "y" + ChatColor.RESET + ", " + ChatColor.YELLOW + location.getBlockZ()
-                + ChatColor.GRAY + "z");
+        sb.append("" +
+                ChatColor.YELLOW + location.getBlockX() +
+                ChatColor.GRAY + "x" +
+                ChatColor.RESET + ", " +
+                ChatColor.YELLOW + location.getBlockY() +
+                ChatColor.GRAY + "y" +
+                ChatColor.RESET + ", " +
+                ChatColor.YELLOW + location.getBlockZ() +
+                ChatColor.GRAY + "z");
 
         return sb.toString();
 
@@ -22,8 +29,6 @@ public class StringUtils {
         switch (environment) {
             case NETHER:
                 return ChatColor.DARK_RED + "Nether" + ChatColor.RESET;
-            case NORMAL:
-                return ChatColor.DARK_GREEN + "Overworld" + ChatColor.RESET;
             case THE_END:
                 return ChatColor.DARK_PURPLE + "End" + ChatColor.RESET;
             default:

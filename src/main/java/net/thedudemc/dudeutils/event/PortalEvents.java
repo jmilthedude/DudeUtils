@@ -1,7 +1,6 @@
 package net.thedudemc.dudeutils.event;
 
 import net.thedudemc.dudeutils.DudeUtils;
-import net.thedudemc.dudeutils.features.portal.PortalHelper;
 import net.thedudemc.dudeutils.util.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -12,6 +11,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityPortalEnterEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -25,7 +25,8 @@ import java.util.List;
 public class PortalEvents implements Listener {
 
     public static HashMap<Player, Long> timers = new HashMap<>();
-    private static List<Cooldown> cooldowns = new ArrayList<>();
+    private static final List<Cooldown> cooldowns = new ArrayList<>();
+    public static HashMap<Player, Location> portals = new HashMap<>();
 
     @EventHandler
     public void onPortalClicked(PlayerInteractEvent event) {
@@ -47,8 +48,8 @@ public class PortalEvents implements Listener {
         if (block == null || block.getType() != Material.OBSIDIAN)
             return;
         else {
-            if (PortalHelper.portals.containsKey(player)) {
-                Location location = PortalHelper.portals.remove(player);
+            if (portals.containsKey(player)) {
+                Location location = portals.remove(player);
                 event.setCancelled(true);
                 player.sendMessage("Removed particles at: " + StringUtils.getCoordinateString(location));
                 return;
@@ -66,7 +67,7 @@ public class PortalEvents implements Listener {
 
         player.sendMessage(StringUtils.getDimensionName(alternate.getWorld().getEnvironment()) + " Portal Location: " + StringUtils.getCoordinateString(alternate));
 
-        PortalHelper.portals.put(player, alternate);
+        portals.put(player, alternate);
         timers.put(player, 300L);
 
     }
@@ -82,8 +83,14 @@ public class PortalEvents implements Listener {
 
             GameMode current = p.getGameMode();
             updateGameMode(p, current);
-
             beginCooldown(p);
+        }
+    }
+
+    @EventHandler
+    public void onBlockPlaceAttempt(BlockPlaceEvent event) {
+        if (event.getPlayer().getGameMode() == GameMode.CREATIVE && playerInCooldown(event.getPlayer())) {
+            event.setCancelled(true);
         }
     }
 
