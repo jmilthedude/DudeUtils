@@ -21,3 +21,9 @@ commands:
   veinminer:
     description: Apply VeinMiner to tool in hand.
     usage: /veinminer
+  magnet:
+    description: Apply Magnet to player.
+    usage: /magnet
+  save:
+    description: Save plugin data.
+    usage: /save
