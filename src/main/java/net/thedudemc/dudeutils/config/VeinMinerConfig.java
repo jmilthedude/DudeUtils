@@ -1,10 +1,13 @@
 package net.thedudemc.dudeutils.config;
 
 import com.google.gson.annotations.Expose;
-import net.thedudemc.dudeutils.init.PluginConfigs;
+import net.thedudemc.dudeutils.DudeUtils;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +23,11 @@ public class VeinMinerConfig extends Config {
     @Expose
     public int DAMAGE_PER_BLOCK;
     @Expose
-    public int BLOCKS_PER_FOOD;
+    public float EXHAUSTION_PER_BLOCK;
+    @Expose
+    public boolean DROP_AT_PLAYER;
+
+    public static final NamespacedKey KEY = new NamespacedKey(DudeUtils.getInstance(), "VeinMiner");
 
     @Override
     public String getName() {
@@ -42,9 +49,9 @@ public class VeinMinerConfig extends Config {
                 "NETHER_QUARTZ_ORE",
                 "NETHERITE_SCRAP"
         );
-        REQUIRED_LORE = "VeinMiner!";
         DAMAGE_PER_BLOCK = 4;
-        BLOCKS_PER_FOOD = 4;
+        EXHAUSTION_PER_BLOCK = .005f;
+        DROP_AT_PLAYER = false;
     }
 
     public int getBlockLimit() {
@@ -60,24 +67,18 @@ public class VeinMinerConfig extends Config {
         return materials;
     }
 
-    public String getRequiredLore() {
-        return REQUIRED_LORE;
-    }
-
     public static ItemStack applyOrRemoveVeinMinerUpgrade(ItemStack stack) {
         ItemMeta meta = stack.getItemMeta();
         if (meta != null) {
-            String requiredLore = PluginConfigs.VEINMINER.getRequiredLore();
-            if (meta.hasLore()) {
-                List<String> lore = meta.getLore();
-                if (lore.contains(requiredLore)) {
-                    lore.remove(requiredLore);
-                } else {
-                    lore.add(requiredLore);
+            PersistentDataContainer data = meta.getPersistentDataContainer();
+            Byte value = (byte) 1;
+            if (data.has(KEY, PersistentDataType.BYTE)) {
+                value = data.get(KEY, PersistentDataType.BYTE);
+                if (value != null) {
+                    data.set(KEY, PersistentDataType.BYTE, (value == (byte) 0 ? (byte) 1 : (byte) 0));
                 }
-                meta.setLore(lore);
             } else {
-                meta.setLore(Arrays.asList(requiredLore));
+                data.set(KEY, PersistentDataType.BYTE, value);
             }
             stack.setItemMeta(meta);
         }
@@ -88,7 +89,11 @@ public class VeinMinerConfig extends Config {
         return DAMAGE_PER_BLOCK;
     }
 
-    public int getBlocksPerFood() {
-        return BLOCKS_PER_FOOD;
+    public float getExhaustion() {
+        return EXHAUSTION_PER_BLOCK;
+    }
+
+    public boolean shouldDropAtPlayer() {
+        return this.DROP_AT_PLAYER;
     }
 }

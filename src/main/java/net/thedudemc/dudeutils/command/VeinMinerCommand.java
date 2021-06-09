@@ -14,7 +14,6 @@ public class VeinMinerCommand extends PluginCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) throws CommandException {
-
         Player p = (Player) sender;
         ItemStack heldItem = p.getInventory().getItemInMainHand();
         VeinMinerConfig.applyOrRemoveVeinMinerUpgrade(heldItem);
