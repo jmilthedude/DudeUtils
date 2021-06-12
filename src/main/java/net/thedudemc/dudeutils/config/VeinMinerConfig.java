@@ -19,8 +19,6 @@ public class VeinMinerConfig extends Config {
     @Expose
     private List<String> MATERIALS;
     @Expose
-    private String REQUIRED_LORE;
-    @Expose
     public int DAMAGE_PER_BLOCK;
     @Expose
     public float EXHAUSTION_PER_BLOCK;
@@ -38,20 +36,30 @@ public class VeinMinerConfig extends Config {
     protected void reset() {
         BLOCK_LIMIT = 32;
         MATERIALS = Arrays.asList(
-                "COAL_ORE",
-                "IRON_ORE",
-                "GOLD_ORE",
-                "DIAMOND_ORE",
-                "EMERALD_ORE",
-                "REDSTONE_ORE",
-                "LAPIS_ORE",
-                "NETHER_GOLD_ORE",
-                "NETHER_QUARTZ_ORE",
-                "NETHERITE_SCRAP"
+                Material.COAL_ORE.name(),
+                Material.DEEPSLATE_COAL_ORE.name(),
+                Material.IRON_ORE.name(),
+                Material.DEEPSLATE_IRON_ORE.name(),
+                Material.GOLD_ORE.name(),
+                Material.DEEPSLATE_GOLD_ORE.name(),
+                Material.DIAMOND_ORE.name(),
+                Material.DEEPSLATE_DIAMOND_ORE.name(),
+                Material.EMERALD_ORE.name(),
+                Material.DEEPSLATE_EMERALD_ORE.name(),
+                Material.REDSTONE_ORE.name(),
+                Material.DEEPSLATE_REDSTONE_ORE.name(),
+                Material.LAPIS_ORE.name(),
+                Material.DEEPSLATE_LAPIS_ORE.name(),
+                Material.COPPER_ORE.name(),
+                Material.DEEPSLATE_COPPER_ORE.name(),
+                Material.NETHER_GOLD_ORE.name(),
+                Material.NETHER_QUARTZ_ORE.name(),
+                Material.NETHERITE_SCRAP.name(),
+                Material.OBSIDIAN.name()
         );
-        DAMAGE_PER_BLOCK = 4;
+        DAMAGE_PER_BLOCK = 1;
         EXHAUSTION_PER_BLOCK = .005f;
-        DROP_AT_PLAYER = false;
+        DROP_AT_PLAYER = true;
     }
 
     public int getBlockLimit() {
@@ -67,7 +75,7 @@ public class VeinMinerConfig extends Config {
         return materials;
     }
 
-    public static ItemStack applyOrRemoveVeinMinerUpgrade(ItemStack stack) {
+    public static void applyOrRemoveVeinMinerUpgrade(ItemStack stack) {
         ItemMeta meta = stack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer data = meta.getPersistentDataContainer();
@@ -82,7 +90,6 @@ public class VeinMinerConfig extends Config {
             }
             stack.setItemMeta(meta);
         }
-        return stack;
     }
 
     public int getDamagePerBlock() {
