@@ -12,9 +12,6 @@ commands:
   ally:
     description: Adds or removes allies from your ally group.
     usage: /ally add/remove <PlayerName>
-  config:
-    description: Change or save config settings.
-    usage: /config save /config set <setting> <value>
   color:
     description: Change your color.
     usage: /color <colorName>

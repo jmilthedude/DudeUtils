@@ -14,7 +14,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class InventoryEvents implements Listener {
@@ -67,12 +67,7 @@ public class InventoryEvents implements Listener {
 					items.add(item);
 			}
 
-			Collections.sort(items, (o1, o2) -> {
-				if (o1.getType() == null || o2.getType() == null) {
-					return 0;
-				}
-				return o1.getType().compareTo(o2.getType());
-			});
+			items.sort(Comparator.comparing(ItemStack::getType));
 
 			List<ItemStack> combined = combineStacks(items);
 

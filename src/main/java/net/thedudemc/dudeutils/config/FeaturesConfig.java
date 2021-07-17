@@ -29,5 +29,6 @@ public class FeaturesConfig extends Config {
         ENABLED.put("SlimeChunkCheck", true);
         ENABLED.put("Alternator", true);
         ENABLED.put("ShulkerDropsTwo", true);
+        ENABLED.put("DisableEndermanGriefing", true);
     }
 }
