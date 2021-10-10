@@ -3,7 +3,13 @@ package net.thedudemc.dudeutils.init;
 import net.thedudemc.dudeutils.DudeUtils;
 import net.thedudemc.dudeutils.command.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class PluginCommands {
+
+    public static HashMap<String, PluginCommand> REGISTRY = new HashMap<>();
 
     public static DudeCommand DUDE;
     public static SlimeCommand SLIME;
@@ -28,6 +34,7 @@ public class PluginCommands {
     private static PluginCommand registerCommand(PluginCommand command) {
         DudeUtils.getInstance().getCommand(command.getName()).setExecutor(command);
         DudeUtils.getInstance().getCommand(command.getName()).setTabCompleter(command);
+        REGISTRY.put(command.getName(), command);
         return command;
     }
 
