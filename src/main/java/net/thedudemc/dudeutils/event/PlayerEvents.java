@@ -13,6 +13,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerCommandSendEvent;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,9 +29,11 @@ public class PlayerEvents implements Listener {
                     .map(PluginCommand::getName)
                     .collect(Collectors.toList());
 
-            System.out.println(blocked);
+            List<String> withId = new ArrayList<>();
+            blocked.forEach(s -> withId.add("dudeutils:" + s));
 
             event.getCommands().removeAll(blocked);
+            event.getCommands().removeAll(withId);
         }
     }
 
