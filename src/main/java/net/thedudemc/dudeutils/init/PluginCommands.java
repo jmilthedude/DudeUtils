@@ -18,6 +18,7 @@ public class PluginCommands {
     public static VeinMinerCommand VEIN_MINER;
     public static MagnetCommand MAGNET;
     public static SaveCommand SAVE;
+    public static CoordsCommand COORDS;
 
     public static void register() {
 
@@ -28,6 +29,7 @@ public class PluginCommands {
         if (PluginConfigs.FEATURES.ENABLED.get("VeinMiner")) VEIN_MINER = (VeinMinerCommand) registerCommand(new VeinMinerCommand().playerOnly().opOnly());
         if (PluginConfigs.FEATURES.ENABLED.get("Magnet")) MAGNET = (MagnetCommand) registerCommand(new MagnetCommand().playerOnly().opOnly());
         SAVE =  (SaveCommand) registerCommand(new SaveCommand().opOnly());
+        COORDS = (CoordsCommand) registerCommand(new CoordsCommand().playerOnly());
 
     }
 
