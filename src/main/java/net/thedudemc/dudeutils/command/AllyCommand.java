@@ -2,6 +2,7 @@ package net.thedudemc.dudeutils.command;
 
 import net.thedudemc.dudeutils.command.exception.CommandException;
 import net.thedudemc.dudeutils.features.allies.AllyGroup;
+import net.thedudemc.dudeutils.init.PluginConfigs;
 import net.thedudemc.dudeutils.init.PluginData;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -18,6 +19,10 @@ public class AllyCommand extends PluginCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) throws CommandException {
+        if(!PluginConfigs.FEATURES.ENABLED.get("Allies")) {
+            sender.sendMessage("That feature is disabled in this server.");
+            return;
+        }
         Player p = (Player) sender;
         AllyGroup group = PluginData.ALLY_DATA.getOrCreateGroup(p.getName());
         if (args.length == 1) {

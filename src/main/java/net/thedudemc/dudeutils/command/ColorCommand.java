@@ -1,6 +1,7 @@
 package net.thedudemc.dudeutils.command;
 
 import net.thedudemc.dudeutils.command.exception.CommandException;
+import net.thedudemc.dudeutils.init.PluginConfigs;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -21,6 +22,10 @@ public class ColorCommand extends PluginCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) throws CommandException {
+        if(!PluginConfigs.FEATURES.ENABLED.get("ChatNameColor")) {
+            sender.sendMessage("That feature is disabled in this server.");
+            return;
+        }
         Player p = (Player) sender;
         if (args.length == 1) {
             String teamColor = args[0];
