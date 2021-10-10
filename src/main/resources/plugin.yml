@@ -27,3 +27,6 @@ commands:
   coords:
     description: Send your coords in chat.
     usage: /coords
+  deathpoint:
+    description: Send your recent death coords in chat.
+    usage: /deathpoint

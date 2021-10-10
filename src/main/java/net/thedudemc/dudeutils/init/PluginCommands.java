@@ -19,17 +19,20 @@ public class PluginCommands {
     public static MagnetCommand MAGNET;
     public static SaveCommand SAVE;
     public static CoordsCommand COORDS;
+    public static DeathpointCommand DEATHPOINT;
 
     public static void register() {
 
         DUDE = (DudeCommand) registerCommand(new DudeCommand()).opOnly();
-        if (PluginConfigs.FEATURES.ENABLED.get("SlimeChunkCheck")) SLIME = (SlimeCommand) registerCommand(new SlimeCommand().playerOnly());
-        if (PluginConfigs.FEATURES.ENABLED.get("Allies")) ALLY = (AllyCommand) registerCommand(new AllyCommand().playerOnly());
-        if (PluginConfigs.FEATURES.ENABLED.get("ChatNameColor")) COLOR = (ColorCommand) registerCommand(new ColorCommand().playerOnly());
-        if (PluginConfigs.FEATURES.ENABLED.get("VeinMiner")) VEIN_MINER = (VeinMinerCommand) registerCommand(new VeinMinerCommand().playerOnly().opOnly());
-        if (PluginConfigs.FEATURES.ENABLED.get("Magnet")) MAGNET = (MagnetCommand) registerCommand(new MagnetCommand().playerOnly().opOnly());
+        SLIME = (SlimeCommand) registerCommand(new SlimeCommand().playerOnly());
+        ALLY = (AllyCommand) registerCommand(new AllyCommand().playerOnly());
+        COLOR = (ColorCommand) registerCommand(new ColorCommand().playerOnly());
+        VEIN_MINER = (VeinMinerCommand) registerCommand(new VeinMinerCommand().playerOnly().opOnly());
+        MAGNET = (MagnetCommand) registerCommand(new MagnetCommand().playerOnly().opOnly());
         SAVE =  (SaveCommand) registerCommand(new SaveCommand().opOnly());
         COORDS = (CoordsCommand) registerCommand(new CoordsCommand().playerOnly());
+        DEATHPOINT = (DeathpointCommand) registerCommand(new DeathpointCommand().playerOnly());
+
 
     }
 

@@ -1,5 +1,6 @@
 package net.thedudemc.dudeutils.util;
 
+import net.thedudemc.dudeutils.features.deathpoint.DeathLocation;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -24,6 +25,19 @@ public class StringUtils {
         return sb.toString();
 
     }
+
+    public static String getCoordinateString(DeathLocation location) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(ChatColor.GOLD).append(location.getX());
+        sb.append(ChatColor.WHITE).append(", ");
+        sb.append(ChatColor.GOLD).append(location.getY());
+        sb.append(ChatColor.WHITE).append(", ");
+        sb.append(ChatColor.GOLD).append(location.getZ());
+        sb.append(ChatColor.WHITE).append(" in ");
+        sb.append(StringUtils.getDimensionName(World.Environment.valueOf(location.getDimension().toUpperCase())));
+        return sb.toString();
+    }
+
 
     public static String getDimensionName(World.Environment environment) {
         switch (environment) {
