@@ -45,7 +45,7 @@ public abstract class SaveData {
             GSON.toJson(this, writer);
             writer.flush();
             writer.close();
-            System.out.println(this.isDirty);
+            DudeUtils.logInfo("Saved " + this.getName());
 
             this.isDirty = false;
         } catch (IOException e) {

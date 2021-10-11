@@ -30,6 +30,10 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         return this;
     }
 
+    public boolean isOpOnly() {
+        return this.opOnly;
+    }
+
     public boolean canExecute(CommandSender sender) throws CommandException {
         if (this.playerCommand && !(sender instanceof Player))
             throw new CommandException("This command can only be run by a player.");

@@ -32,9 +32,6 @@ public class MagnetData extends SaveData {
 
     @Override
     public void writeData() {
-        for (String s : magnetizedPlayers) {
-            System.out.println(s);
-        }
         super.writeData();
     }
 }
