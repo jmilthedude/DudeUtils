@@ -32,5 +32,6 @@ public class PluginEvents {
         if (PluginConfigs.FEATURES.ENABLED.get("DisableEndermanGriefing"))
             plugin.getServer().getPluginManager().registerEvents(new EndermanEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PlayerEvents(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new PetTransferEvent(), plugin);
     }
 }
