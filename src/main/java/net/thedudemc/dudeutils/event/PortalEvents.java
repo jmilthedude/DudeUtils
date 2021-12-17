@@ -2,18 +2,17 @@ package net.thedudemc.dudeutils.event;
 
 import net.thedudemc.dudeutils.DudeUtils;
 import net.thedudemc.dudeutils.util.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityPortalEnterEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -70,6 +69,21 @@ public class PortalEvents implements Listener {
         portals.put(player, alternate);
         timers.put(player, 300L);
 
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onUseOldPortal(PlayerPortalEvent event) {
+        System.out.println("oldPortalEvent");
+        World world = event.getFrom().getWorld();
+        if (world != null && world.getName().contains("world_old")) {
+            System.out.println("in old world");
+            World spawnWorld = Bukkit.getWorld("world");
+            if (spawnWorld != null) {
+                System.out.println("found spawn world");
+                event.setCancelled(true);
+                event.getPlayer().teleport(spawnWorld.getSpawnLocation());
+            }
+        }
     }
 
     @EventHandler
