@@ -1,5 +1,6 @@
 package net.thedudemc.dudeutils.command;
 
+import net.thedudemc.dudeutils.init.PluginConfigs;
 import net.thedudemc.dudeutils.init.PluginData;
 import org.bukkit.command.CommandSender;
 
@@ -13,6 +14,7 @@ public class SaveCommand extends PluginCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (args.length == 0) {
+            PluginConfigs.save();
             PluginData.save();
         }
     }

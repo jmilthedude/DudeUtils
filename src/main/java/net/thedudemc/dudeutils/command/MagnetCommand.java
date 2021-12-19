@@ -1,9 +1,8 @@
 package net.thedudemc.dudeutils.command;
 
 import net.thedudemc.dudeutils.command.exception.CommandException;
-import net.thedudemc.dudeutils.features.magnet.MagnetHelper;
-import net.thedudemc.dudeutils.init.PluginConfigs;
 import net.thedudemc.dudeutils.init.PluginData;
+import net.thedudemc.dudeutils.init.PluginFeatures;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -21,7 +20,7 @@ public class MagnetCommand extends PluginCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) throws CommandException {
-        if(!PluginConfigs.FEATURES.ENABLED.get("Magnet")) {
+        if(!PluginFeatures.MAGNET_FEATURE.isEnabled()) {
             sender.sendMessage("That feature is disabled in this server.");
             return;
         }

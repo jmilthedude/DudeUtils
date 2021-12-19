@@ -22,4 +22,13 @@ public class PluginConfigs {
         VEINMINER = (VeinMinerConfig) new VeinMinerConfig().readConfig();
 
     }
+
+    public static void save() {
+        FEATURES.writeConfig();
+        MAGNET.writeConfig();
+        PORTAL_UTILITY.writeConfig();
+        RECIPES.writeConfig();
+        SPECIAL.writeConfig();
+        VEINMINER.writeConfig();
+    }
 }

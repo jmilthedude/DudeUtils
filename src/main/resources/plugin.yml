@@ -30,3 +30,6 @@ commands:
   deathpoint:
     description: Send your recent death coords in chat.
     usage: /deathpoint
+  feature:
+    description: Enable or disable a feature
+    usage: /feature <name> <true|false>

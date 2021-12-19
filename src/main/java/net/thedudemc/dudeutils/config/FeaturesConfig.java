@@ -17,7 +17,7 @@ public class FeaturesConfig extends Config {
     @Override
     protected void reset() {
         ENABLED.put("ChatNameColor", true);
-        ENABLED.put("Magnet", false);
+        ENABLED.put("magnet", false);
         ENABLED.put("NetherWater", false);
         ENABLED.put("PortalUtility", true);
         ENABLED.put("VeinMiner", false);
@@ -30,5 +30,10 @@ public class FeaturesConfig extends Config {
         ENABLED.put("Alternator", true);
         ENABLED.put("ShulkerDropsTwo", true);
         ENABLED.put("DisableEndermanGriefing", true);
+    }
+
+    public void setEnabled(String name, boolean value) {
+        ENABLED.put(name, value);
+        this.markDirty();
     }
 }

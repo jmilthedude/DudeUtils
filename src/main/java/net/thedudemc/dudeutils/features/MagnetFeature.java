@@ -1,4 +1,4 @@
-package net.thedudemc.dudeutils.features.magnet;
+package net.thedudemc.dudeutils.features;
 
 import net.thedudemc.dudeutils.DudeUtils;
 import net.thedudemc.dudeutils.init.PluginConfigs;
@@ -17,27 +17,27 @@ import org.bukkit.util.Vector;
 import java.util.Collection;
 import java.util.function.Predicate;
 
-public class MagnetHelper {
+public class MagnetFeature extends Feature {
 
     private static BukkitTask task;
 
-    public static boolean isWearingItem(Player player) {
-        ItemStack item = player.getInventory().getHelmet();
-
-        if (item != null) {
-            Material mat = item.getType();
-            return mat == Material.DRAGON_HEAD;
-        }
-        return false;
+    public MagnetFeature() {
+        this.isEnabled = PluginConfigs.FEATURES.ENABLED.get(this.getName());
     }
 
-    static Predicate<Entity> filter = e -> e.getType() == EntityType.DROPPED_ITEM;
+    @Override
+    public String getName() {
+        return "magnet";
+    }
 
-    public static void run() {
+    @Override
+    public void doEnable() {
+        if (!isEnabled()) return;
+
         task = Bukkit.getScheduler().runTaskTimer(DudeUtils.INSTANCE, () -> {
             Collection<? extends Player> players = Bukkit.getOnlinePlayers();
             for (Player p : players) {
-                if (MagnetHelper.isWearingItem(p) || PluginData.MAGNET_DATA.magnetizedPlayers.contains(p.getName())) {
+                if (isWearingItem(p) || PluginData.MAGNET_DATA.magnetizedPlayers.contains(p.getName())) {
                     float speed = (float) PluginConfigs.MAGNET.SPEED;
                     int range = PluginConfigs.MAGNET.RANGE;
 
@@ -54,8 +54,24 @@ public class MagnetHelper {
         }, 60L, 1L);
     }
 
-    public static void cancelMagnet() {
-        if (task != null) Bukkit.getScheduler().cancelTask(task.getTaskId());
+    @Override
+    public void doDisable() {
+        if (task != null) {
+            Bukkit.getScheduler().cancelTask(task.getTaskId());
+            task.cancel();
+            task = null;
+        }
     }
 
+    private boolean isWearingItem(Player player) {
+        ItemStack item = player.getInventory().getHelmet();
+
+        if (item != null) {
+            Material mat = item.getType();
+            return mat == Material.DRAGON_HEAD;
+        }
+        return false;
+    }
+
+    static Predicate<Entity> filter = e -> e.getType() == EntityType.DROPPED_ITEM;
 }

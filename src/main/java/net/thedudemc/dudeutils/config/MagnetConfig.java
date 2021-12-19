@@ -9,7 +9,7 @@ public class MagnetConfig extends Config {
 
     @Override
     public String getName() {
-        return "Magnet";
+        return "magnet";
     }
 
     @Override

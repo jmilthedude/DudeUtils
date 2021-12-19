@@ -21,6 +21,7 @@ public class DudeUtils extends JavaPlugin implements Listener {
 
         INSTANCE = this;
         PluginConfigs.register();
+        PluginFeatures.register();
         PluginData.register();
         PluginRecipes.register(this);
         PluginRecipes.removeDisabled(this);
@@ -32,11 +33,15 @@ public class DudeUtils extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
+        PluginConfigs.save();
         PluginData.save();
     }
 
     @EventHandler
-    public void onSave(WorldSaveEvent event) { PluginData.save(); }
+    public void onSave(WorldSaveEvent event) {
+        PluginConfigs.save();
+        PluginData.save();
+    }
 
 
     public static void logInfo(String msg) {

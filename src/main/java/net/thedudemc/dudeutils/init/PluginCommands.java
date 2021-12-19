@@ -3,9 +3,7 @@ package net.thedudemc.dudeutils.init;
 import net.thedudemc.dudeutils.DudeUtils;
 import net.thedudemc.dudeutils.command.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class PluginCommands {
 
@@ -20,6 +18,7 @@ public class PluginCommands {
     public static SaveCommand SAVE;
     public static CoordsCommand COORDS;
     public static DeathpointCommand DEATHPOINT;
+    public static FeatureCommand FEATURE;
 
     public static void register() {
 
@@ -29,9 +28,10 @@ public class PluginCommands {
         COLOR = (ColorCommand) registerCommand(new ColorCommand().playerOnly());
         VEIN_MINER = (VeinMinerCommand) registerCommand(new VeinMinerCommand().playerOnly().opOnly());
         MAGNET = (MagnetCommand) registerCommand(new MagnetCommand().playerOnly().opOnly());
-        SAVE =  (SaveCommand) registerCommand(new SaveCommand().opOnly());
+        SAVE = (SaveCommand) registerCommand(new SaveCommand().opOnly());
         COORDS = (CoordsCommand) registerCommand(new CoordsCommand().playerOnly());
         DEATHPOINT = (DeathpointCommand) registerCommand(new DeathpointCommand().playerOnly());
+        FEATURE = (FeatureCommand) registerCommand(new FeatureCommand().opOnly());
 
 
     }
