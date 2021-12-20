@@ -1,6 +1,7 @@
 package net.thedudemc.dudeutils.util;
 
 import net.thedudemc.dudeutils.features.deathpoint.DeathLocation;
+import org.apache.commons.lang.time.DurationFormatUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -48,6 +49,10 @@ public class StringUtils {
             default:
                 return ChatColor.DARK_GREEN + "Overworld" + ChatColor.RESET;
         }
+    }
+
+    public static String formatDuration(long time) {
+        return DurationFormatUtils.formatDuration(time, "dd:HH:mm:ss");
     }
 
 }

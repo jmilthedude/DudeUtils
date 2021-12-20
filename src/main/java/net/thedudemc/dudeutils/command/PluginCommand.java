@@ -1,6 +1,8 @@
 package net.thedudemc.dudeutils.command;
 
 import net.thedudemc.dudeutils.command.exception.CommandException;
+import net.thedudemc.dudeutils.features.Feature;
+import net.thedudemc.dudeutils.init.PluginFeatures;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -59,6 +61,10 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         return null;
+    }
+
+    protected Feature getFeature() {
+        return PluginFeatures.getFeature(this.getName());
     }
 
 }

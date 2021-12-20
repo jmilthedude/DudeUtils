@@ -7,12 +7,10 @@ import org.bukkit.event.Listener;
 
 public abstract class Feature implements Listener {
 
-    protected boolean isEnabled;
-
     public abstract String getName();
 
     public boolean isEnabled() {
-        return this.isEnabled;
+        return PluginConfigs.FEATURES.ENABLED.get(this.getName());
     }
 
     public abstract void doEnable();
@@ -20,13 +18,11 @@ public abstract class Feature implements Listener {
     public abstract void doDisable();
 
     public void enable() {
-        this.isEnabled = true;
         PluginConfigs.FEATURES.setEnabled(this.getName(), true);
         this.doEnable();
     }
 
     public void disable() {
-        this.isEnabled = false;
         PluginConfigs.FEATURES.setEnabled(this.getName(), false);
         this.doDisable();
     }

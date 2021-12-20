@@ -21,10 +21,6 @@ public class MagnetFeature extends Feature {
 
     private static BukkitTask task;
 
-    public MagnetFeature() {
-        this.isEnabled = PluginConfigs.FEATURES.ENABLED.get(this.getName());
-    }
-
     @Override
     public String getName() {
         return "magnet";

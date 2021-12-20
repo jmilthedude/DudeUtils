@@ -1,20 +1,15 @@
 package net.thedudemc.dudeutils.event;
 
 import net.thedudemc.dudeutils.command.PluginCommand;
-import net.thedudemc.dudeutils.features.deathpoint.DeathLocation;
 import net.thedudemc.dudeutils.init.PluginCommands;
 import net.thedudemc.dudeutils.init.PluginConfigs;
-import net.thedudemc.dudeutils.init.PluginData;
-import net.thedudemc.dudeutils.util.StringUtils;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerCommandSendEvent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,12 +42,6 @@ public class PlayerEvents implements Listener {
                 }
             }
         }
-    }
-
-    @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event) {
-        DeathLocation location = PluginData.DEATHPOINT.setDeathpoint(event.getEntity());
-        event.getEntity().sendMessage("You died at: " + StringUtils.getCoordinateString(location));
     }
 
     private boolean isHostile(Entity entity) {

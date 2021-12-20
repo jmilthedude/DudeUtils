@@ -1,19 +1,25 @@
 package net.thedudemc.dudeutils.features.deathpoint;
 
 import com.google.gson.annotations.Expose;
+import net.thedudemc.dudeutils.util.StringUtils;
 import org.bukkit.Location;
+
+import java.time.Instant;
 
 public class DeathLocation {
     @Expose
     private int x, y, z;
     @Expose
     private String dimension;
+    @Expose
+    private long time;
 
     public DeathLocation(int x, int y, int z, String dimension) {
         this.x = x;
         this.y = y;
         this.z = z;
         this.dimension = dimension;
+        this.time = Instant.now().toEpochMilli();
     }
 
     public static DeathLocation fromLocation(Location location) {
@@ -34,31 +40,24 @@ public class DeathLocation {
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public int getY() {
         return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     public int getZ() {
         return z;
     }
 
-    public void setZ(int z) {
-        this.z = z;
-    }
-
     public String getDimension() {
         return dimension;
     }
 
-    public void setDimension(String dimension) {
-        this.dimension = dimension;
+    public long getTimeSince() {
+        return Instant.now().toEpochMilli() - this.time;
+    }
+
+    @Override
+    public String toString() {
+        return StringUtils.getCoordinateString(this) + " - " + StringUtils.formatDuration(this.getTimeSince());
     }
 }
