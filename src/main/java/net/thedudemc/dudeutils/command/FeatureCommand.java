@@ -23,7 +23,6 @@ public class FeatureCommand extends PluginCommand {
 
         String featureName = args[0];
         Feature feature = PluginFeatures.getFeature(featureName);
-        if (feature == null) throw new CommandException("There is no feature with that name: " + featureName);
 
         boolean enable = Boolean.parseBoolean(args[1]);
         if (enable) {

@@ -1,54 +1,46 @@
 package net.thedudemc.dudeutils.data;
 
 import com.google.gson.annotations.Expose;
-import net.thedudemc.dudeutils.features.allies.AllyGroup;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class AllySaveData extends SaveData {
 
 
     @Expose
-    public List<AllyGroup> ALLY_GROUPS = new ArrayList<>();
-
+    public HashMap<UUID, List<UUID>> allyGroups = new HashMap<>();
 
     @Override
     public String getName() {
-        return "allies";
+        return "ally";
     }
 
     @Override
     protected void reset() {
-        ALLY_GROUPS.add(new AllyGroup("player1")
-                .addAlliedPlayer("player2")
-                .addAlliedPlayer("player3"));
-        ALLY_GROUPS.add(new AllyGroup("player4")
-                .addAlliedPlayer("player5")
-                .addAlliedPlayer("player6"));
-        this.markDirty();
     }
 
-    public AllyGroup getOrCreateGroup(String owner) {
-        AllyGroup group = null;
-        for (AllyGroup g : ALLY_GROUPS) {
-            if (g.getOwner().equalsIgnoreCase(owner)) {
-                group = g;
-                break;
-            }
+    public boolean addAlly(UUID owner, UUID ally) {
+        List<UUID> allies = allyGroups.computeIfAbsent(owner, o -> new ArrayList<>());
+        if (!allies.contains(ally)) {
+            allies.add(ally);
+            this.markDirty();
+            return true;
         }
-        if (group == null) group = new AllyGroup(owner);
-        this.markDirty();
-        return group;
+        return false;
     }
 
-    public void addAllyGroup(AllyGroup group) {
-        for (AllyGroup existing : ALLY_GROUPS) {
-            if (existing.getOwner().equalsIgnoreCase(group.getOwner()))
-                return;
+    public boolean removeAlly(UUID owner, UUID ally) {
+        List<UUID> allies = allyGroups.computeIfAbsent(owner, o -> new ArrayList<>());
+        if (allies.remove(ally)) {
+            this.markDirty();
+            return true;
         }
-        ALLY_GROUPS.add(group);
-        this.markDirty();
+        return false;
     }
 
+    public List<UUID> getAllies(UUID owner) {
+        List<UUID> allies = allyGroups.computeIfAbsent(owner, o -> new ArrayList<>());
+        this.markDirty();
+        return allies;
+    }
 }

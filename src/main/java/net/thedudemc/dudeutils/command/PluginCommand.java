@@ -35,10 +35,12 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
     }
 
     public boolean canExecute(CommandSender sender) throws CommandException {
-        if (this.playerCommand && !(sender instanceof Player))
+        if (this.playerCommand && !(sender instanceof Player)) {
             throw new CommandException("This command can only be run by a player.");
-        if (this.opOnly && !sender.isOp())
+        }
+        if (this.opOnly && !sender.isOp()) {
             throw new CommandException("You do not have permission to run this command.");
+        }
         return true;
     }
 
@@ -48,7 +50,7 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         try {
             if (this.canExecute(sender)) this.execute(sender, args);
-        } catch (CommandException ex) {
+        } catch (CommandException | RuntimeException ex) {
             sender.sendMessage(ChatColor.RED + ex.getMessage());
         }
         return true;

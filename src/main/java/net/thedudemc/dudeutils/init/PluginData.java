@@ -1,12 +1,12 @@
 package net.thedudemc.dudeutils.init;
 
-import net.thedudemc.dudeutils.data.AllySaveData;
-import net.thedudemc.dudeutils.data.BlacklistSaveData;
-import net.thedudemc.dudeutils.data.DeathpointData;
-import net.thedudemc.dudeutils.data.MagnetData;
+import net.thedudemc.dudeutils.data.*;
+
+import java.util.HashMap;
 
 public class PluginData {
 
+    private static final HashMap<String, SaveData> registry = new HashMap<>();
 
     public static BlacklistSaveData BLACKLIST_DATA;
     public static AllySaveData ALLY_DATA;
@@ -14,17 +14,23 @@ public class PluginData {
     public static DeathpointData DEATHPOINT;
 
     public static void register() {
-        BLACKLIST_DATA = (BlacklistSaveData) new BlacklistSaveData().readData();
-        ALLY_DATA = (AllySaveData) new AllySaveData().readData();
-        MAGNET_DATA = (MagnetData) new MagnetData().readData();
-        DEATHPOINT = (DeathpointData) new DeathpointData().readData();
+        BLACKLIST_DATA = (BlacklistSaveData) register(new BlacklistSaveData().readData());
+        ALLY_DATA = (AllySaveData) register(new AllySaveData().readData());
+        MAGNET_DATA = (MagnetData) register(new MagnetData().readData());
+        DEATHPOINT = (DeathpointData) register(new DeathpointData().readData());
+    }
+
+    private static SaveData register(SaveData data) {
+        registry.put(data.getName(), data);
+        return data;
+    }
+
+    public static SaveData get(String name) {
+        return registry.get(name);
     }
 
     public static void save() {
-        BLACKLIST_DATA.writeData();
-        ALLY_DATA.writeData();
-        MAGNET_DATA.writeData();
-        DEATHPOINT.writeData();
+        registry.values().forEach(SaveData::writeData);
     }
 
 }
