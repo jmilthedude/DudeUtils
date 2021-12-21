@@ -138,7 +138,7 @@ public class PortalEvents implements Listener {
     }
 
     public static class Cooldown {
-        private Player player;
+        private final Player player;
         private int ticksRemaining;
 
         public Cooldown(Player p, int cooldown) {

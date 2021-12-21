@@ -1,10 +1,7 @@
 package net.thedudemc.dudeutils.init;
 
 import net.thedudemc.dudeutils.DudeUtils;
-import net.thedudemc.dudeutils.features.AllyFeature;
-import net.thedudemc.dudeutils.features.DeathpointFeature;
-import net.thedudemc.dudeutils.features.Feature;
-import net.thedudemc.dudeutils.features.MagnetFeature;
+import net.thedudemc.dudeutils.features.*;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -16,11 +13,13 @@ public class PluginFeatures {
     public static MagnetFeature MAGNET_FEATURE;
     public static AllyFeature ALLY_FEATURE;
     public static DeathpointFeature DEATHPOINT_FEATURE;
+    public static NetherWaterFeature NETHER_WATER_FEATURE;
 
     public static void register() {
         MAGNET_FEATURE = register(new MagnetFeature());
         ALLY_FEATURE = register(new AllyFeature());
         DEATHPOINT_FEATURE = register(new DeathpointFeature());
+        NETHER_WATER_FEATURE = register(new NetherWaterFeature());
     }
 
     private static <T extends Feature> T register(T feature) {

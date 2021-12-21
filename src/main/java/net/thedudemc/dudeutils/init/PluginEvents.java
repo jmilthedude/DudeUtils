@@ -13,7 +13,6 @@ public class PluginEvents {
         plugin.getServer().getPluginManager().registerEvents(new InventoryEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new SleepEvent(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new VeinMinerEvent(), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new NetherWaterEvent(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new VillagerEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new AlternatorEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new ShulkerEvents(), plugin);

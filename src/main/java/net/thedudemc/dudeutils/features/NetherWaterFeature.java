@@ -1,16 +1,32 @@
-package net.thedudemc.dudeutils.event;
+package net.thedudemc.dudeutils.features;
 
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 
-public class NetherWaterEvent implements Listener {
+public class NetherWaterFeature extends Feature {
+    @Override
+    public String getName() {
+        return "nether_water";
+    }
+
+    @Override
+    public void doEnable() {
+
+    }
+
+    @Override
+    public void doDisable() {
+
+    }
+
 
     @EventHandler
     public void onWaterBucketUse(PlayerBucketEmptyEvent event) {
+        if (!isEnabled()) return;
+
         Block block = event.getBlockClicked();
         Block water = block.getRelative(event.getBlockFace());
         World world = block.getWorld();
@@ -18,7 +34,6 @@ public class NetherWaterEvent implements Listener {
 
         water.setType(Material.WATER);
         water.getState().update();
-
     }
 
 }
