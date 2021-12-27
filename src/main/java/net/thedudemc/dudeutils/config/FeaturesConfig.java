@@ -19,7 +19,7 @@ public class FeaturesConfig extends Config {
         ENABLED.put("ChatNameColor", true);
         ENABLED.put("magnet", false);
         ENABLED.put("nether_water", false);
-        ENABLED.put("PortalUtility", true);
+        ENABLED.put("portal_utility", true);
         ENABLED.put("VeinMiner", false);
         ENABLED.put("VillagerUtility", true);
         ENABLED.put("SinglePlayerSleep", true);

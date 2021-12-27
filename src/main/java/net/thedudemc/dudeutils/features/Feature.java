@@ -1,5 +1,6 @@
 package net.thedudemc.dudeutils.features;
 
+import net.thedudemc.dudeutils.DudeUtils;
 import net.thedudemc.dudeutils.data.SaveData;
 import net.thedudemc.dudeutils.init.PluginConfigs;
 import net.thedudemc.dudeutils.init.PluginData;
@@ -9,7 +10,13 @@ public abstract class Feature implements Listener {
 
     public abstract String getName();
 
+    public Feature() {
+        if (this.isEnabled()) this.enable();
+        else this.disable();
+    }
+
     public boolean isEnabled() {
+        DudeUtils.logInfo(this.getName() + " enabled: " + PluginConfigs.FEATURES.ENABLED.get(this.getName()));
         return PluginConfigs.FEATURES.ENABLED.get(this.getName());
     }
 

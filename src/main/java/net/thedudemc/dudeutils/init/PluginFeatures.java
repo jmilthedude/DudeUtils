@@ -14,12 +14,14 @@ public class PluginFeatures {
     public static AllyFeature ALLY_FEATURE;
     public static DeathpointFeature DEATHPOINT_FEATURE;
     public static NetherWaterFeature NETHER_WATER_FEATURE;
+    public static PortalUtilityFeature PORTAL_UTILITY_FEATURE;
 
     public static void register() {
         MAGNET_FEATURE = register(new MagnetFeature());
         ALLY_FEATURE = register(new AllyFeature());
         DEATHPOINT_FEATURE = register(new DeathpointFeature());
         NETHER_WATER_FEATURE = register(new NetherWaterFeature());
+        PORTAL_UTILITY_FEATURE = register(new PortalUtilityFeature());
     }
 
     private static <T extends Feature> T register(T feature) {
