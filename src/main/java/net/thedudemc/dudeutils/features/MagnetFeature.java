@@ -11,7 +11,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.Collection;
@@ -19,7 +18,6 @@ import java.util.function.Predicate;
 
 public class MagnetFeature extends Feature {
 
-    private static BukkitTask task;
 
     @Override
     public String getName() {
@@ -30,33 +28,37 @@ public class MagnetFeature extends Feature {
     public void doEnable() {
         if (!isEnabled()) return;
 
-        task = Bukkit.getScheduler().runTaskTimer(DudeUtils.INSTANCE, () -> {
-            Collection<? extends Player> players = Bukkit.getOnlinePlayers();
-            for (Player p : players) {
-                if (isWearingItem(p) || PluginData.MAGNET_DATA.magnetizedPlayers.contains(p.getName())) {
-                    float speed = (float) PluginConfigs.MAGNET.SPEED;
-                    int range = PluginConfigs.MAGNET.RANGE;
+        createTask();
+    }
 
-                    World world = p.getWorld();
-                    Vector target = VectorHelper.getVectorFromPos(p.getLocation());
-                    Collection<Entity> entities = world.getNearbyEntities(p.getLocation(), range, range, range, filter);
-                    for (Entity e : entities) {
-                        Vector current = VectorHelper.getVectorFromPos(e.getLocation());
-                        Vector movement = VectorHelper.getMovementVelocity(current, target, speed);
-                        e.setVelocity(VectorHelper.add(e.getVelocity(), movement));
-                    }
+    @Override
+    protected void createTask() {
+        task = Bukkit.getScheduler().runTaskTimer(DudeUtils.INSTANCE, this::execute, 60L, 1L);
+    }
+
+    @Override
+    public void execute() {
+        Collection<? extends Player> players = Bukkit.getOnlinePlayers();
+        for (Player p : players) {
+            if (isWearingItem(p) || PluginData.MAGNET_DATA.magnetizedPlayers.contains(p.getName())) {
+                float speed = (float) PluginConfigs.MAGNET.SPEED;
+                int range = PluginConfigs.MAGNET.RANGE;
+
+                World world = p.getWorld();
+                Vector target = VectorHelper.getVectorFromPos(p.getLocation());
+                Collection<Entity> entities = world.getNearbyEntities(p.getLocation(), range, range, range, filter);
+                for (Entity e : entities) {
+                    Vector current = VectorHelper.getVectorFromPos(e.getLocation());
+                    Vector movement = VectorHelper.getMovementVelocity(current, target, speed);
+                    e.setVelocity(VectorHelper.add(e.getVelocity(), movement));
                 }
             }
-        }, 60L, 1L);
+        }
     }
 
     @Override
     public void doDisable() {
-        if (task != null) {
-            Bukkit.getScheduler().cancelTask(task.getTaskId());
-            task.cancel();
-            task = null;
-        }
+        cancelTask();
     }
 
     private boolean isWearingItem(Player player) {

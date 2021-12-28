@@ -12,13 +12,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
 
 public class PortalUtilityFeature extends Feature {
-
-    private static BukkitTask task;
 
     private static final HashMap<UUID, Long> timers = new HashMap<>();
     private static final List<Cooldown> cooldowns = new ArrayList<>();
@@ -32,24 +29,7 @@ public class PortalUtilityFeature extends Feature {
     @Override
     public void doEnable() {
         if (!isEnabled()) return;
-
-        task = Bukkit.getScheduler().runTaskTimer(DudeUtils.INSTANCE, () -> {
-            Collection<? extends Player> players = Bukkit.getOnlinePlayers();
-            players.forEach(player -> {
-                UUID id = player.getUniqueId();
-                if (portals.containsKey(player.getUniqueId())) {
-
-                    Location location = portals.get(id);
-                    if (isChunkLoaded(location)) {
-                        spawnParticles(id, location);
-                    }
-
-                    if (decrementTimer(id) <= 0) {
-                        removeParticles(player);
-                    }
-                }
-            });
-        }, 60L, 20L);
+        createTask();
     }
 
     @Override
@@ -59,6 +39,30 @@ public class PortalUtilityFeature extends Feature {
             task.cancel();
             task = null;
         }
+    }
+
+    @Override
+    protected void createTask() {
+        task = Bukkit.getScheduler().runTaskTimer(DudeUtils.INSTANCE, this::execute, 60L, 20L);
+    }
+
+    @Override
+    public void execute() {
+        Collection<? extends Player> players = Bukkit.getOnlinePlayers();
+        players.forEach(player -> {
+            UUID id = player.getUniqueId();
+            if (portals.containsKey(player.getUniqueId())) {
+
+                Location location = portals.get(id);
+                if (isChunkLoaded(location)) {
+                    spawnParticles(id, location);
+                }
+
+                if (decrementTimer(id) <= 0) {
+                    removeParticles(player);
+                }
+            }
+        });
     }
 
     private void activateParticles(Player player, Location oppositeLocation) {
@@ -204,14 +208,14 @@ public class PortalUtilityFeature extends Feature {
         World world = current.getWorld();
         if (world == null) return null;
         if (world.getEnvironment() == World.Environment.NORMAL) {
-            int x = current.getBlockX() / 8;
-            int y = current.getBlockY();
-            int z = current.getBlockZ() / 8;
+            double x = current.getBlockX() / 8D;
+            double y = current.getBlockY();
+            double z = current.getBlockZ() / 8D;
             return new Location(Bukkit.getWorlds().get(1), x, y, z);
         } else {
-            int x = current.getBlockX() * 8;
-            int y = current.getBlockY();
-            int z = current.getBlockZ() * 8;
+            double x = current.getBlockX() * 8D;
+            double y = current.getBlockY();
+            double z = current.getBlockZ() * 8D;
             return new Location(Bukkit.getWorlds().get(0), x, y, z);
 
         }

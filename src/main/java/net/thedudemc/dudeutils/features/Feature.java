@@ -4,9 +4,13 @@ import net.thedudemc.dudeutils.DudeUtils;
 import net.thedudemc.dudeutils.data.SaveData;
 import net.thedudemc.dudeutils.init.PluginConfigs;
 import net.thedudemc.dudeutils.init.PluginData;
+import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
+import org.bukkit.scheduler.BukkitTask;
 
 public abstract class Feature implements Listener {
+
+    protected static BukkitTask task;
 
     public abstract String getName();
 
@@ -23,6 +27,20 @@ public abstract class Feature implements Listener {
     public abstract void doEnable();
 
     public abstract void doDisable();
+
+    public void execute() {
+    }
+
+    protected void createTask() {
+    }
+
+    protected void cancelTask() {
+        if (task != null) {
+            Bukkit.getScheduler().cancelTask(task.getTaskId());
+            task.cancel();
+            task = null;
+        }
+    }
 
     public void enable() {
         PluginConfigs.FEATURES.setEnabled(this.getName(), true);
