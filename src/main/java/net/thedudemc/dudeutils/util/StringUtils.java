@@ -29,10 +29,13 @@ public class StringUtils {
 
     public static String getCoordinateString(DeathLocation location) {
         StringBuilder sb = new StringBuilder();
+        sb.append(ChatColor.DARK_AQUA).append("x");
         sb.append(ChatColor.GOLD).append(location.getX());
         sb.append(ChatColor.WHITE).append(", ");
+        sb.append(ChatColor.DARK_AQUA).append("y");
         sb.append(ChatColor.GOLD).append(location.getY());
         sb.append(ChatColor.WHITE).append(", ");
+        sb.append(ChatColor.DARK_AQUA).append("z");
         sb.append(ChatColor.GOLD).append(location.getZ());
         sb.append(ChatColor.WHITE).append(" in ");
         sb.append(StringUtils.getDimensionName(World.Environment.valueOf(location.getDimension().toUpperCase())));

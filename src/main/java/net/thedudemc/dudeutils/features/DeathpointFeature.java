@@ -3,6 +3,7 @@ package net.thedudemc.dudeutils.features;
 import net.thedudemc.dudeutils.data.DeathpointData;
 import net.thedudemc.dudeutils.features.deathpoint.DeathLocation;
 import net.thedudemc.dudeutils.util.StringUtils;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
@@ -27,7 +28,8 @@ public class DeathpointFeature extends Feature {
     public void onPlayerDeath(PlayerDeathEvent event) {
         if (!isEnabled()) return;
         DeathpointData data = this.getSaveData();
-        DeathLocation location = data.setDeathpoint(event.getEntity());
-        event.getEntity().sendMessage("You died at: " + StringUtils.getCoordinateString(location));
+        Player player = event.getEntity();
+        DeathLocation location = data.setDeathpoint(player);
+        player.sendMessage("You died at: " + StringUtils.getCoordinateString(location));
     }
 }

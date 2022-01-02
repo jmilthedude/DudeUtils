@@ -34,9 +34,12 @@ public class DeathpointData extends SaveData {
 
     public DeathLocation setDeathpoint(Player player) {
         DeathLocation location = DeathLocation.fromLocation(player.getLocation());
-        DeathHistory history = deathHistoryMap.computeIfAbsent(player.getUniqueId(), DeathHistory::new);
-        history.addLocation(location);
-        this.markDirty();
+        if (location != null) {
+            location.setInventory(player.getInventory());
+            DeathHistory history = deathHistoryMap.computeIfAbsent(player.getUniqueId(), DeathHistory::new);
+            history.addLocation(location);
+            this.markDirty();
+        }
         return location;
     }
 

@@ -1,9 +1,14 @@
 package net.thedudemc.dudeutils.features.deathpoint;
 
 import com.google.gson.annotations.Expose;
+import net.thedudemc.dudeutils.DudeUtils;
+import net.thedudemc.dudeutils.util.ItemStackUtils;
 import net.thedudemc.dudeutils.util.StringUtils;
 import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
+import java.io.IOException;
 import java.time.Instant;
 
 public class DeathLocation {
@@ -13,6 +18,8 @@ public class DeathLocation {
     private String dimension;
     @Expose
     private long time;
+    @Expose
+    private String inventory;
 
     public DeathLocation(int x, int y, int z, String dimension) {
         this.x = x;
@@ -59,5 +66,19 @@ public class DeathLocation {
     @Override
     public String toString() {
         return StringUtils.getCoordinateString(this) + " - " + StringUtils.formatDuration(this.getTimeSince());
+    }
+
+    public void setInventory(PlayerInventory inventory) {
+        this.inventory = ItemStackUtils.playerInventoryToBase64(inventory);
+    }
+
+    public ItemStack[] getInventory() {
+        try {
+            return ItemStackUtils.itemStackArrayFromBase64(this.inventory);
+        } catch (IOException exception) {
+            DudeUtils.logError("Error converting string to inventory.");
+            DudeUtils.logError(exception.getMessage());
+        }
+        return new ItemStack[0];
     }
 }
