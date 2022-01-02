@@ -4,12 +4,13 @@ import com.google.gson.annotations.Expose;
 import org.bukkit.Material;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class BlacklistSaveData extends SaveData {
 
     @Expose
-    public HashMap<String, String[]> BLACKLIST = new HashMap<>();
+    public HashMap<UUID, List<String>> BLACKLIST = new HashMap<>();
 
     @Override
     public String getName() {
@@ -18,40 +19,33 @@ public class BlacklistSaveData extends SaveData {
 
     @Override
     protected void reset() {
-        BLACKLIST.put("player1", new String[]{
+        BLACKLIST.put(UUID.randomUUID(), Arrays.asList(
                 Material.STICK.toString(),
                 Material.ROTTEN_FLESH.toString(),
-                Material.DEAD_BUSH.toString()
-        });
-        BLACKLIST.put("player2", new String[]{
+                Material.DEAD_BUSH.toString())
+        );
+        BLACKLIST.put(UUID.randomUUID(), Arrays.asList(
                 Material.STICK.toString(),
                 Material.ROTTEN_FLESH.toString(),
-                Material.DEAD_BUSH.toString()
-        });
+                Material.DEAD_BUSH.toString())
+        );
         this.markDirty();
     }
 
-    public boolean hasItems(String name) {
-        return BLACKLIST.containsKey(name);
-    }
-
-
     @Nonnull
-    public Material[] getItems(String name) {
-        Material[] materials = new Material[BLACKLIST.get(name).length];
-        for (int i = 0; i < materials.length; i++) {
-            materials[i] = Material.getMaterial(BLACKLIST.get(name)[i]);
+    public List<Material> getItems(UUID uuid) {
+        if (BLACKLIST.containsKey(uuid)) {
+            return BLACKLIST.get(uuid).stream().map(Material::getMaterial).collect(Collectors.toList());
         }
+        List<Material> materials = new ArrayList<>();
+        BLACKLIST.put(uuid, new ArrayList<>());
+        this.markDirty();
+
         return materials;
     }
 
-    public void addItems(String name, Material[] materials) {
-        String[] mats = new String[materials.length];
-        int i = 0;
-        for (Material m : materials) {
-            mats[i++] = m.toString();
-        }
-        BLACKLIST.put(name, mats);
+    public void updateItems(UUID uuid, List<Material> materials) {
+        BLACKLIST.put(uuid, materials.stream().map(Material::toString).collect(Collectors.toList()));
         this.markDirty();
     }
 }
