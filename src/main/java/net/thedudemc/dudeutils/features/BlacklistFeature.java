@@ -3,6 +3,7 @@ package net.thedudemc.dudeutils.features;
 import net.thedudemc.dudeutils.data.BlacklistSaveData;
 import net.thedudemc.dudeutils.features.alternator.AlternatorHelper;
 import net.thedudemc.dudeutils.gui.BlacklistGui;
+import net.thedudemc.dudeutils.util.ItemStackUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,10 +18,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BlacklistFeature extends Feature {
@@ -105,6 +103,7 @@ public class BlacklistFeature extends Feature {
 
         Player player = (Player) event.getWhoClicked();
         BlacklistGui gui = openedInventoryMap.get(player.getUniqueId());
+
         if (gui == null) {
             return;
         }
@@ -118,9 +117,7 @@ public class BlacklistFeature extends Feature {
             return;
         }
 
-
         int slot = event.getSlot();
-
         ItemStack cursor = event.getCursor();
         if (cursor == null) return;
         if (cursor.getAmount() >= 1) {
@@ -131,11 +128,8 @@ public class BlacklistFeature extends Feature {
             event.setCancelled(true);
             return;
         }
-
-        ItemStack toSet = cursor.clone();
-        toSet.setAmount(1);
-        gui.getInventory().setItem(slot, toSet);
         event.setCancelled(true);
+        gui.getInventory().setItem(slot, ItemStackUtils.createItem(cursor.getType(), "", "Blacklisted Item"));
     }
 
     @EventHandler
@@ -163,10 +157,15 @@ public class BlacklistFeature extends Feature {
 
         ItemStack[] contents = gui.getInventory().getContents();
         List<Material> materials = Arrays.stream(contents)
+                .filter(Objects::nonNull)
                 .map(ItemStack::getType)
                 .collect(Collectors.toList());
 
         data.updateItems(player.getUniqueId(), materials);
         close(player);
+    }
+
+    public static boolean hasBlacklistOpen(Player player) {
+        return openedInventoryMap.containsKey(player.getUniqueId());
     }
 }
