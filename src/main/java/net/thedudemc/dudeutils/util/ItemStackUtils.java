@@ -33,26 +33,10 @@ public class ItemStackUtils {
 
         return item;
     }
-
-    /**
-     * Converts the player inventory to a Base64 encoded string.
-     *
-     * @param playerInventory to turn into an array of strings.
-     * @return string with serialized Inventory
-     * @throws IllegalStateException
-     */
     public static String playerInventoryToBase64(PlayerInventory playerInventory) throws IllegalStateException {
-        // This contains contents, armor and offhand (contents are indexes 0 - 35, armor 36 - 39, offhand - 40)
         return itemStackArrayToBase64(playerInventory.getContents());
     }
 
-    /**
-     * A method to serialize an {@link ItemStack} array to Base64 String.
-     *
-     * @param items to turn into a Base64 String.
-     * @return Base64 string of the items.
-     * @throws IllegalStateException
-     */
     public static String itemStackArrayToBase64(ItemStack[] items) throws IllegalStateException {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -75,13 +59,6 @@ public class ItemStackUtils {
         }
     }
 
-    /**
-     * Gets an array of ItemStacks from Base64 string.
-     *
-     * @param data Base64 string to convert to ItemStack array.
-     * @return ItemStack array created from the Base64 string.
-     * @throws IOException
-     */
     public static ItemStack[] itemStackArrayFromBase64(String data) throws IOException {
         try {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data));
