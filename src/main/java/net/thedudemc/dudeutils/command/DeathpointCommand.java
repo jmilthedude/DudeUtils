@@ -8,8 +8,11 @@ import net.thedudemc.dudeutils.features.deathpoint.DeathLocation;
 import net.thedudemc.dudeutils.util.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.DoubleChestInventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
@@ -44,23 +47,47 @@ public class DeathpointCommand extends PluginCommand {
             }
 
             //deathpoint restore <player> <index>
-        } else if (args.length == 3) {
+        } else if (args.length >= 3) {
             if ("restore".equalsIgnoreCase(args[0])) {
-
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target == null) {
                     throw new CommandException("No player found by that name.");
                 }
                 DeathHistory history = data.getDeathHistory(target);
 
-                int index = Integer.parseInt(args[2]) - 1;
-                if (index + 1 > history.getDeathpoints().size()) {
-                    throw new CommandException("There are only " + history.getDeathpoints().size() + " deathpoints.");
+                int index = Integer.parseInt(args[2]);
+                if (index >= history.getDeathpoints().size()) {
+                    throw new CommandException("There are only " + history.getDeathpoints().size() + " deathpoint(s).");
                 }
 
                 DeathLocation deathData = history.getDeathpoints().get(index);
-                dropExistingItems(target);
-                target.getInventory().setContents(deathData.getInventory());
+
+                if (args.length == 3) {
+                    dropExistingItems(target);
+                    target.getInventory().setContents(deathData.getInventory());
+                    sender.sendMessage("Death contents placed into the player's inventory.");
+                } else if (args.length == 4) {
+                    if ("dump".equalsIgnoreCase(args[3])) {
+                        Block block = player.getTargetBlockExact(8);
+                        if (block == null) {
+                            throw new CommandException("No block found in view. Maybe get closer.");
+                        }
+                        if (!(block.getState() instanceof Chest)) {
+                            throw new CommandException("You are not targeting a chest.");
+                        }
+                        Chest chest = (Chest) block.getState();
+                        if (!(chest.getInventory() instanceof DoubleChestInventory)) {
+                            throw new CommandException("You must be looking at a double chest.");
+                        }
+                        if (!chest.getInventory().isEmpty()) {
+                            throw new CommandException("The chest must be empty.");
+                        }
+                        chest.getInventory().setContents(deathData.getInventory());
+                        sender.sendMessage("Death contents placed into the chest.");
+                        return;
+                    }
+
+                }
                 return;
             }
         }
