@@ -1,4 +1,4 @@
-package net.thedudemc.dudeutils.event;
+package net.thedudemc.dudeutils.features;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -7,10 +7,8 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
-import org.bukkit.entity.Villager.Profession;
 import org.bukkit.entity.memory.MemoryKey;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -24,10 +22,24 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class VillagerEvents implements Listener {
+public class VillagerUtilityFeature extends Feature {
+    @Override
+    public String getName() {
+        return "villager_utility";
+    }
 
-    private static List<Player> cancelInventoryEvent = new ArrayList<>();
-    private static HashMap<Player, Villager> selectedVillagers = new HashMap<>();
+    @Override
+    public void doEnable() {
+
+    }
+
+    @Override
+    public void doDisable() {
+
+    }
+
+    private static final List<Player> cancelInventoryEvent = new ArrayList<>();
+    private static final HashMap<Player, Villager> selectedVillagers = new HashMap<>();
 
     private static final List<Material> possibleWorkstations = Arrays.asList(
             Material.BLAST_FURNACE,
@@ -47,6 +59,8 @@ public class VillagerEvents implements Listener {
 
     @EventHandler
     public void getVillagerInfo(PlayerInteractAtEntityEvent event) {
+        if (!isEnabled()) return;
+
         if (event.getHand() != EquipmentSlot.HAND) return;
 
         Player player = event.getPlayer();
@@ -67,11 +81,11 @@ public class VillagerEvents implements Listener {
             return;
         }
         Block workstation = jobLocation.getBlock();
-        Profession profession = villager.getProfession();
+        Villager.Profession profession = villager.getProfession();
 
         sendChatMessage(player, "~~~Villager Info~~~",
                 ChatColor.AQUA + "UUID" + ChatColor.RESET + ": " + ChatColor.YELLOW + villager.getUniqueId(),
-                ChatColor.AQUA + "Profession" + ChatColor.RESET + ": " + ChatColor.GREEN + profession.toString(),
+                ChatColor.AQUA + "Profession" + ChatColor.RESET + ": " + ChatColor.GREEN + profession,
                 ChatColor.AQUA + "Workstation" + ChatColor.RESET + ": " + ChatColor.DARK_PURPLE + workstation.getType() +
                         ChatColor.RESET + " | " +
                         ChatColor.GOLD + workstation.getX() + ChatColor.RESET + ", " +
@@ -82,6 +96,8 @@ public class VillagerEvents implements Listener {
 
     @EventHandler
     public void selectVillager(PlayerInteractAtEntityEvent event) {
+        if (!isEnabled()) return;
+
         if (event.getHand() != EquipmentSlot.HAND) return;
 
         Player player = event.getPlayer();
@@ -103,6 +119,8 @@ public class VillagerEvents implements Listener {
 
     @EventHandler
     public void assignWorkstation(PlayerInteractEvent event) {
+        if (!isEnabled()) return;
+
         if (event.getHand() != EquipmentSlot.HAND) return;
 
         Player player = event.getPlayer();
@@ -124,6 +142,8 @@ public class VillagerEvents implements Listener {
 
     @EventHandler
     public void removeWorkstation(PlayerInteractEvent event) {
+        if (!isEnabled()) return;
+
         if (event.getHand() != EquipmentSlot.HAND) return;
 
         Player player = event.getPlayer();
@@ -143,6 +163,8 @@ public class VillagerEvents implements Listener {
 
     @EventHandler
     public void cancelOpenInventory(InventoryOpenEvent event) {
+        if (!isEnabled()) return;
+
         if (event.getInventory().getType() != InventoryType.MERCHANT) return;
         Player p = (Player) event.getPlayer();
         if (cancelInventoryEvent.contains(p)) {
@@ -156,6 +178,4 @@ public class VillagerEvents implements Listener {
             p.sendMessage(s);
         }
     }
-
 }
-

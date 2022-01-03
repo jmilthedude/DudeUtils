@@ -27,7 +27,7 @@ public class FeaturesConfig extends Config {
         ENABLED.put("alternator", true);
         ENABLED.put("shulker_drops_two", true);
         ENABLED.put("disable_enderman_griefing", true);
-        ENABLED.put("VillagerUtility", true);
+        ENABLED.put("villager_utility", true);
         ENABLED.put("SinglePlayerSleep", true);
         ENABLED.put("InventorySorter", true);
         ENABLED.put("SlimeChunkCheck", true);

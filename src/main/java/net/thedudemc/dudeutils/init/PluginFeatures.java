@@ -21,6 +21,7 @@ public class PluginFeatures {
     public static AlternatorFeature ALTERNATOR;
     public static DisableEndermanGriefingFeature DISABLE_ENDERMAN_GRIEFING;
     public static ShulkerDropsTwoFeature SHULKER_DROPS_TWO;
+    public static VillagerUtilityFeature VILLAGER_UTILITY;
 
     public static void register() {
         MAGNET = register(new MagnetFeature());
@@ -34,6 +35,7 @@ public class PluginFeatures {
         ALTERNATOR = register(new AlternatorFeature());
         DISABLE_ENDERMAN_GRIEFING = register(new DisableEndermanGriefingFeature());
         SHULKER_DROPS_TWO = register(new ShulkerDropsTwoFeature());
+        VILLAGER_UTILITY = register(new VillagerUtilityFeature());
     }
 
     private static <T extends Feature> T register(T feature) {
