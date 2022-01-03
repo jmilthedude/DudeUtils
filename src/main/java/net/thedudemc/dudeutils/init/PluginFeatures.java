@@ -19,6 +19,8 @@ public class PluginFeatures {
     public static ChatNameColorFeature CHAT_NAME_COLOR;
     public static VeinminerFeature VEINMINER;
     public static AlternatorFeature ALTERNATOR;
+    public static DisableEndermanGriefingFeature DISABLE_ENDERMAN_GRIEFING;
+    public static ShulkerDropsTwoFeature SHULKER_DROPS_TWO;
 
     public static void register() {
         MAGNET = register(new MagnetFeature());
@@ -30,6 +32,8 @@ public class PluginFeatures {
         CHAT_NAME_COLOR = register(new ChatNameColorFeature());
         VEINMINER = register(new VeinminerFeature());
         ALTERNATOR = register(new AlternatorFeature());
+        DISABLE_ENDERMAN_GRIEFING = register(new DisableEndermanGriefingFeature());
+        SHULKER_DROPS_TWO = register(new ShulkerDropsTwoFeature());
     }
 
     private static <T extends Feature> T register(T feature) {

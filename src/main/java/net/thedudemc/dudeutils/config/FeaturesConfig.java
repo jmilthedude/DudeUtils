@@ -25,7 +25,7 @@ public class FeaturesConfig extends Config {
         ENABLED.put("deathpoint", true);
         ENABLED.put("ally", true);
         ENABLED.put("alternator", true);
-        ENABLED.put("ShulkerDropsTwo", true);
+        ENABLED.put("shulker_drops_two", true);
         ENABLED.put("disable_enderman_griefing", true);
         ENABLED.put("VillagerUtility", true);
         ENABLED.put("SinglePlayerSleep", true);
