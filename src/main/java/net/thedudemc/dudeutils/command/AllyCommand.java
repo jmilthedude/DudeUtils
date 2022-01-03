@@ -28,7 +28,7 @@ public class AllyCommand extends PluginCommand {
         if (!feature.isEnabled()) {
             throw new CommandException("The feature is not enabled on this server: " + this.getName());
         }
-        AllySaveData data = feature.getSaveData();
+        AllySaveData data = (AllySaveData) feature.getSaveData();
         Player p = (Player) sender;
         if (args.length == 1) {
             if ("list".equalsIgnoreCase(args[0])) {

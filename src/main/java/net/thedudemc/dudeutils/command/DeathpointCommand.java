@@ -27,7 +27,7 @@ public class DeathpointCommand extends PluginCommand {
     @Override
     public void execute(CommandSender sender, String[] args) throws CommandException {
         Player player = (Player) sender;
-        DeathpointData data = this.getFeature().getSaveData();
+        DeathpointData data = (DeathpointData) this.getFeature().getSaveData();
 
         if (args.length == 0) {
             DeathLocation location = data.getLatestDeathLocation(player);

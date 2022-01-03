@@ -68,7 +68,7 @@ public class ChatNameColorFeature extends Feature {
     public void onChat(AsyncPlayerChatEvent event) {
         if (!this.isEnabled()) return;
         Player player = event.getPlayer();
-        ChatNameColorData data = this.getSaveData();
+        ChatNameColorData data = (ChatNameColorData) this.getSaveData();
         ChatColor color = data.getColor(player);
         event.setFormat(ChatColor.WHITE + "<" + color + "%s" + ChatColor.WHITE + ">" + ChatColor.RESET + " %s");
     }
@@ -76,7 +76,7 @@ public class ChatNameColorFeature extends Feature {
     @EventHandler
     public void onTabList(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        ChatNameColorData data = this.getSaveData();
+        ChatNameColorData data = (ChatNameColorData) this.getSaveData();
         ChatColor color = data.getColor(player);
         player.setPlayerListName(color + player.getName());
     }

@@ -27,7 +27,7 @@ public class DeathpointFeature extends Feature {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         if (!isEnabled()) return;
-        DeathpointData data = this.getSaveData();
+        DeathpointData data = (DeathpointData) this.getSaveData();
         Player player = event.getEntity();
         DeathLocation location = data.setDeathpoint(player);
         player.sendMessage("You died at: " + StringUtils.getCoordinateString(location));

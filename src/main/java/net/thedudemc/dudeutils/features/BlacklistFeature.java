@@ -54,7 +54,7 @@ public class BlacklistFeature extends Feature {
     }
 
     private boolean isBlacklistedForPlayer(UUID playerId, ItemStack stack) {
-        BlacklistSaveData data = this.getSaveData();
+        BlacklistSaveData data = (BlacklistSaveData) this.getSaveData();
         return data.getItems(playerId).stream().anyMatch(material -> material.equals(stack.getType()));
     }
 
@@ -89,7 +89,7 @@ public class BlacklistFeature extends Feature {
     }
 
     private BlacklistGui create(Player player) {
-        BlacklistSaveData data = this.getSaveData();
+        BlacklistSaveData data = (BlacklistSaveData) this.getSaveData();
         BlacklistGui gui = new BlacklistGui(player.getName() + "'s Blacklist", 9);
 
         List<Material> items = data.getItems(player.getUniqueId());
@@ -153,7 +153,7 @@ public class BlacklistFeature extends Feature {
 
         if (gui == null || event.getInventory() != gui.getInventory()) return;
 
-        BlacklistSaveData data = this.getSaveData();
+        BlacklistSaveData data = (BlacklistSaveData) this.getSaveData();
 
         ItemStack[] contents = gui.getInventory().getContents();
         List<Material> materials = Arrays.stream(contents)

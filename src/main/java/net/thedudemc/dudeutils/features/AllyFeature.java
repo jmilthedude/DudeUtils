@@ -44,7 +44,7 @@ public class AllyFeature extends Feature {
     }
 
     private boolean isAlly(UUID owner, UUID target) {
-        AllySaveData data = this.getSaveData();
+        AllySaveData data = (AllySaveData) this.getSaveData();
         return data.getAllies(owner).contains(target);
     }
 }

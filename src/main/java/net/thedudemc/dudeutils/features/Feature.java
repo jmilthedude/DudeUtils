@@ -51,8 +51,8 @@ public abstract class Feature implements Listener {
         this.doDisable();
     }
 
-    public <T extends SaveData> T getSaveData() {
-        T data = (T) PluginData.get(this.getName());
+    public SaveData getSaveData() {
+        SaveData data = PluginData.get(this.getName());
         if (data == null) throw new RuntimeException("No data found with that name: " + this.getName());
         return data;
     }
