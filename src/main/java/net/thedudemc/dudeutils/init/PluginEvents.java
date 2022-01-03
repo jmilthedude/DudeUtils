@@ -12,7 +12,6 @@ public class PluginEvents {
         plugin.getServer().getPluginManager().registerEvents(new SleepEvent(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new VillagerEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new ShulkerEvents(), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new EndermanEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PlayerEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PetTransferEvent(), plugin);
     }

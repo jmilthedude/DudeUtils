@@ -21,16 +21,16 @@ public class FeaturesConfig extends Config {
         ENABLED.put("nether_water", false);
         ENABLED.put("portal_utility", true);
         ENABLED.put("veinminer", false);
-        ENABLED.put("VillagerUtility", true);
-        ENABLED.put("SinglePlayerSleep", true);
         ENABLED.put("blacklist", true);
         ENABLED.put("deathpoint", true);
         ENABLED.put("ally", true);
-        ENABLED.put("InventorySorter", true);
-        ENABLED.put("SlimeChunkCheck", true);
         ENABLED.put("alternator", true);
         ENABLED.put("ShulkerDropsTwo", true);
-        ENABLED.put("DisableEndermanGriefing", true);
+        ENABLED.put("disable_enderman_griefing", true);
+        ENABLED.put("VillagerUtility", true);
+        ENABLED.put("SinglePlayerSleep", true);
+        ENABLED.put("InventorySorter", true);
+        ENABLED.put("SlimeChunkCheck", true);
     }
 
     public void setEnabled(String name, boolean value) {
