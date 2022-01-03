@@ -1,6 +1,6 @@
 package net.thedudemc.dudeutils.command;
 
-import net.thedudemc.dudeutils.init.PluginConfigs;
+import net.thedudemc.dudeutils.init.PluginFeatures;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.command.CommandSender;
@@ -15,7 +15,7 @@ public class SlimeCommand extends PluginCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(!PluginConfigs.FEATURES.ENABLED.get("SlimeChunkCheck")) {
+        if (!PluginFeatures.SLIME_CHUNK_CHECK.isEnabled()) {
             sender.sendMessage("That feature is disabled in this server.");
             return;
         }

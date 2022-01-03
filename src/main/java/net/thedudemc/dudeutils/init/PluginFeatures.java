@@ -24,6 +24,7 @@ public class PluginFeatures {
     public static VillagerUtilityFeature VILLAGER_UTILITY;
     public static SinglePlayerSleepFeature SINGLE_PLAYER_SLEEP;
     public static InventorySortFeature INVENTORY_SORT;
+    public static SlimeChunkCheckFeature SLIME_CHUNK_CHECK;
 
     public static void register() {
         MAGNET = register(new MagnetFeature());
@@ -40,6 +41,7 @@ public class PluginFeatures {
         VILLAGER_UTILITY = register(new VillagerUtilityFeature());
         SINGLE_PLAYER_SLEEP = register(new SinglePlayerSleepFeature());
         INVENTORY_SORT = register(new InventorySortFeature());
+        SLIME_CHUNK_CHECK = register(new SlimeChunkCheckFeature());
     }
 
     private static <T extends Feature> T register(T feature) {

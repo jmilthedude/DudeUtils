@@ -30,7 +30,7 @@ public class FeaturesConfig extends Config {
         ENABLED.put("villager_utility", true);
         ENABLED.put("single_player_sleep", true);
         ENABLED.put("inventory_sort", true);
-        ENABLED.put("SlimeChunkCheck", true);
+        ENABLED.put("slime_chunk_check", true);
     }
 
     public void setEnabled(String name, boolean value) {
