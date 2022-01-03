@@ -16,6 +16,7 @@ public class PluginFeatures {
     public static NetherWaterFeature NETHER_WATER_FEATURE;
     public static PortalUtilityFeature PORTAL_UTILITY_FEATURE;
     public static BlacklistFeature BLACKLIST_FEATURE;
+    public static ChatNameColorFeature CHAT_NAME_COLOR_FEATURE;
 
     public static void register() {
         MAGNET_FEATURE = register(new MagnetFeature());
@@ -24,6 +25,7 @@ public class PluginFeatures {
         NETHER_WATER_FEATURE = register(new NetherWaterFeature());
         PORTAL_UTILITY_FEATURE = register(new PortalUtilityFeature());
         BLACKLIST_FEATURE = register(new BlacklistFeature());
+        CHAT_NAME_COLOR_FEATURE = register(new ChatNameColorFeature());
     }
 
     private static <T extends Feature> T register(T feature) {

@@ -16,7 +16,7 @@ public class FeaturesConfig extends Config {
 
     @Override
     protected void reset() {
-        ENABLED.put("ChatNameColor", true);
+        ENABLED.put("chat_name_color", true);
         ENABLED.put("magnet", false);
         ENABLED.put("nether_water", false);
         ENABLED.put("portal_utility", true);
@@ -34,7 +34,9 @@ public class FeaturesConfig extends Config {
     }
 
     public void setEnabled(String name, boolean value) {
-        ENABLED.put(name, value);
-        this.markDirty();
+        if (ENABLED.get(name) != value) {
+            ENABLED.put(name, value);
+            this.markDirty();
+        }
     }
 }

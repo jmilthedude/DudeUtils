@@ -12,12 +12,14 @@ public class PluginData {
     public static AllySaveData ALLY_DATA;
     public static MagnetData MAGNET_DATA;
     public static DeathpointData DEATHPOINT;
+    public static ChatNameColorData CHAT_NAME_COLOR_DATA;
 
     public static void register() {
         BLACKLIST_DATA = (BlacklistSaveData) register(new BlacklistSaveData().readData());
         ALLY_DATA = (AllySaveData) register(new AllySaveData().readData());
         MAGNET_DATA = (MagnetData) register(new MagnetData().readData());
         DEATHPOINT = (DeathpointData) register(new DeathpointData().readData());
+        CHAT_NAME_COLOR_DATA = (ChatNameColorData) register(new ChatNameColorData().readData());
     }
 
     private static SaveData register(SaveData data) {

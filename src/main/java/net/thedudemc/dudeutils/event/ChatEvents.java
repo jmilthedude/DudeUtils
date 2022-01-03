@@ -15,15 +15,6 @@ public class ChatEvents implements Listener {
         this.enableChatNameColor = true;
     }
 
-    @EventHandler
-    public void onChat(AsyncPlayerChatEvent event) {
-        Player p = event.getPlayer();
-        Team team = p.getScoreboard().getEntryTeam(p.getName());
-        if (team != null) {
-            ChatColor color = team.getColor();
-            event.setFormat(ChatColor.WHITE + "<" + color + "%s" + ChatColor.WHITE + ">" + ChatColor.RESET + " %s");
-        }
-    }
 
 
 }
