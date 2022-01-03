@@ -22,6 +22,7 @@ public class PluginFeatures {
     public static DisableEndermanGriefingFeature DISABLE_ENDERMAN_GRIEFING;
     public static ShulkerDropsTwoFeature SHULKER_DROPS_TWO;
     public static VillagerUtilityFeature VILLAGER_UTILITY;
+    public static SinglePlayerSleepFeature SINGLE_PLAYER_SLEEP;
 
     public static void register() {
         MAGNET = register(new MagnetFeature());
@@ -36,6 +37,7 @@ public class PluginFeatures {
         DISABLE_ENDERMAN_GRIEFING = register(new DisableEndermanGriefingFeature());
         SHULKER_DROPS_TWO = register(new ShulkerDropsTwoFeature());
         VILLAGER_UTILITY = register(new VillagerUtilityFeature());
+        SINGLE_PLAYER_SLEEP = register(new SinglePlayerSleepFeature());
     }
 
     private static <T extends Feature> T register(T feature) {

@@ -42,6 +42,7 @@ public abstract class Feature implements Listener {
 
     public void enable() {
         PluginConfigs.FEATURES.setEnabled(this.getName(), true);
+        createTask();
         this.doEnable();
     }
 

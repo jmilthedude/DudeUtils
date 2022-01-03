@@ -28,7 +28,6 @@ public class PortalUtilityFeature extends Feature {
 
     @Override
     public void doEnable() {
-        createTask();
     }
 
     @Override

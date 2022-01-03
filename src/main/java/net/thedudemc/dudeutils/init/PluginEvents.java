@@ -9,7 +9,6 @@ public class PluginEvents {
     public static void register(DudeUtils plugin) {
         plugin.getServer().getPluginManager().registerEvents(new MiscEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new InventoryEvents(), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new SleepEvent(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PlayerEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PetTransferEvent(), plugin);
     }

@@ -1,7 +1,6 @@
 package net.thedudemc.dudeutils.init;
 
 import net.thedudemc.dudeutils.DudeUtils;
-import net.thedudemc.dudeutils.event.SleepEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -15,8 +14,6 @@ public class PluginTasks {
     private static final Random rand = new Random();
 
     public static void run() {
-        if (PluginConfigs.FEATURES.ENABLED.get("SinglePlayerSleep")) SleepEvent.run();
-
         //Speed up xp collection, reduces lag
         Bukkit.getScheduler().scheduleSyncRepeatingTask(DudeUtils.getInstance(), () -> Bukkit.getOnlinePlayers()
                 .forEach(player -> player.getNearbyEntities(.5, .5, .5)

@@ -26,9 +26,6 @@ public class MagnetFeature extends Feature {
 
     @Override
     public void doEnable() {
-        if (!isEnabled()) return;
-
-        createTask();
     }
 
     @Override
