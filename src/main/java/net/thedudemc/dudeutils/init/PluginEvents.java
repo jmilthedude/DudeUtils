@@ -7,9 +7,7 @@ import net.thedudemc.dudeutils.event.MiscEvents;
 public class PluginEvents {
 
     public static void register(DudeUtils plugin) {
-        plugin.getServer().getPluginManager().registerEvents(new ChatEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new MiscEvents(), plugin);
-        plugin.getServer().getPluginManager().registerEvents(new BlacklistEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new InventoryEvents(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new SleepEvent(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new VeinMinerEvent(), plugin);

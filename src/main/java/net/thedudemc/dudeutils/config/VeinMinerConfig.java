@@ -9,9 +9,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class VeinMinerConfig extends Config {
     @Expose
@@ -67,12 +68,7 @@ public class VeinMinerConfig extends Config {
     }
 
     public List<Material> getMaterials() {
-        List<Material> materials = new ArrayList<>();
-        MATERIALS.forEach(s -> {
-            Material material = Material.getMaterial(s);
-            if (material != null) materials.add(material);
-        });
-        return materials;
+        return MATERIALS.stream().map(Material::getMaterial).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     public static void applyOrRemoveVeinMinerUpgrade(ItemStack stack) {
