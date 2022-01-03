@@ -29,7 +29,7 @@ public class FeaturesConfig extends Config {
         ENABLED.put("disable_enderman_griefing", true);
         ENABLED.put("villager_utility", true);
         ENABLED.put("single_player_sleep", true);
-        ENABLED.put("InventorySorter", true);
+        ENABLED.put("inventory_sort", true);
         ENABLED.put("SlimeChunkCheck", true);
     }
 

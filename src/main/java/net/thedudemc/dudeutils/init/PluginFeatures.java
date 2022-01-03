@@ -23,6 +23,7 @@ public class PluginFeatures {
     public static ShulkerDropsTwoFeature SHULKER_DROPS_TWO;
     public static VillagerUtilityFeature VILLAGER_UTILITY;
     public static SinglePlayerSleepFeature SINGLE_PLAYER_SLEEP;
+    public static InventorySortFeature INVENTORY_SORT;
 
     public static void register() {
         MAGNET = register(new MagnetFeature());
@@ -38,6 +39,7 @@ public class PluginFeatures {
         SHULKER_DROPS_TWO = register(new ShulkerDropsTwoFeature());
         VILLAGER_UTILITY = register(new VillagerUtilityFeature());
         SINGLE_PLAYER_SLEEP = register(new SinglePlayerSleepFeature());
+        INVENTORY_SORT = register(new InventorySortFeature());
     }
 
     private static <T extends Feature> T register(T feature) {

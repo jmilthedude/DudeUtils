@@ -1,16 +1,13 @@
-package net.thedudemc.dudeutils.event;
+package net.thedudemc.dudeutils.features;
 
 import net.thedudemc.dudeutils.DudeUtils;
-import net.thedudemc.dudeutils.features.BlacklistFeature;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -18,17 +15,33 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class InventoryEvents implements Listener {
+public class InventorySortFeature extends Feature {
+
+    @Override
+    public String getName() {
+        return "inventory_sort";
+    }
+
+    @Override
+    public void doEnable() {
+
+    }
+
+    @Override
+    public void doDisable() {
+
+    }
 
     @EventHandler
     public void onPlayerInventorySort(InventoryClickEvent event) {
+        if (!isEnabled()) return;
         if (BlacklistFeature.hasBlacklistOpen((Player) event.getWhoClicked())) {
             return;
         }
         if (event.getInventory().getType() != InventoryType.CRAFTING) {
             return;
         }
-        if (event.getSlotType() != SlotType.OUTSIDE) {
+        if (event.getSlotType() != InventoryType.SlotType.OUTSIDE) {
             return;
         }
         if (event.getCursor().getType() != Material.AIR) {
@@ -43,6 +56,7 @@ public class InventoryEvents implements Listener {
 
     @EventHandler
     public void onChestSort(InventoryClickEvent event) {
+        if (!isEnabled()) return;
         if (BlacklistFeature.hasBlacklistOpen((Player) event.getWhoClicked())) {
             return;
         }
@@ -50,7 +64,7 @@ public class InventoryEvents implements Listener {
         if (type != InventoryType.CHEST && type != InventoryType.BARREL && type != InventoryType.SHULKER_BOX && type != InventoryType.ENDER_CHEST) {
             return;
         }
-        if (event.getSlotType() != SlotType.OUTSIDE) {
+        if (event.getSlotType() != InventoryType.SlotType.OUTSIDE) {
             return;
         }
         if (event.getCursor().getType() != Material.AIR) {
@@ -129,5 +143,4 @@ public class InventoryEvents implements Listener {
         }
         return -1;
     }
-
 }
