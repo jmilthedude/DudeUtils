@@ -34,7 +34,7 @@ public class VeinMinerEvent implements Listener {
         if (!canVeinMine(heldItem)) return;
 
         Block block = event.getBlock();
-        if (isVeinMineable(block)) return;
+        if (!isVeinMineable(block)) return;
 
         if (mine(block, player)) {
             event.setCancelled(true);
@@ -42,7 +42,7 @@ public class VeinMinerEvent implements Listener {
     }
 
     private boolean isVeinMineable(Block block) {
-        return !PluginConfigs.VEINMINER.getMaterials().contains(block.getType());
+        return PluginConfigs.VEINMINER.getMaterials().contains(block.getType());
     }
 
     private boolean mine(Block block, Player player) {
