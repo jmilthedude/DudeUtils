@@ -1,8 +1,7 @@
-package net.thedudemc.dudeutils.event;
+package net.thedudemc.dudeutils.features;
 
 import net.thedudemc.dudeutils.DudeUtils;
 import net.thedudemc.dudeutils.features.alternator.AlternatorHelper;
-import net.thedudemc.dudeutils.features.alternator.AlternatorHelper.Mode;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -11,7 +10,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -22,9 +20,23 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-public class AlternatorEvents implements Listener {
+public class AlternatorFeature extends Feature{
+    @Override
+    public String getName() {
+        return "alternator";
+    }
 
-    private static HashSet<String> cooldowns = new HashSet<>();
+    @Override
+    public void doEnable() {
+
+    }
+
+    @Override
+    public void doDisable() {
+
+    }
+
+    private static final HashSet<String> cooldowns = new HashSet<>();
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onUse(PlayerInteractEvent event) {
@@ -47,7 +59,7 @@ public class AlternatorEvents implements Listener {
 
     private void useAlternator(Block block, BlockFace face, Player player, ItemStack alternator) {
         if (block.getType() == Material.BEDROCK || block.getType() == Material.OBSIDIAN) return;
-        Mode mode = AlternatorHelper.getCurrentMode(alternator);
+        AlternatorHelper.Mode mode = AlternatorHelper.getCurrentMode(alternator);
 
         ItemStack[] hotbar = getHotbar(player);
         List<ItemStack> possibleBlocks = getPossibleBlocks(hotbar);
@@ -57,7 +69,7 @@ public class AlternatorEvents implements Listener {
         Collections.shuffle(possibleBlocks);
         ItemStack randomBlock = possibleBlocks.get(0);
 
-        if (mode == Mode.CHANGE) {
+        if (mode == AlternatorHelper.Mode.CHANGE) {
             player.getInventory().addItem(new ItemStack(block.getType()));
             block.setType(randomBlock.getType());
         } else {
@@ -100,6 +112,4 @@ public class AlternatorEvents implements Listener {
         for (int i = 0; i < size; i++) array[i] = new ItemStack(Material.AIR);
         return array;
     }
-
-
 }

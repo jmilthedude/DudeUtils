@@ -17,8 +17,9 @@ public class PluginRecipes {
 
     public static void register(DudeUtils plugin) {
         BLACKSTONE = registerRecipe(plugin, new BlackstoneRecipe());
-        if (PluginConfigs.FEATURES.ENABLED.get("Alternator"))
+        if (PluginFeatures.ALTERNATOR.isEnabled()) {
             ALTERNATOR = registerRecipe(plugin, new AlternatorRecipe());
+        }
 
     }
 

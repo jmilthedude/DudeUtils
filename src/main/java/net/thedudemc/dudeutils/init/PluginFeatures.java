@@ -18,6 +18,7 @@ public class PluginFeatures {
     public static BlacklistFeature BLACKLIST;
     public static ChatNameColorFeature CHAT_NAME_COLOR;
     public static VeinminerFeature VEINMINER;
+    public static AlternatorFeature ALTERNATOR;
 
     public static void register() {
         MAGNET = register(new MagnetFeature());
@@ -28,6 +29,7 @@ public class PluginFeatures {
         BLACKLIST = register(new BlacklistFeature());
         CHAT_NAME_COLOR = register(new ChatNameColorFeature());
         VEINMINER = register(new VeinminerFeature());
+        ALTERNATOR = register(new AlternatorFeature());
     }
 
     private static <T extends Feature> T register(T feature) {

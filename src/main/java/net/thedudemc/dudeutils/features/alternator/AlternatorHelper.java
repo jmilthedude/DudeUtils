@@ -29,14 +29,13 @@ public class AlternatorHelper {
     }
 
     private static List<String> getAlternatorLore(Mode mode) {
-        List<String> lore = Arrays.asList(
+        return Arrays.asList(
                 "Randomly changes or places",
                 "blocks using blocks in",
                 "your hotbar!",
                 " ",
                 ChatColor.AQUA + "Mode" + ChatColor.RESET + ": " + ChatColor.GREEN + mode.getName()
         );
-        return lore;
     }
 
     public static ItemStack changeAlternatorMode(ItemStack alternator) {
