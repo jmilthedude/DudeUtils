@@ -20,7 +20,7 @@ public class FeaturesConfig extends Config {
         ENABLED.put("magnet", false);
         ENABLED.put("nether_water", false);
         ENABLED.put("portal_utility", true);
-        ENABLED.put("VeinMiner", false);
+        ENABLED.put("veinminer", false);
         ENABLED.put("VillagerUtility", true);
         ENABLED.put("SinglePlayerSleep", true);
         ENABLED.put("blacklist", true);

@@ -1,4 +1,4 @@
-package net.thedudemc.dudeutils.event;
+package net.thedudemc.dudeutils.features;
 
 import net.thedudemc.dudeutils.config.VeinMinerConfig;
 import net.thedudemc.dudeutils.init.PluginConfigs;
@@ -10,7 +10,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -19,12 +18,28 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
 
-public class VeinMinerEvent implements Listener {
+public class VeinminerFeature extends Feature {
+    @Override
+    public String getName() {
+        return "veinminer";
+    }
+
+    @Override
+    public void doEnable() {
+
+    }
+
+    @Override
+    public void doDisable() {
+
+    }
 
     private static final Set<UUID> mining = new HashSet<>();
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event) {
+        if (!isEnabled()) return;
+
         Player player = event.getPlayer();
         if (mining.contains(player.getUniqueId())) return;
 
@@ -103,5 +118,4 @@ public class VeinMinerEvent implements Listener {
     private boolean isVeinMineable(Block block) {
         return PluginConfigs.VEINMINER.getMaterials().contains(block.getType());
     }
-
 }

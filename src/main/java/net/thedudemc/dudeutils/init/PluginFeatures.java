@@ -10,22 +10,24 @@ public class PluginFeatures {
 
     public static HashMap<String, Feature> registry = new HashMap<>();
 
-    public static MagnetFeature MAGNET_FEATURE;
-    public static AllyFeature ALLY_FEATURE;
-    public static DeathpointFeature DEATHPOINT_FEATURE;
-    public static NetherWaterFeature NETHER_WATER_FEATURE;
-    public static PortalUtilityFeature PORTAL_UTILITY_FEATURE;
-    public static BlacklistFeature BLACKLIST_FEATURE;
-    public static ChatNameColorFeature CHAT_NAME_COLOR_FEATURE;
+    public static MagnetFeature MAGNET;
+    public static AllyFeature ALLY;
+    public static DeathpointFeature DEATHPOINT;
+    public static NetherWaterFeature NETHER_WATER;
+    public static PortalUtilityFeature PORTAL_UTILITY;
+    public static BlacklistFeature BLACKLIST;
+    public static ChatNameColorFeature CHAT_NAME_COLOR;
+    public static VeinminerFeature VEINMINER;
 
     public static void register() {
-        MAGNET_FEATURE = register(new MagnetFeature());
-        ALLY_FEATURE = register(new AllyFeature());
-        DEATHPOINT_FEATURE = register(new DeathpointFeature());
-        NETHER_WATER_FEATURE = register(new NetherWaterFeature());
-        PORTAL_UTILITY_FEATURE = register(new PortalUtilityFeature());
-        BLACKLIST_FEATURE = register(new BlacklistFeature());
-        CHAT_NAME_COLOR_FEATURE = register(new ChatNameColorFeature());
+        MAGNET = register(new MagnetFeature());
+        ALLY = register(new AllyFeature());
+        DEATHPOINT = register(new DeathpointFeature());
+        NETHER_WATER = register(new NetherWaterFeature());
+        PORTAL_UTILITY = register(new PortalUtilityFeature());
+        BLACKLIST = register(new BlacklistFeature());
+        CHAT_NAME_COLOR = register(new ChatNameColorFeature());
+        VEINMINER = register(new VeinminerFeature());
     }
 
     private static <T extends Feature> T register(T feature) {

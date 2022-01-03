@@ -21,7 +21,7 @@ public class ColorCommand extends PluginCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) throws CommandException {
-        if (!PluginFeatures.CHAT_NAME_COLOR_FEATURE.isEnabled()) {
+        if (!PluginFeatures.CHAT_NAME_COLOR.isEnabled()) {
             throw new CommandException("That feature is not enabled on this server.");
         }
         Player p = (Player) sender;
@@ -31,7 +31,7 @@ public class ColorCommand extends PluginCommand {
 
             if (color == ChatColor.RESET) throw new CommandException("No color found for: " + nameColor);
 
-            PluginFeatures.CHAT_NAME_COLOR_FEATURE.setNameColor(p, nameColor);
+            PluginFeatures.CHAT_NAME_COLOR.setNameColor(p, nameColor);
             p.setPlayerListName(color + p.getName());
             return;
         }

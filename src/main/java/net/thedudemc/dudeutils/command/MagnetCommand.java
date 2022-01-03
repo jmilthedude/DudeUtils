@@ -20,7 +20,7 @@ public class MagnetCommand extends PluginCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) throws CommandException {
-        if(!PluginFeatures.MAGNET_FEATURE.isEnabled()) {
+        if(!PluginFeatures.MAGNET.isEnabled()) {
             sender.sendMessage("That feature is disabled in this server.");
             return;
         }
