@@ -41,10 +41,6 @@ public class VeinMinerEvent implements Listener {
         }
     }
 
-    private boolean isVeinMineable(Block block) {
-        return PluginConfigs.VEINMINER.getMaterials().contains(block.getType());
-    }
-
     private boolean mine(Block block, Player player) {
         mining.add(player.getUniqueId());
         World world = block.getWorld();
@@ -102,6 +98,10 @@ public class VeinMinerEvent implements Listener {
             }
         }
         return false;
+    }
+
+    private boolean isVeinMineable(Block block) {
+        return PluginConfigs.VEINMINER.getMaterials().contains(block.getType());
     }
 
 }
