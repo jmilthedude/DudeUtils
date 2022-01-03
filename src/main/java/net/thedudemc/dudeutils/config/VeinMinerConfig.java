@@ -20,11 +20,7 @@ public class VeinMinerConfig extends Config {
     @Expose
     private List<String> MATERIALS;
     @Expose
-    public int DAMAGE_PER_BLOCK;
-    @Expose
     public float EXHAUSTION_PER_BLOCK;
-    @Expose
-    public boolean DROP_AT_PLAYER;
 
     public static final NamespacedKey KEY = new NamespacedKey(DudeUtils.getInstance(), "VeinMiner");
 
@@ -58,9 +54,7 @@ public class VeinMinerConfig extends Config {
                 Material.NETHERITE_SCRAP.name(),
                 Material.OBSIDIAN.name()
         );
-        DAMAGE_PER_BLOCK = 1;
         EXHAUSTION_PER_BLOCK = .005f;
-        DROP_AT_PLAYER = true;
     }
 
     public int getBlockLimit() {
@@ -88,15 +82,7 @@ public class VeinMinerConfig extends Config {
         }
     }
 
-    public int getDamagePerBlock() {
-        return DAMAGE_PER_BLOCK;
-    }
-
     public float getExhaustion() {
         return EXHAUSTION_PER_BLOCK;
-    }
-
-    public boolean shouldDropAtPlayer() {
-        return this.DROP_AT_PLAYER;
     }
 }

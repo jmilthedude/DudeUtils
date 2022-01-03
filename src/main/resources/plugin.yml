@@ -1,6 +1,6 @@
 name: DudeUtils
 main: net.thedudemc.dudeutils.DudeUtils
-version: 1.12.1
+version: 1.13
 api-version: 1.13
 commands:
   dude:
