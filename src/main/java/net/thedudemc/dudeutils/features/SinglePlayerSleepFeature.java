@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerBedEnterEvent;
 
 import java.util.stream.Collectors;
 
-public class SinglePlayerSleepFeature extends Feature {
+public class SinglePlayerSleepFeature extends Feature implements Tickable {
 
     @Override
     public String getName() {
@@ -18,33 +18,20 @@ public class SinglePlayerSleepFeature extends Feature {
     }
 
     @Override
-    public void doEnable() {
+    public void onEnabled() {
     }
 
     @Override
-    public void doDisable() {
+    public void onDisabled() {
 
-    }
-
-    @EventHandler
-    public void onSleep(PlayerBedEnterEvent event) {
-        if (!isEnabled()) return;
-        World world = event.getPlayer().getWorld();
-        Bukkit.getScheduler().scheduleSyncDelayedTask(DudeUtils.getInstance(), () -> {
-            world.setWeatherDuration(0);
-            world.setThunderDuration(0);
-            world.setThundering(false);
-            world.setStorm(false);
-        }, 5L);
     }
 
     @Override
-    protected void createTask() {
-        task = Bukkit.getScheduler().runTaskTimer(DudeUtils.getInstance(), this::execute, 0L, 1L);
+    public void tick() {
+        if (this.isEnabled()) handleSleeping();
     }
 
-    @Override
-    public void execute() {
+    private void handleSleeping() {
         Bukkit.getOnlinePlayers()
                 .stream()
                 .filter(LivingEntity::isSleeping)
@@ -59,5 +46,18 @@ public class SinglePlayerSleepFeature extends Feature {
 
     private void setTime(World world, long time) {
         world.setFullTime(time);
+    }
+
+
+    @EventHandler
+    public void onSleep(PlayerBedEnterEvent event) {
+        if (!isEnabled()) return;
+        World world = event.getPlayer().getWorld();
+        Bukkit.getScheduler().scheduleSyncDelayedTask(DudeUtils.getInstance(), () -> {
+            world.setWeatherDuration(0);
+            world.setThunderDuration(0);
+            world.setThundering(false);
+            world.setStorm(false);
+        }, 5L);
     }
 }

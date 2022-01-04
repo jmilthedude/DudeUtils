@@ -3,13 +3,9 @@ package net.thedudemc.dudeutils.features;
 import net.thedudemc.dudeutils.data.SaveData;
 import net.thedudemc.dudeutils.init.PluginConfigs;
 import net.thedudemc.dudeutils.init.PluginData;
-import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
-import org.bukkit.scheduler.BukkitTask;
 
 public abstract class Feature implements Listener {
-
-    protected static BukkitTask task;
 
     public abstract String getName();
 
@@ -22,33 +18,18 @@ public abstract class Feature implements Listener {
         return PluginConfigs.FEATURES.ENABLED.get(this.getName());
     }
 
-    public abstract void doEnable();
+    public abstract void onEnabled();
 
-    public abstract void doDisable();
-
-    public void execute() {
-    }
-
-    protected void createTask() {
-    }
-
-    protected void cancelTask() {
-        if (task != null) {
-            Bukkit.getScheduler().cancelTask(task.getTaskId());
-            task.cancel();
-            task = null;
-        }
-    }
+    public abstract void onDisabled();
 
     public void enable() {
         PluginConfigs.FEATURES.setEnabled(this.getName(), true);
-        createTask();
-        this.doEnable();
+        this.onEnabled();
     }
 
     public void disable() {
         PluginConfigs.FEATURES.setEnabled(this.getName(), false);
-        this.doDisable();
+        this.onDisabled();
     }
 
     public SaveData getSaveData() {

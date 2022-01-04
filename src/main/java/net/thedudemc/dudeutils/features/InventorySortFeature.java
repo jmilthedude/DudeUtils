@@ -23,12 +23,12 @@ public class InventorySortFeature extends Feature {
     }
 
     @Override
-    public void doEnable() {
+    public void onEnabled() {
 
     }
 
     @Override
-    public void doDisable() {
+    public void onDisabled() {
 
     }
 
@@ -79,7 +79,7 @@ public class InventorySortFeature extends Feature {
     }
 
     private void sortInventoryAsync(Player player, Inventory inv, int minSlot, int maxSlot) {
-        Bukkit.getScheduler().runTaskAsynchronously(DudeUtils.INSTANCE, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(DudeUtils.getInstance(), () -> {
 
             List<ItemStack> items = new ArrayList<>();
             for (int i = minSlot; i < maxSlot; i++) {

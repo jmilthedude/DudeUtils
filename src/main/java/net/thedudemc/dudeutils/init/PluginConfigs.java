@@ -11,7 +11,7 @@ public class PluginConfigs {
     public static SpecialConfig SPECIAL;
     public static VeinMinerConfig VEINMINER;
 
-    public static void register() {
+    public static void init() {
 
         FEATURES = (FeaturesConfig) new FeaturesConfig().readConfig();
 

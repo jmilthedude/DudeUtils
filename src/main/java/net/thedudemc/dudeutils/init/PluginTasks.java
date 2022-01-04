@@ -1,33 +1,49 @@
 package net.thedudemc.dudeutils.init;
 
 import net.thedudemc.dudeutils.DudeUtils;
+import net.thedudemc.dudeutils.features.Tickable;
+import net.thedudemc.dudeutils.tasks.ExperienceCollectionTask;
+import net.thedudemc.dudeutils.tasks.PluginTask;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.ExperienceOrb;
+import org.bukkit.NamespacedKey;
 
-import java.util.Random;
+import java.util.HashMap;
 
 public class PluginTasks {
 
-    private static final Random rand = new Random();
+    public static final HashMap<NamespacedKey, PluginTask> registry = new HashMap<>();
 
-    public static void run() {
-        //Speed up xp collection, reduces lag
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(DudeUtils.getInstance(), () -> Bukkit.getOnlinePlayers()
-                .forEach(player -> player.getNearbyEntities(.5, .5, .5)
-                        .stream()
-                        .filter(entity -> entity.getType().equals(EntityType.EXPERIENCE_ORB))
-                        .map(entity -> (ExperienceOrb) entity)
-                        .forEach(orb -> {
-                            player.giveExp(orb.getExperience());
-                            orb.remove();
-                            player.playSound(player.getLocation(),
-                                    Sound.ENTITY_EXPERIENCE_ORB_PICKUP,
-                                    SoundCategory.PLAYERS,
-                                    Math.random() > .95d ? .7f : 0f,
-                                    (rand.nextFloat() - rand.nextFloat()) * 0.35F + 0.9F);
-                        })), 0L, 10L);
+    private static long currentTick = 0;
+
+    public static void init() {
+        registerTasks(new ExperienceCollectionTask());
+
+        run();
+    }
+
+    private static void registerTasks(PluginTask... tasks) {
+        for (PluginTask task : tasks) {
+            registry.put(task.getKey(), task);
+        }
+    }
+
+    private static void run() {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(DudeUtils.getInstance(), PluginTasks::tick, 0L, 1L);
+    }
+
+    private static void tick() {
+        registry.values()
+                .stream()
+                .filter(task -> task.frequency() % currentTick == 0)
+                .forEach(Tickable::tick);
+
+        PluginFeatures.registry.values()
+                .stream()
+                .filter(feature -> feature instanceof Tickable)
+                .map(feature -> (Tickable) feature)
+                .filter(tickable -> tickable.frequency() % currentTick == 0)
+                .forEach(Tickable::tick);
+
+        currentTick++;
     }
 }

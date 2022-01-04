@@ -20,7 +20,7 @@ public class PluginCommands {
     public static DeathpointCommand DEATHPOINT;
     public static FeatureCommand FEATURE;
 
-    public static void register() {
+    public static void init() {
 
         DUDE = (DudeCommand) registerCommand(new DudeCommand()).opOnly();
         SLIME = (SlimeCommand) registerCommand(new SlimeCommand().playerOnly());

@@ -26,7 +26,7 @@ public class PluginFeatures {
     public static InventorySortFeature INVENTORY_SORT;
     public static SlimeChunkCheckFeature SLIME_CHUNK_CHECK;
 
-    public static void register() {
+    public static void init() {
         MAGNET = register(new MagnetFeature());
         ALLY = register(new AllyFeature());
         DEATHPOINT = register(new DeathpointFeature());

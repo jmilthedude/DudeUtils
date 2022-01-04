@@ -3,6 +3,7 @@ package net.thedudemc.dudeutils.data;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.thedudemc.dudeutils.DudeUtils;
+import net.thedudemc.dudeutils.util.Log;
 
 import java.io.*;
 
@@ -45,7 +46,7 @@ public abstract class SaveData {
             GSON.toJson(this, writer);
             writer.flush();
             writer.close();
-            DudeUtils.logInfo("Saved " + this.getName());
+            Log.info("Saved " + this.getName());
 
             this.isDirty = false;
         } catch (IOException e) {

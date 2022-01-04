@@ -29,12 +29,12 @@ public class VillagerUtilityFeature extends Feature {
     }
 
     @Override
-    public void doEnable() {
+    public void onEnabled() {
 
     }
 
     @Override
-    public void doDisable() {
+    public void onDisabled() {
 
     }
 

@@ -49,7 +49,8 @@ public class PlayerEvents implements Listener {
                 entity instanceof Slime ||
                 entity instanceof Phantom ||
                 entity instanceof Hoglin ||
-                entity instanceof Shulker;
+                entity instanceof Shulker ||
+                entity instanceof EnderDragon;
     }
 
 }

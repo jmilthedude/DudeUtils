@@ -1,8 +1,8 @@
 package net.thedudemc.dudeutils.features.deathpoint;
 
 import com.google.gson.annotations.Expose;
-import net.thedudemc.dudeutils.DudeUtils;
 import net.thedudemc.dudeutils.util.ItemStackUtils;
+import net.thedudemc.dudeutils.util.Log;
 import net.thedudemc.dudeutils.util.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
@@ -76,8 +76,8 @@ public class DeathLocation {
         try {
             return ItemStackUtils.itemStackArrayFromBase64(this.inventory);
         } catch (IOException exception) {
-            DudeUtils.logError("Error converting string to inventory.");
-            DudeUtils.logError(exception.getMessage());
+            Log.error("Error converting string to inventory.");
+            Log.error(exception.getMessage());
         }
         return new ItemStack[0];
     }

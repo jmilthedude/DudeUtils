@@ -14,7 +14,7 @@ public class PluginData {
     public static DeathpointData DEATHPOINT;
     public static ChatNameColorData CHAT_NAME_COLOR_DATA;
 
-    public static void register() {
+    public static void init() {
         BLACKLIST_DATA = (BlacklistSaveData) register(new BlacklistSaveData().readData());
         ALLY_DATA = (AllySaveData) register(new AllySaveData().readData());
         MAGNET_DATA = (MagnetData) register(new MagnetData().readData());

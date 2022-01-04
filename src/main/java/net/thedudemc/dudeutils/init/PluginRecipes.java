@@ -15,21 +15,26 @@ public class PluginRecipes {
     public static PluginRecipe BLACKSTONE;
     public static PluginRecipe ALTERNATOR;
 
-    public static void register(DudeUtils plugin) {
-        BLACKSTONE = registerRecipe(plugin, new BlackstoneRecipe());
+    public static void init() {
+        register();
+        removeDisabled();
+    }
+
+    private static void register() {
+        BLACKSTONE = registerRecipe(DudeUtils.getInstance(), new BlackstoneRecipe());
         if (PluginFeatures.ALTERNATOR.isEnabled()) {
-            ALTERNATOR = registerRecipe(plugin, new AlternatorRecipe());
+            ALTERNATOR = registerRecipe(DudeUtils.getInstance(), new AlternatorRecipe());
         }
 
     }
 
-    public static void removeDisabled(DudeUtils plugin) {
+    private static void removeDisabled() {
         for (String s : PluginConfigs.RECIPES.CUSTOM_RECIPES.keySet()) {
-            NamespacedKey key = new NamespacedKey(plugin, s.split(":")[1]);
+            NamespacedKey key = new NamespacedKey(DudeUtils.getInstance(), s.split(":")[1]);
             boolean enabled = PluginConfigs.RECIPES.CUSTOM_RECIPES.get(s);
             if (!enabled) {
                 if (REGISTRY.containsKey(key)) {
-                    if (plugin.getServer().removeRecipe(key))
+                    if (DudeUtils.getInstance().getServer().removeRecipe(key))
                         REGISTRY.remove(key);
                 }
             }

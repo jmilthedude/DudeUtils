@@ -15,7 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-public class PortalUtilityFeature extends Feature {
+public class PortalUtilityFeature extends Feature implements Tickable {
 
     private static final HashMap<UUID, Long> timers = new HashMap<>();
     private static final List<Cooldown> cooldowns = new ArrayList<>();
@@ -27,25 +27,24 @@ public class PortalUtilityFeature extends Feature {
     }
 
     @Override
-    public void doEnable() {
+    public void onEnabled() {
     }
 
     @Override
-    public void doDisable() {
-        if (task != null) {
-            Bukkit.getScheduler().cancelTask(task.getTaskId());
-            task.cancel();
-            task = null;
-        }
+    public void onDisabled() {
     }
 
     @Override
-    protected void createTask() {
-        task = Bukkit.getScheduler().runTaskTimer(DudeUtils.INSTANCE, this::execute, 60L, 20L);
+    public void tick() {
+        if (this.isEnabled()) calculatePortal();
     }
 
     @Override
-    public void execute() {
+    public int frequency() {
+        return 20;
+    }
+
+    private void calculatePortal() {
         Collection<? extends Player> players = Bukkit.getOnlinePlayers();
         players.forEach(player -> {
             UUID id = player.getUniqueId();

@@ -1,6 +1,5 @@
 package net.thedudemc.dudeutils.features;
 
-import net.thedudemc.dudeutils.DudeUtils;
 import net.thedudemc.dudeutils.init.PluginConfigs;
 import net.thedudemc.dudeutils.init.PluginData;
 import net.thedudemc.dudeutils.util.VectorHelper;
@@ -16,8 +15,9 @@ import org.bukkit.util.Vector;
 import java.util.Collection;
 import java.util.function.Predicate;
 
-public class MagnetFeature extends Feature {
+public class MagnetFeature extends Feature implements Tickable {
 
+    static Predicate<Entity> filter = e -> e.getType() == EntityType.DROPPED_ITEM;
 
     @Override
     public String getName() {
@@ -25,37 +25,35 @@ public class MagnetFeature extends Feature {
     }
 
     @Override
-    public void doEnable() {
+    public void onEnabled() {
     }
 
     @Override
-    protected void createTask() {
-        task = Bukkit.getScheduler().runTaskTimer(DudeUtils.INSTANCE, this::execute, 60L, 1L);
+    public void onDisabled() {
     }
 
     @Override
-    public void execute() {
-        Collection<? extends Player> players = Bukkit.getOnlinePlayers();
-        for (Player p : players) {
-            if (isWearingItem(p) || PluginData.MAGNET_DATA.magnetizedPlayers.contains(p.getName())) {
-                float speed = (float) PluginConfigs.MAGNET.SPEED;
-                int range = PluginConfigs.MAGNET.RANGE;
-
-                World world = p.getWorld();
-                Vector target = VectorHelper.getVectorFromPos(p.getLocation());
-                Collection<Entity> entities = world.getNearbyEntities(p.getLocation(), range, range, range, filter);
-                for (Entity e : entities) {
-                    Vector current = VectorHelper.getVectorFromPos(e.getLocation());
-                    Vector movement = VectorHelper.getMovementVelocity(current, target, speed);
-                    e.setVelocity(VectorHelper.add(e.getVelocity(), movement));
-                }
-            }
-        }
+    public void tick() {
+        if (this.isEnabled()) magnetize();
     }
 
-    @Override
-    public void doDisable() {
-        cancelTask();
+    private void magnetize() {
+        Bukkit.getOnlinePlayers()
+                .stream()
+                .filter(this::shouldMagnetize)
+                .forEach(p -> {
+                    float speed = (float) PluginConfigs.MAGNET.SPEED;
+                    int range = PluginConfigs.MAGNET.RANGE;
+
+                    World world = p.getWorld();
+                    Vector target = VectorHelper.getVectorFromPos(p.getLocation());
+                    Collection<Entity> entities = world.getNearbyEntities(p.getLocation(), range, range, range, filter);
+                    entities.forEach(e -> moveEntity(speed, target, e));
+                });
+    }
+
+    private boolean shouldMagnetize(Player player) {
+        return isWearingItem(player) || PluginData.MAGNET_DATA.magnetizedPlayers.contains(player.getName());
     }
 
     private boolean isWearingItem(Player player) {
@@ -68,5 +66,10 @@ public class MagnetFeature extends Feature {
         return false;
     }
 
-    static Predicate<Entity> filter = e -> e.getType() == EntityType.DROPPED_ITEM;
+    private void moveEntity(float speed, Vector target, Entity e) {
+        Vector current = VectorHelper.getVectorFromPos(e.getLocation());
+        Vector movement = VectorHelper.getMovementVelocity(current, target, speed);
+        e.setVelocity(VectorHelper.add(e.getVelocity(), movement));
+    }
+
 }
