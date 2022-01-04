@@ -4,6 +4,7 @@ import net.thedudemc.dudeutils.DudeUtils;
 import net.thedudemc.dudeutils.recipe.AlternatorRecipe;
 import net.thedudemc.dudeutils.recipe.BlackstoneRecipe;
 import net.thedudemc.dudeutils.recipe.PluginRecipe;
+import net.thedudemc.dudeutils.util.Log;
 import org.bukkit.NamespacedKey;
 
 import java.util.HashMap;
@@ -16,6 +17,7 @@ public class PluginRecipes {
     public static PluginRecipe ALTERNATOR;
 
     public static void init() {
+        Log.info("Initializing Recipes");
         register();
         removeDisabled();
     }

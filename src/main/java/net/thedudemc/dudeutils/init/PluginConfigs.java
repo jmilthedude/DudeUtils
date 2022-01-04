@@ -1,6 +1,7 @@
 package net.thedudemc.dudeutils.init;
 
 import net.thedudemc.dudeutils.config.*;
+import net.thedudemc.dudeutils.util.Log;
 
 public class PluginConfigs {
 
@@ -12,9 +13,8 @@ public class PluginConfigs {
     public static VeinMinerConfig VEINMINER;
 
     public static void init() {
-
+        Log.info("Initializing Configs");
         FEATURES = (FeaturesConfig) new FeaturesConfig().readConfig();
-
         MAGNET = (MagnetConfig) new MagnetConfig().readConfig();
         PORTAL_UTILITY = (PortalConfig) new PortalConfig().readConfig();
         RECIPES = (RecipeConfig) new RecipeConfig().readConfig();

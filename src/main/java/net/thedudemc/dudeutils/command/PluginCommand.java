@@ -3,6 +3,7 @@ package net.thedudemc.dudeutils.command;
 import net.thedudemc.dudeutils.command.exception.CommandException;
 import net.thedudemc.dudeutils.features.Feature;
 import net.thedudemc.dudeutils.init.PluginFeatures;
+import net.thedudemc.dudeutils.util.Log;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -63,8 +64,13 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         return null;
     }
 
-    protected Feature getFeature() {
-        return PluginFeatures.getFeature(this.getName());
+    protected Feature getFeature() throws CommandException {
+        try {
+            return PluginFeatures.getFeature(this.getName());
+        } catch (Exception ex) {
+            Log.error(ex.getMessage());
+            throw new CommandException("There was an error running the command. Check the console for details.");
+        }
     }
 
 }

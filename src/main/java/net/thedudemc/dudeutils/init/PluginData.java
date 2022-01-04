@@ -1,6 +1,7 @@
 package net.thedudemc.dudeutils.init;
 
 import net.thedudemc.dudeutils.data.*;
+import net.thedudemc.dudeutils.util.Log;
 
 import java.util.HashMap;
 
@@ -15,6 +16,7 @@ public class PluginData {
     public static ChatNameColorData CHAT_NAME_COLOR_DATA;
 
     public static void init() {
+        Log.info("Initializing Data");
         BLACKLIST_DATA = (BlacklistSaveData) register(new BlacklistSaveData().readData());
         ALLY_DATA = (AllySaveData) register(new AllySaveData().readData());
         MAGNET_DATA = (MagnetData) register(new MagnetData().readData());

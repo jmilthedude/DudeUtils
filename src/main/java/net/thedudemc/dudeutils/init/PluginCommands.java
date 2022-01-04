@@ -2,6 +2,7 @@ package net.thedudemc.dudeutils.init;
 
 import net.thedudemc.dudeutils.DudeUtils;
 import net.thedudemc.dudeutils.command.*;
+import net.thedudemc.dudeutils.util.Log;
 
 import java.util.HashMap;
 
@@ -21,6 +22,7 @@ public class PluginCommands {
     public static FeatureCommand FEATURE;
 
     public static void init() {
+        Log.info("Initializing Commands");
 
         DUDE = (DudeCommand) registerCommand(new DudeCommand()).opOnly();
         SLIME = (SlimeCommand) registerCommand(new SlimeCommand().playerOnly());

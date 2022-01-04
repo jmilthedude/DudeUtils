@@ -34,6 +34,7 @@ public class FeatureCommand extends PluginCommand {
             sender.sendMessage(featureName + " has been disabled.");
         }
 
+
     }
 
     @Override
