@@ -20,8 +20,8 @@ public class DudeUtils extends JavaPlugin implements Listener {
         if (INSTANCE == null) INSTANCE = this;
 
         PluginConfigs.init();
-        PluginFeatures.init();
         PluginData.init();
+        PluginFeatures.init();
         PluginRecipes.init();
         PluginEvents.init();
         PluginCommands.init();
