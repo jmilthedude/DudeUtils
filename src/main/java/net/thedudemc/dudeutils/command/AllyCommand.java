@@ -3,7 +3,6 @@ package net.thedudemc.dudeutils.command;
 import net.thedudemc.dudeutils.command.exception.CommandException;
 import net.thedudemc.dudeutils.data.AllySaveData;
 import net.thedudemc.dudeutils.features.ally.AllyFeature;
-import net.thedudemc.dudeutils.init.PluginFeatures;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -24,7 +23,7 @@ public class AllyCommand extends PluginCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) throws CommandException {
-        AllyFeature feature = (AllyFeature) PluginFeatures.getFeature(this.getName());
+        AllyFeature feature = (AllyFeature) this.getFeature();
         if (!feature.isEnabled()) {
             throw new CommandException("The feature is not enabled on this server: " + this.getName());
         }
