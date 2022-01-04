@@ -31,6 +31,7 @@ public class FeaturesConfig extends Config {
         ENABLED.put("single_player_sleep", true);
         ENABLED.put("inventory_sort", true);
         ENABLED.put("slime_chunk_check", true);
+        ENABLED.put("fast_xp", true);
     }
 
     public void setEnabled(String name, boolean value) {

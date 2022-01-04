@@ -8,6 +8,7 @@ import net.thedudemc.dudeutils.features.blacklist.BlacklistFeature;
 import net.thedudemc.dudeutils.features.chatnamecolor.ChatNameColorFeature;
 import net.thedudemc.dudeutils.features.deathpoint.DeathpointFeature;
 import net.thedudemc.dudeutils.features.disableendermengriefing.DisableEndermanGriefingFeature;
+import net.thedudemc.dudeutils.features.fastxp.FastXPFeature;
 import net.thedudemc.dudeutils.features.inventorysort.InventorySortFeature;
 import net.thedudemc.dudeutils.features.magnet.MagnetFeature;
 import net.thedudemc.dudeutils.features.netherwater.NetherWaterFeature;
@@ -17,6 +18,7 @@ import net.thedudemc.dudeutils.features.singleplayersleep.SinglePlayerSleepFeatu
 import net.thedudemc.dudeutils.features.slimechunkcheck.SlimeChunkCheckFeature;
 import net.thedudemc.dudeutils.features.veinminer.VeinminerFeature;
 import net.thedudemc.dudeutils.features.villagerutility.VillagerUtilityFeature;
+import net.thedudemc.dudeutils.util.Log;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -40,8 +42,10 @@ public class PluginFeatures {
     public static SinglePlayerSleepFeature SINGLE_PLAYER_SLEEP;
     public static InventorySortFeature INVENTORY_SORT;
     public static SlimeChunkCheckFeature SLIME_CHUNK_CHECK;
+    public static FastXPFeature FAST_XP;
 
     public static void init() {
+        Log.info("Initializing Features");
         MAGNET = register(new MagnetFeature());
         ALLY = register(new AllyFeature());
         DEATHPOINT = register(new DeathpointFeature());
@@ -57,11 +61,13 @@ public class PluginFeatures {
         SINGLE_PLAYER_SLEEP = register(new SinglePlayerSleepFeature());
         INVENTORY_SORT = register(new InventorySortFeature());
         SLIME_CHUNK_CHECK = register(new SlimeChunkCheckFeature());
+        FAST_XP = register(new FastXPFeature());
     }
 
     private static <T extends Feature> T register(T feature) {
         if(feature.getListener() != null) {
             DudeUtils.getInstance().getServer().getPluginManager().registerEvents(feature.getListener(), DudeUtils.getInstance());
+            Log.info(" -registered " + feature.getName() + " listener");
         }
         registry.put(feature.getName(), feature);
         return feature;
