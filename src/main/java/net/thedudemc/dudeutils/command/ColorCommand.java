@@ -1,7 +1,7 @@
 package net.thedudemc.dudeutils.command;
 
 import net.thedudemc.dudeutils.command.exception.CommandException;
-import net.thedudemc.dudeutils.features.ChatNameColorFeature;
+import net.thedudemc.dudeutils.features.chatnamecolor.ChatNameColorFeature;
 import net.thedudemc.dudeutils.init.PluginFeatures;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

@@ -1,6 +1,8 @@
-package net.thedudemc.dudeutils.features;
+package net.thedudemc.dudeutils.features.veinminer;
 
 import net.thedudemc.dudeutils.config.VeinMinerConfig;
+import net.thedudemc.dudeutils.features.Feature;
+import net.thedudemc.dudeutils.features.FeatureListener;
 import net.thedudemc.dudeutils.init.PluginConfigs;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -18,27 +20,16 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
 
-public class VeinminerFeature extends Feature {
-    @Override
-    public String getName() {
-        return "veinminer";
-    }
-
-    @Override
-    public void onEnabled() {
-
-    }
-
-    @Override
-    public void onDisabled() {
-
-    }
-
+public class VeinminerListener extends FeatureListener {
     private static final Set<UUID> mining = new HashSet<>();
+
+    public VeinminerListener(Feature feature) {
+        super(feature);
+    }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event) {
-        if (!isEnabled()) return;
+        if (!feature.isEnabled()) return;
 
         Player player = event.getPlayer();
         if (mining.contains(player.getUniqueId())) return;

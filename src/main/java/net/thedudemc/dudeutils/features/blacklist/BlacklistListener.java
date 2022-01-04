@@ -1,6 +1,8 @@
-package net.thedudemc.dudeutils.features;
+package net.thedudemc.dudeutils.features.blacklist;
 
 import net.thedudemc.dudeutils.data.BlacklistSaveData;
+import net.thedudemc.dudeutils.features.Feature;
+import net.thedudemc.dudeutils.features.FeatureListener;
 import net.thedudemc.dudeutils.features.alternator.AlternatorHelper;
 import net.thedudemc.dudeutils.gui.BlacklistGui;
 import net.thedudemc.dudeutils.util.ItemStackUtils;
@@ -21,28 +23,15 @@ import org.bukkit.inventory.ItemStack;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class BlacklistFeature extends Feature {
+public class BlacklistListener extends FeatureListener {
 
-    private static final HashMap<UUID, BlacklistGui> openedInventoryMap = new HashMap<>();
-
-    @Override
-    public String getName() {
-        return "blacklist";
-    }
-
-    @Override
-    public void onEnabled() {
-
-    }
-
-    @Override
-    public void onDisabled() {
-
+    public BlacklistListener(Feature feature) {
+        super(feature);
     }
 
     @EventHandler
     public void onItemPickup(EntityPickupItemEvent event) {
-        if (!this.isEnabled()) return;
+        if (!feature.isEnabled()) return;
 
         if (!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
@@ -54,13 +43,13 @@ public class BlacklistFeature extends Feature {
     }
 
     private boolean isBlacklistedForPlayer(UUID playerId, ItemStack stack) {
-        BlacklistSaveData data = (BlacklistSaveData) this.getSaveData();
+        BlacklistSaveData data = (BlacklistSaveData) feature.getSaveData();
         return data.getItems(playerId).stream().anyMatch(material -> material.equals(stack.getType()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryOpen(PlayerInteractEvent event) {
-        if (!this.isEnabled()) return;
+        if (!feature.isEnabled()) return;
 
         if (event.getHand() != EquipmentSlot.HAND || !event.getPlayer().isSneaking()) {
             return;
@@ -79,17 +68,17 @@ public class BlacklistFeature extends Feature {
     }
 
     private void open(Player player, BlacklistGui gui) {
-        openedInventoryMap.put(player.getUniqueId(), gui);
+        BlacklistFeature.openedInventoryMap.put(player.getUniqueId(), gui);
         player.openInventory(gui.getInventory());
     }
 
     private void close(Player player) {
-        openedInventoryMap.remove(player.getUniqueId());
+        BlacklistFeature.openedInventoryMap.remove(player.getUniqueId());
         player.closeInventory();
     }
 
     private BlacklistGui create(Player player) {
-        BlacklistSaveData data = (BlacklistSaveData) this.getSaveData();
+        BlacklistSaveData data = (BlacklistSaveData) feature.getSaveData();
         BlacklistGui gui = new BlacklistGui(player.getName() + "'s Blacklist", 9);
 
         List<Material> items = data.getItems(player.getUniqueId());
@@ -99,10 +88,10 @@ public class BlacklistFeature extends Feature {
 
     @EventHandler
     public void onLeftClick(InventoryClickEvent event) {
-        if (!this.isEnabled()) return;
+        if (!feature.isEnabled()) return;
 
         Player player = (Player) event.getWhoClicked();
-        BlacklistGui gui = openedInventoryMap.get(player.getUniqueId());
+        BlacklistGui gui = BlacklistFeature.openedInventoryMap.get(player.getUniqueId());
 
         if (gui == null) {
             return;
@@ -134,26 +123,26 @@ public class BlacklistFeature extends Feature {
 
     @EventHandler
     public void onDrag(InventoryDragEvent event) {
-        if (!this.isEnabled()) return;
+        if (!feature.isEnabled()) return;
 
         Player player = (Player) event.getWhoClicked();
-        BlacklistGui gui = openedInventoryMap.get(player.getUniqueId());
+        BlacklistGui gui = BlacklistFeature.openedInventoryMap.get(player.getUniqueId());
 
         event.setCancelled(gui != null);
     }
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
-        if (!this.isEnabled()) return;
+        if (!feature.isEnabled()) return;
 
         if (!(event.getPlayer() instanceof Player)) return;
 
         Player player = (Player) event.getPlayer();
-        BlacklistGui gui = openedInventoryMap.get(player.getUniqueId());
+        BlacklistGui gui = BlacklistFeature.openedInventoryMap.get(player.getUniqueId());
 
         if (gui == null || event.getInventory() != gui.getInventory()) return;
 
-        BlacklistSaveData data = (BlacklistSaveData) this.getSaveData();
+        BlacklistSaveData data = (BlacklistSaveData) feature.getSaveData();
 
         ItemStack[] contents = gui.getInventory().getContents();
         List<Material> materials = Arrays.stream(contents)
@@ -165,7 +154,4 @@ public class BlacklistFeature extends Feature {
         close(player);
     }
 
-    public static boolean hasBlacklistOpen(Player player) {
-        return openedInventoryMap.containsKey(player.getUniqueId());
-    }
 }

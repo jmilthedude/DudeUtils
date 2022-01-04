@@ -1,6 +1,9 @@
-package net.thedudemc.dudeutils.features;
+package net.thedudemc.dudeutils.features.inventorysort;
 
 import net.thedudemc.dudeutils.DudeUtils;
+import net.thedudemc.dudeutils.features.Feature;
+import net.thedudemc.dudeutils.features.FeatureListener;
+import net.thedudemc.dudeutils.features.blacklist.BlacklistFeature;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -15,26 +18,16 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class InventorySortFeature extends Feature {
+public class InventorySortListener extends FeatureListener {
 
-    @Override
-    public String getName() {
-        return "inventory_sort";
-    }
 
-    @Override
-    public void onEnabled() {
-
-    }
-
-    @Override
-    public void onDisabled() {
-
+    public InventorySortListener(Feature feature) {
+        super(feature);
     }
 
     @EventHandler
     public void onPlayerInventorySort(InventoryClickEvent event) {
-        if (!isEnabled()) return;
+        if (!feature.isEnabled()) return;
         if (BlacklistFeature.hasBlacklistOpen((Player) event.getWhoClicked())) {
             return;
         }
@@ -56,7 +49,7 @@ public class InventorySortFeature extends Feature {
 
     @EventHandler
     public void onChestSort(InventoryClickEvent event) {
-        if (!isEnabled()) return;
+        if (!feature.isEnabled()) return;
         if (BlacklistFeature.hasBlacklistOpen((Player) event.getWhoClicked())) {
             return;
         }

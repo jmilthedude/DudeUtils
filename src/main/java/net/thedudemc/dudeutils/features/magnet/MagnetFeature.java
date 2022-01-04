@@ -1,7 +1,10 @@
-package net.thedudemc.dudeutils.features;
+package net.thedudemc.dudeutils.features.magnet;
 
+import net.thedudemc.dudeutils.features.Feature;
+import net.thedudemc.dudeutils.features.FeatureListener;
 import net.thedudemc.dudeutils.init.PluginConfigs;
 import net.thedudemc.dudeutils.init.PluginData;
+import net.thedudemc.dudeutils.util.Tickable;
 import net.thedudemc.dudeutils.util.VectorHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -25,11 +28,8 @@ public class MagnetFeature extends Feature implements Tickable {
     }
 
     @Override
-    public void onEnabled() {
-    }
-
-    @Override
-    public void onDisabled() {
+    public FeatureListener getListener() {
+        return null;
     }
 
     @Override

@@ -2,7 +2,7 @@ package net.thedudemc.dudeutils.command;
 
 import net.thedudemc.dudeutils.command.exception.CommandException;
 import net.thedudemc.dudeutils.data.AllySaveData;
-import net.thedudemc.dudeutils.features.AllyFeature;
+import net.thedudemc.dudeutils.features.ally.AllyFeature;
 import net.thedudemc.dudeutils.init.PluginFeatures;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

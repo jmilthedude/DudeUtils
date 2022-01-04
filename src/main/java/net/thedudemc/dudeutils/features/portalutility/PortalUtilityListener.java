@@ -1,7 +1,9 @@
-package net.thedudemc.dudeutils.features;
+package net.thedudemc.dudeutils.features.portalutility;
 
 import net.thedudemc.dudeutils.DudeUtils;
-import net.thedudemc.dudeutils.util.StringUtils;
+import net.thedudemc.dudeutils.features.Feature;
+import net.thedudemc.dudeutils.features.FeatureListener;
+import net.thedudemc.dudeutils.util.Cooldown;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -13,92 +15,17 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
-public class PortalUtilityFeature extends Feature implements Tickable {
+public class PortalUtilityListener extends FeatureListener {
 
-    private static final HashMap<UUID, Long> timers = new HashMap<>();
-    private static final List<Cooldown> cooldowns = new ArrayList<>();
-    private static final HashMap<UUID, Location> portals = new HashMap<>();
+    public static final List<Cooldown> cooldowns = new ArrayList<>();
 
-    @Override
-    public String getName() {
-        return "portal_utility";
+    public PortalUtilityListener(Feature feature) {
+        super(feature);
     }
-
-    @Override
-    public void onEnabled() {
-    }
-
-    @Override
-    public void onDisabled() {
-    }
-
-    @Override
-    public void tick() {
-        if (this.isEnabled()) calculatePortal();
-    }
-
-    @Override
-    public int frequency() {
-        return 20;
-    }
-
-    private void calculatePortal() {
-        Collection<? extends Player> players = Bukkit.getOnlinePlayers();
-        players.forEach(player -> {
-            UUID id = player.getUniqueId();
-            if (portals.containsKey(player.getUniqueId())) {
-
-                Location location = portals.get(id);
-                if (isChunkLoaded(location)) {
-                    spawnParticles(id, location);
-                }
-
-                if (decrementTimer(id) <= 0) {
-                    removeParticles(player);
-                }
-            }
-        });
-    }
-
-    private void activateParticles(Player player, Location oppositeLocation) {
-        World world = oppositeLocation.getWorld();
-        if (world == null) return;
-
-        portals.put(player.getUniqueId(), oppositeLocation);
-        timers.put(player.getUniqueId(), 300L);
-        player.sendMessage(StringUtils.getDimensionName(oppositeLocation.getWorld().getEnvironment()) + " Portal Location: " + StringUtils.getCoordinateString(oppositeLocation));
-    }
-
-    private void removeParticles(Player player) {
-        Location location = portals.remove(player.getUniqueId());
-        timers.remove(player.getUniqueId());
-        player.sendMessage("Particles Despawned at: " + StringUtils.getCoordinateString(location));
-    }
-
-    private void spawnParticles(UUID p, Location location) {
-        World world = location.getWorld();
-        if (world == null) return;
-        double x = location.getBlockX() + 0.5;
-        double z = location.getBlockZ() + 0.5;
-        for (int i = 1; i < 128; i++) {
-            world.spawnParticle(Particle.DRAGON_BREATH, x, i, z, 1, 0D, 0D, 0D, 0.005);
-        }
-    }
-
-    private boolean isChunkLoaded(Location location) {
-        World world = location.getWorld();
-        if (world == null) return false;
-        return world.getChunkAt(location).isLoaded();
-    }
-
-    private long decrementTimer(UUID p) {
-        long timeRemaining = timers.get(p) - 1;
-        timers.put(p, timeRemaining);
-        return timeRemaining;
-    }
-
 
     @EventHandler
     public void onPortalClicked(PlayerInteractEvent event) {
@@ -115,8 +42,8 @@ public class PortalUtilityFeature extends Feature implements Tickable {
 
         event.setCancelled(true);
 
-        if (portals.containsKey(player.getUniqueId())) {
-            removeParticles(player);
+        if (PortalUtilityFeature.getPortals().containsKey(player.getUniqueId())) {
+            PortalUtilityFeature.removeParticles(player);
             return;
         }
 
@@ -130,7 +57,7 @@ public class PortalUtilityFeature extends Feature implements Tickable {
         World oppositeWorld = oppositeLocation.getWorld();
         if (oppositeWorld == null) return;
 
-        activateParticles(player, oppositeLocation);
+        PortalUtilityFeature.activateParticles(player, oppositeLocation);
     }
 
     @EventHandler
@@ -156,8 +83,9 @@ public class PortalUtilityFeature extends Feature implements Tickable {
         }
     }
 
+
     private boolean playerInCooldown(UUID playerId) {
-        return cooldowns.stream().anyMatch(cooldown -> cooldown.playerId.equals(playerId));
+        return cooldowns.stream().anyMatch(cooldown -> cooldown.getPlayerId().equals(playerId));
     }
 
     private void beginCooldown(UUID playerId) {
@@ -182,24 +110,6 @@ public class PortalUtilityFeature extends Feature implements Tickable {
         }.runTaskLater(DudeUtils.getInstance(), 3);
     }
 
-    public static class Cooldown {
-        private final UUID playerId;
-        private int ticksRemaining;
-
-        public Cooldown(UUID playerId, int cooldown) {
-            this.playerId = playerId;
-            this.ticksRemaining = cooldown;
-        }
-
-        public void update() {
-            ticksRemaining--;
-        }
-
-        public boolean isComplete() {
-            return ticksRemaining <= 0;
-        }
-    }
-
 
     private Location getAlternateDimensionLocation(Location current) {
         World world = current.getWorld();
@@ -217,4 +127,5 @@ public class PortalUtilityFeature extends Feature implements Tickable {
 
         }
     }
+
 }

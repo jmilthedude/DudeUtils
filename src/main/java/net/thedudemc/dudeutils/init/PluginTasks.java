@@ -1,7 +1,8 @@
 package net.thedudemc.dudeutils.init;
 
 import net.thedudemc.dudeutils.DudeUtils;
-import net.thedudemc.dudeutils.features.Tickable;
+import net.thedudemc.dudeutils.util.Log;
+import net.thedudemc.dudeutils.util.Tickable;
 import net.thedudemc.dudeutils.tasks.ExperienceCollectionTask;
 import net.thedudemc.dudeutils.tasks.PluginTask;
 import org.bukkit.Bukkit;
@@ -13,7 +14,7 @@ public class PluginTasks {
 
     public static final HashMap<NamespacedKey, PluginTask> registry = new HashMap<>();
 
-    private static long currentTick = 0;
+    private static long currentTick = 1;
 
     public static void init() {
         registerTasks(new ExperienceCollectionTask());
@@ -34,14 +35,14 @@ public class PluginTasks {
     private static void tick() {
         registry.values()
                 .stream()
-                .filter(task -> task.frequency() % currentTick == 0)
+                .filter(tickable -> tickable.shouldTick(currentTick))
                 .forEach(Tickable::tick);
 
         PluginFeatures.registry.values()
                 .stream()
                 .filter(feature -> feature instanceof Tickable)
                 .map(feature -> (Tickable) feature)
-                .filter(tickable -> tickable.frequency() % currentTick == 0)
+                .filter(tickable -> tickable.shouldTick(currentTick))
                 .forEach(Tickable::tick);
 
         currentTick++;

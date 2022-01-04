@@ -3,9 +3,8 @@ package net.thedudemc.dudeutils.features;
 import net.thedudemc.dudeutils.data.SaveData;
 import net.thedudemc.dudeutils.init.PluginConfigs;
 import net.thedudemc.dudeutils.init.PluginData;
-import org.bukkit.event.Listener;
 
-public abstract class Feature implements Listener {
+public abstract class Feature {
 
     public abstract String getName();
 
@@ -14,13 +13,18 @@ public abstract class Feature implements Listener {
         else this.disable();
     }
 
+    public abstract FeatureListener getListener();
+
     public boolean isEnabled() {
         return PluginConfigs.FEATURES.ENABLED.get(this.getName());
     }
 
-    public abstract void onEnabled();
+    protected void onEnabled() {
 
-    public abstract void onDisabled();
+    }
+
+    protected void onDisabled() {
+    }
 
     public void enable() {
         PluginConfigs.FEATURES.setEnabled(this.getName(), true);

@@ -1,12 +1,10 @@
-package net.thedudemc.dudeutils.features;
+package net.thedudemc.dudeutils.features.chatnamecolor;
 
-import net.thedudemc.dudeutils.data.ChatNameColorData;
+import net.thedudemc.dudeutils.features.Feature;
+import net.thedudemc.dudeutils.features.FeatureListener;
 import net.thedudemc.dudeutils.init.PluginData;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +33,16 @@ public class ChatNameColorFeature extends Feature {
         }
     };
 
+    @Override
+    public String getName() {
+        return "chat_name_color";
+    }
+
+    @Override
+    public FeatureListener getListener() {
+        return new ChatNameColorListener(this);
+    }
+
     public static List<String> getColorNames() {
         return new ArrayList<>(colors.keySet());
     }
@@ -51,33 +59,5 @@ public class ChatNameColorFeature extends Feature {
         PluginData.CHAT_NAME_COLOR_DATA.setColor(player, "RESET");
     }
 
-    @Override
-    public String getName() {
-        return "chat_name_color";
-    }
 
-    @Override
-    public void onEnabled() {
-    }
-
-    @Override
-    public void onDisabled() {
-    }
-
-    @EventHandler
-    public void onChat(AsyncPlayerChatEvent event) {
-        if (!this.isEnabled()) return;
-        Player player = event.getPlayer();
-        ChatNameColorData data = (ChatNameColorData) this.getSaveData();
-        ChatColor color = data.getColor(player);
-        event.setFormat(ChatColor.WHITE + "<" + color + "%s" + ChatColor.WHITE + ">" + ChatColor.RESET + " %s");
-    }
-
-    @EventHandler
-    public void onTabList(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        ChatNameColorData data = (ChatNameColorData) this.getSaveData();
-        ChatColor color = data.getColor(player);
-        player.setPlayerListName(color + player.getName());
-    }
 }

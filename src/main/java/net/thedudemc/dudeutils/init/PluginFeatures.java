@@ -2,6 +2,21 @@ package net.thedudemc.dudeutils.init;
 
 import net.thedudemc.dudeutils.DudeUtils;
 import net.thedudemc.dudeutils.features.*;
+import net.thedudemc.dudeutils.features.ally.AllyFeature;
+import net.thedudemc.dudeutils.features.alternator.AlternatorFeature;
+import net.thedudemc.dudeutils.features.blacklist.BlacklistFeature;
+import net.thedudemc.dudeutils.features.chatnamecolor.ChatNameColorFeature;
+import net.thedudemc.dudeutils.features.deathpoint.DeathpointFeature;
+import net.thedudemc.dudeutils.features.disableendermengriefing.DisableEndermanGriefingFeature;
+import net.thedudemc.dudeutils.features.inventorysort.InventorySortFeature;
+import net.thedudemc.dudeutils.features.magnet.MagnetFeature;
+import net.thedudemc.dudeutils.features.netherwater.NetherWaterFeature;
+import net.thedudemc.dudeutils.features.portalutility.PortalUtilityFeature;
+import net.thedudemc.dudeutils.features.shulkerdropstwo.ShulkerDropsTwoFeature;
+import net.thedudemc.dudeutils.features.singleplayersleep.SinglePlayerSleepFeature;
+import net.thedudemc.dudeutils.features.slimechunkcheck.SlimeChunkCheckFeature;
+import net.thedudemc.dudeutils.features.veinminer.VeinminerFeature;
+import net.thedudemc.dudeutils.features.villagerutility.VillagerUtilityFeature;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -45,7 +60,9 @@ public class PluginFeatures {
     }
 
     private static <T extends Feature> T register(T feature) {
-        DudeUtils.getInstance().getServer().getPluginManager().registerEvents(feature, DudeUtils.getInstance());
+        if(feature.getListener() != null) {
+            DudeUtils.getInstance().getServer().getPluginManager().registerEvents(feature.getListener(), DudeUtils.getInstance());
+        }
         registry.put(feature.getName(), feature);
         return feature;
     }

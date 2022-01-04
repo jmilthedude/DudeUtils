@@ -1,7 +1,7 @@
 package net.thedudemc.dudeutils.data;
 
 import com.google.gson.annotations.Expose;
-import net.thedudemc.dudeutils.features.ChatNameColorFeature;
+import net.thedudemc.dudeutils.features.chatnamecolor.ChatNameColorFeature;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

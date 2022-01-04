@@ -1,7 +1,8 @@
-package net.thedudemc.dudeutils.features;
+package net.thedudemc.dudeutils.features.alternator;
 
 import net.thedudemc.dudeutils.DudeUtils;
-import net.thedudemc.dudeutils.features.alternator.AlternatorHelper;
+import net.thedudemc.dudeutils.features.Feature;
+import net.thedudemc.dudeutils.features.FeatureListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -20,26 +21,17 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-public class AlternatorFeature extends Feature{
-    @Override
-    public String getName() {
-        return "alternator";
-    }
-
-    @Override
-    public void onEnabled() {
-
-    }
-
-    @Override
-    public void onDisabled() {
-
-    }
-
+public class AlternatorListener extends FeatureListener {
     private static final HashSet<String> cooldowns = new HashSet<>();
+
+    public AlternatorListener(Feature feature) {
+        super(feature);
+    }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onUse(PlayerInteractEvent event) {
+        if (!feature.isEnabled()) return;
+
         if (event.getHand() == EquipmentSlot.OFF_HAND) return;
         ItemStack heldItem = event.getItem();
         if (heldItem == null || !AlternatorHelper.isAlternatorItem(heldItem)) return;

@@ -1,5 +1,7 @@
-package net.thedudemc.dudeutils.features;
+package net.thedudemc.dudeutils.features.villagerutility;
 
+import net.thedudemc.dudeutils.features.Feature;
+import net.thedudemc.dudeutils.features.FeatureListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,48 +20,21 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class VillagerUtilityFeature extends Feature {
-    @Override
-    public String getName() {
-        return "villager_utility";
-    }
-
-    @Override
-    public void onEnabled() {
-
-    }
-
-    @Override
-    public void onDisabled() {
-
+public class VillagerUtilityListener extends FeatureListener {
+    public VillagerUtilityListener(Feature feature) {
+        super(feature);
     }
 
     private static final List<Player> cancelInventoryEvent = new ArrayList<>();
     private static final HashMap<Player, Villager> selectedVillagers = new HashMap<>();
 
-    private static final List<Material> possibleWorkstations = Arrays.asList(
-            Material.BLAST_FURNACE,
-            Material.SMOKER,
-            Material.CARTOGRAPHY_TABLE,
-            Material.BREWING_STAND,
-            Material.COMPOSTER,
-            Material.BARREL,
-            Material.FLETCHING_TABLE,
-            Material.CAULDRON,
-            Material.LECTERN,
-            Material.STONECUTTER,
-            Material.LOOM,
-            Material.GRINDSTONE,
-            Material.SMITHING_TABLE
-    );
 
     @EventHandler
     public void getVillagerInfo(PlayerInteractAtEntityEvent event) {
-        if (!isEnabled()) return;
+        if (!feature.isEnabled()) return;
 
         if (event.getHand() != EquipmentSlot.HAND) return;
 
@@ -96,7 +71,7 @@ public class VillagerUtilityFeature extends Feature {
 
     @EventHandler
     public void selectVillager(PlayerInteractAtEntityEvent event) {
-        if (!isEnabled()) return;
+        if (!feature.isEnabled()) return;
 
         if (event.getHand() != EquipmentSlot.HAND) return;
 
@@ -119,7 +94,7 @@ public class VillagerUtilityFeature extends Feature {
 
     @EventHandler
     public void assignWorkstation(PlayerInteractEvent event) {
-        if (!isEnabled()) return;
+        if (!feature.isEnabled()) return;
 
         if (event.getHand() != EquipmentSlot.HAND) return;
 
@@ -130,7 +105,7 @@ public class VillagerUtilityFeature extends Feature {
         if (block == null || !player.isSneaking() || heldItem.getType() != Material.EMERALD || event.getAction() != Action.RIGHT_CLICK_BLOCK)
             return;
 
-        if (possibleWorkstations.contains(block.getType())) {
+        if (VillagerUtilityFeature.possibleWorkstations.contains(block.getType())) {
             if (selectedVillagers.containsKey(player)) {
                 Villager v = selectedVillagers.remove(player);
                 v.setMemory(MemoryKey.JOB_SITE, block.getLocation());
@@ -142,7 +117,7 @@ public class VillagerUtilityFeature extends Feature {
 
     @EventHandler
     public void removeWorkstation(PlayerInteractEvent event) {
-        if (!isEnabled()) return;
+        if (!feature.isEnabled()) return;
 
         if (event.getHand() != EquipmentSlot.HAND) return;
 
@@ -163,7 +138,7 @@ public class VillagerUtilityFeature extends Feature {
 
     @EventHandler
     public void cancelOpenInventory(InventoryOpenEvent event) {
-        if (!isEnabled()) return;
+        if (!feature.isEnabled()) return;
 
         if (event.getInventory().getType() != InventoryType.MERCHANT) return;
         Player p = (Player) event.getPlayer();

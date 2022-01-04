@@ -1,6 +1,8 @@
-package net.thedudemc.dudeutils.features;
+package net.thedudemc.dudeutils.features.ally;
 
 import net.thedudemc.dudeutils.data.AllySaveData;
+import net.thedudemc.dudeutils.features.Feature;
+import net.thedudemc.dudeutils.features.FeatureListener;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
@@ -9,24 +11,15 @@ import org.bukkit.event.entity.EntityTargetEvent;
 
 import java.util.UUID;
 
-public class AllyFeature extends Feature {
+public class AllyListener extends FeatureListener {
 
-    @Override
-    public String getName() {
-        return "ally";
-    }
-
-    @Override
-    public void onEnabled() {
-    }
-
-    @Override
-    public void onDisabled() {
+    public AllyListener(Feature feature) {
+        super(feature);
     }
 
     @EventHandler
     public void onTarget(EntityTargetEvent event) {
-        if (!isEnabled()) return;
+        if (!feature.isEnabled()) return;
 
         if (!(event.getEntity() instanceof Wolf)) {
             return;
@@ -44,7 +37,8 @@ public class AllyFeature extends Feature {
     }
 
     private boolean isAlly(UUID owner, UUID target) {
-        AllySaveData data = (AllySaveData) this.getSaveData();
+        AllySaveData data = (AllySaveData) feature.getSaveData();
         return data.getAllies(owner).contains(target);
     }
+
 }
