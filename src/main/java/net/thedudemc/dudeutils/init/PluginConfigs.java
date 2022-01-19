@@ -11,6 +11,7 @@ public class PluginConfigs {
     public static RecipeConfig RECIPES;
     public static SpecialConfig SPECIAL;
     public static VeinMinerConfig VEINMINER;
+    public static GhastLogConfig GHAST_LOG;
 
     public static void init() {
         Log.info("Initializing Configs");
@@ -20,7 +21,7 @@ public class PluginConfigs {
         RECIPES = (RecipeConfig) new RecipeConfig().readConfig();
         SPECIAL = (SpecialConfig) new SpecialConfig().readConfig();
         VEINMINER = (VeinMinerConfig) new VeinMinerConfig().readConfig();
-
+        GHAST_LOG = (GhastLogConfig) new GhastLogConfig().readConfig();
     }
 
     public static void save() {
@@ -30,5 +31,6 @@ public class PluginConfigs {
         RECIPES.writeConfig();
         SPECIAL.writeConfig();
         VEINMINER.writeConfig();
+        GHAST_LOG.writeConfig();
     }
 }

@@ -1,6 +1,6 @@
 name: DudeUtils
 main: net.thedudemc.dudeutils.DudeUtils
-version: 1.13
+version: 1.14
 api-version: 1.13
 commands:
   dude:
@@ -33,3 +33,6 @@ commands:
   feature:
     description: Enable or disable a feature
     usage: /feature <name> <true|false>
+  ghast_log:
+    description: Show log of ghast spawns
+    usage: /ghast_log

@@ -20,6 +20,7 @@ public class PluginCommands {
     public static CoordsCommand COORDS;
     public static DeathpointCommand DEATHPOINT;
     public static FeatureCommand FEATURE;
+    public static GhastLogCommand GHAST_LOG;
 
     public static void init() {
         Log.info("Initializing Commands");
@@ -34,6 +35,7 @@ public class PluginCommands {
         COORDS = (CoordsCommand) registerCommand(new CoordsCommand().playerOnly());
         DEATHPOINT = (DeathpointCommand) registerCommand(new DeathpointCommand().playerOnly());
         FEATURE = (FeatureCommand) registerCommand(new FeatureCommand().opOnly());
+        GHAST_LOG = (GhastLogCommand) registerCommand(new GhastLogCommand().opOnly());
 
 
     }
