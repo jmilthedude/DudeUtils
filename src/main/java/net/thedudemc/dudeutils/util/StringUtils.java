@@ -1,10 +1,12 @@
 package net.thedudemc.dudeutils.util;
 
 import net.thedudemc.dudeutils.features.deathpoint.DeathLocation;
-import org.apache.commons.lang.time.DurationFormatUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class StringUtils {
 
@@ -55,7 +57,9 @@ public class StringUtils {
     }
 
     public static String formatDuration(long time) {
-        return DurationFormatUtils.formatDuration(time, "dd:HH:mm:ss");
+        Date date = new Date(time);
+        SimpleDateFormat format = new SimpleDateFormat("dd:HH:mm:ss");
+        return format.format(date);
     }
 
 }

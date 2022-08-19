@@ -14,7 +14,6 @@ public class PluginData {
     public static MagnetData MAGNET_DATA;
     public static DeathpointData DEATHPOINT;
     public static ChatNameColorData CHAT_NAME_COLOR_DATA;
-    public static GhastLogData GHAST_LOG;
 
     public static void init() {
         Log.info("Initializing Data");
@@ -23,7 +22,6 @@ public class PluginData {
         MAGNET_DATA = (MagnetData) register(new MagnetData().readData());
         DEATHPOINT = (DeathpointData) register(new DeathpointData().readData());
         CHAT_NAME_COLOR_DATA = (ChatNameColorData) register(new ChatNameColorData().readData());
-        GHAST_LOG = (GhastLogData) register(new GhastLogData().readData());
     }
 
     private static SaveData register(SaveData data) {
