@@ -11,22 +11,21 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class AlternatorHelper {
 
     private static final NamespacedKey ALTERNATOR_MODE = DudeUtils.getKey("alternator_mode");
 
     public static ItemStack getAlternator() {
-        ItemStack stack = new ItemStack(Material.STICK);
+        ItemStack alternator = new ItemStack(Material.STICK);
         Mode mode = Mode.PLACE;
-        ItemMeta meta = stack.getItemMeta();
+        ItemMeta meta = alternator.getItemMeta();
+        if (meta == null) return new ItemStack(Material.AIR);
 
-        meta.getPersistentDataContainer().set(ALTERNATOR_MODE, PersistentDataType.INTEGER, mode.ordinal());
-        meta.setLore(getAlternatorLore(mode));
-        meta.setDisplayName(ChatColor.AQUA + "Alternator " + ChatColor.RESET + "(" + ChatColor.GREEN + mode.getName() + ChatColor.RESET + ")");
-        stack.setItemMeta(meta);
+        setAlternaterData(meta, mode, alternator);
 
-        return stack;
+        return alternator;
     }
 
     private static List<String> getAlternatorLore(Mode mode) {
@@ -41,50 +40,39 @@ public class AlternatorHelper {
 
     public static ItemStack changeAlternatorMode(ItemStack alternator) {
         ItemMeta meta = alternator.getItemMeta();
-        if (meta != null) {
-            if (!meta.getPersistentDataContainer().has(ALTERNATOR_MODE, PersistentDataType.INTEGER)) return alternator;
+        if (meta == null) return alternator;
+        if (!meta.getPersistentDataContainer().has(ALTERNATOR_MODE, PersistentDataType.INTEGER)) return alternator;
 
-            PersistentDataContainer container = meta.getPersistentDataContainer();
+        int value = getModeValue(meta).orElse(0);
+        setAlternaterData(meta, Mode.values()[value].getNext(), alternator);
 
-            Integer value = container.get(ALTERNATOR_MODE, PersistentDataType.INTEGER);
-            if (value != null) {
-                Mode mode = getNextMode(Mode.values()[value]);
-                meta.getPersistentDataContainer().set(ALTERNATOR_MODE, PersistentDataType.INTEGER, mode.ordinal());
-                meta.setLore(getAlternatorLore(mode));
-                meta.setDisplayName(ChatColor.AQUA + "Alternator " + ChatColor.RESET + "(" + ChatColor.GREEN + mode.getName() + ChatColor.RESET + ")");
-
-                alternator.setItemMeta(meta);
-            }
-        }
         return alternator;
+    }
+
+    private static void setAlternaterData(ItemMeta meta, Mode next, ItemStack alternator) {
+        meta.getPersistentDataContainer().set(ALTERNATOR_MODE, PersistentDataType.INTEGER, next.ordinal());
+        meta.setLore(getAlternatorLore(next));
+        meta.setDisplayName(ChatColor.AQUA + "Alternator " + ChatColor.RESET + "(" + ChatColor.GREEN + next.getName() + ChatColor.RESET + ")");
+
+        alternator.setItemMeta(meta);
+    }
+
+    private static Optional<Integer> getModeValue(ItemMeta meta) {
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        return Optional.ofNullable(container.get(ALTERNATOR_MODE, PersistentDataType.INTEGER));
     }
 
     public static Mode getCurrentMode(ItemStack alternator) {
         ItemMeta meta = alternator.getItemMeta();
-        if (meta != null) {
-            if (meta.getPersistentDataContainer().has(ALTERNATOR_MODE, PersistentDataType.INTEGER)) {
-                Integer value = meta.getPersistentDataContainer().get(ALTERNATOR_MODE, PersistentDataType.INTEGER);
-                if (value != null) {
-                    return Mode.values()[value];
-                }
-            }
-        }
-        return null;
+        if (meta == null) return Mode.CHANGE;
+        return Mode.values()[getModeValue(meta).orElse(0)];
     }
 
     public static boolean isAlternatorItem(ItemStack stack) {
-        if (stack.hasItemMeta()) {
-            ItemMeta meta = stack.getItemMeta();
-            return meta.getPersistentDataContainer().has(ALTERNATOR_MODE, PersistentDataType.INTEGER);
-        }
-        return false;
-    }
-
-    private static Mode getNextMode(Mode mode) {
-        int current = mode.ordinal();
-        current++;
-        if (current > 1) return Mode.values()[0];
-        return Mode.values()[current];
+        if (!stack.hasItemMeta()) return false;
+        ItemMeta meta = stack.getItemMeta();
+        if (meta == null) return false;
+        return meta.getPersistentDataContainer().has(ALTERNATOR_MODE, PersistentDataType.INTEGER);
     }
 
     public enum Mode {
@@ -99,6 +87,10 @@ public class AlternatorHelper {
 
         public String getName() {
             return name;
+        }
+
+        public Mode getNext() {
+            return this == CHANGE ? PLACE : CHANGE;
         }
     }
 }
