@@ -33,8 +33,7 @@ public class BlacklistListener extends FeatureListener {
     public void onItemPickup(EntityPickupItemEvent event) {
         if (!feature.isEnabled()) return;
 
-        if (!(event.getEntity() instanceof Player)) return;
-        Player player = (Player) event.getEntity();
+        if (!(event.getEntity() instanceof Player player)) return;
         ItemStack stack = event.getItem().getItemStack();
         if (isBlacklistedForPlayer(player.getUniqueId(), stack)) {
             event.setCancelled(true);
@@ -135,9 +134,8 @@ public class BlacklistListener extends FeatureListener {
     public void onInventoryClose(InventoryCloseEvent event) {
         if (!feature.isEnabled()) return;
 
-        if (!(event.getPlayer() instanceof Player)) return;
+        if (!(event.getPlayer() instanceof Player player)) return;
 
-        Player player = (Player) event.getPlayer();
         BlacklistGui gui = BlacklistFeature.openedInventoryMap.get(player.getUniqueId());
 
         if (gui == null || event.getInventory() != gui.getInventory()) return;

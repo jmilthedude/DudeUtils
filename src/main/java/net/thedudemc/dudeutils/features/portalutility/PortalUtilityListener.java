@@ -62,8 +62,7 @@ public class PortalUtilityListener extends FeatureListener {
 
     @EventHandler
     public void onEnterPortal(EntityPortalEnterEvent event) {
-        if (event.getEntity() instanceof Player) {
-            Player p = (Player) event.getEntity();
+        if (event.getEntity() instanceof Player p) {
             if (!p.isSneaking()) return;
             if (playerInCooldown(p.getUniqueId())) return;
             if (p.getGameMode().equals(GameMode.CREATIVE)) return;

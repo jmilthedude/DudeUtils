@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Arrays;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class AlternatorHelper {
 
-    private static final NamespacedKey ALTERNATOR_MODE = new NamespacedKey(DudeUtils.getInstance(), "alternator_mode");
+    private static final NamespacedKey ALTERNATOR_MODE = DudeUtils.getKey("alternator_mode");
 
     public static ItemStack getAlternator() {
         ItemStack stack = new ItemStack(Material.STICK);
@@ -43,13 +44,17 @@ public class AlternatorHelper {
         if (meta != null) {
             if (!meta.getPersistentDataContainer().has(ALTERNATOR_MODE, PersistentDataType.INTEGER)) return alternator;
 
-            int value = meta.getPersistentDataContainer().get(ALTERNATOR_MODE, PersistentDataType.INTEGER);
-            Mode mode = getNextMode(Mode.values()[value]);
-            meta.getPersistentDataContainer().set(ALTERNATOR_MODE, PersistentDataType.INTEGER, mode.ordinal());
-            meta.setLore(getAlternatorLore(mode));
-            meta.setDisplayName(ChatColor.AQUA + "Alternator " + ChatColor.RESET + "(" + ChatColor.GREEN + mode.getName() + ChatColor.RESET + ")");
+            PersistentDataContainer container = meta.getPersistentDataContainer();
 
-            alternator.setItemMeta(meta);
+            Integer value = container.get(ALTERNATOR_MODE, PersistentDataType.INTEGER);
+            if (value != null) {
+                Mode mode = getNextMode(Mode.values()[value]);
+                meta.getPersistentDataContainer().set(ALTERNATOR_MODE, PersistentDataType.INTEGER, mode.ordinal());
+                meta.setLore(getAlternatorLore(mode));
+                meta.setDisplayName(ChatColor.AQUA + "Alternator " + ChatColor.RESET + "(" + ChatColor.GREEN + mode.getName() + ChatColor.RESET + ")");
+
+                alternator.setItemMeta(meta);
+            }
         }
         return alternator;
     }
@@ -58,8 +63,10 @@ public class AlternatorHelper {
         ItemMeta meta = alternator.getItemMeta();
         if (meta != null) {
             if (meta.getPersistentDataContainer().has(ALTERNATOR_MODE, PersistentDataType.INTEGER)) {
-                int value = meta.getPersistentDataContainer().get(ALTERNATOR_MODE, PersistentDataType.INTEGER);
-                return Mode.values()[value];
+                Integer value = meta.getPersistentDataContainer().get(ALTERNATOR_MODE, PersistentDataType.INTEGER);
+                if (value != null) {
+                    return Mode.values()[value];
+                }
             }
         }
         return null;
