@@ -12,11 +12,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Team;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public class PetTransferEvent implements Listener {
 
-    private static HashMap<UUID, Tameable> selected = new HashMap<>();
+    private static final HashMap<UUID, Tameable> selected = new HashMap<>();
 
     @EventHandler
     public void onRightClickPet(PlayerInteractAtEntityEvent event) {
@@ -25,9 +26,8 @@ public class PetTransferEvent implements Listener {
         if (heldItem.getType() != Material.DIAMOND) return;
 
         Entity clicked = event.getRightClicked();
-        if (!(clicked instanceof Tameable)) return;
-        Tameable tamedEntity = (Tameable) clicked;
-        if (!tamedEntity.isTamed() || !tamedEntity.getOwner().getUniqueId().equals(player.getUniqueId())) return;
+        if (!(clicked instanceof Tameable tamedEntity)) return;
+        if (!tamedEntity.isTamed() || !Objects.requireNonNull(tamedEntity.getOwner()).getUniqueId().equals(player.getUniqueId())) return;
 
         selected.put(player.getUniqueId(), tamedEntity);
         player.sendMessage(ChatColor.GRAY + "You have selected the " + tamedEntity.getType().toString().toLowerCase() + ". Select the player you would like to transfer this pet to.");
@@ -41,8 +41,7 @@ public class PetTransferEvent implements Listener {
 
 
         Entity clicked = event.getRightClicked();
-        if (!(clicked instanceof Player)) return;
-        Player target = (Player) clicked;
+        if (!(clicked instanceof Player target)) return;
 
         Tameable tamedEntity = selected.remove(player.getUniqueId());
         tamedEntity.setOwner(target);
