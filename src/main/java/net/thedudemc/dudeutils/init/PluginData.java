@@ -17,16 +17,16 @@ public class PluginData {
 
     public static void init() {
         Log.info("Initializing Data");
-        BLACKLIST_DATA = (BlacklistSaveData) register(new BlacklistSaveData().readData());
-        ALLY_DATA = (AllySaveData) register(new AllySaveData().readData());
-        MAGNET_DATA = (MagnetData) register(new MagnetData().readData());
-        DEATHPOINT = (DeathpointData) register(new DeathpointData().readData());
-        CHAT_NAME_COLOR_DATA = (ChatNameColorData) register(new ChatNameColorData().readData());
+        BLACKLIST_DATA = register(new BlacklistSaveData().readData());
+        ALLY_DATA = register(new AllySaveData().readData());
+        MAGNET_DATA = register(new MagnetData().readData());
+        DEATHPOINT = register(new DeathpointData().readData());
+        CHAT_NAME_COLOR_DATA = register(new ChatNameColorData().readData());
     }
 
-    private static SaveData register(SaveData data) {
+    private static <T extends SaveData> T register(SaveData data) {
         registry.put(data.getName(), data);
-        return data;
+        return (T) data;
     }
 
     public static SaveData get(String name) {

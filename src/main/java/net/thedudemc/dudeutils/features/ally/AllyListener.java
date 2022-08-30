@@ -21,10 +21,9 @@ public class AllyListener extends FeatureListener {
     public void onTarget(EntityTargetEvent event) {
         if (!feature.isEnabled()) return;
 
-        if (!(event.getEntity() instanceof Wolf)) {
+        if (!(event.getEntity() instanceof Wolf wolf)) {
             return;
         }
-        Wolf wolf = (Wolf) event.getEntity();
         Entity target = event.getTarget();
         AnimalTamer tamer = wolf.getOwner();
         if (target == null || tamer == null) {

@@ -20,7 +20,7 @@ public class FastXPFeature extends Feature implements Tickable {
 
     @Override
     public FeatureListener getListener() {
-        return null;
+        return new FastXPListener(this);
     }
 
     @Override
