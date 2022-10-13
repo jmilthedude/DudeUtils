@@ -16,6 +16,7 @@ import net.thedudemc.dudeutils.features.portalutility.PortalUtilityFeature;
 import net.thedudemc.dudeutils.features.shulkerdropstwo.ShulkerDropsTwoFeature;
 import net.thedudemc.dudeutils.features.singleplayersleep.SinglePlayerSleepFeature;
 import net.thedudemc.dudeutils.features.slimechunkcheck.SlimeChunkCheckFeature;
+import net.thedudemc.dudeutils.features.spawnlight.SpawnLightLevelFeature;
 import net.thedudemc.dudeutils.features.veinminer.VeinminerFeature;
 import net.thedudemc.dudeutils.features.villagerutility.VillagerUtilityFeature;
 import net.thedudemc.dudeutils.util.Log;
@@ -43,6 +44,7 @@ public class PluginFeatures {
     public static InventorySortFeature INVENTORY_SORT;
     public static SlimeChunkCheckFeature SLIME_CHUNK_CHECK;
     public static FastXPFeature FAST_XP;
+    public static SpawnLightLevelFeature SPAWN_LIGHT_LEVEL;
 
     public static void init() {
         Log.info("Initializing Features");
@@ -62,6 +64,7 @@ public class PluginFeatures {
         INVENTORY_SORT = register(new InventorySortFeature());
         SLIME_CHUNK_CHECK = register(new SlimeChunkCheckFeature());
         FAST_XP = register(new FastXPFeature());
+        SPAWN_LIGHT_LEVEL = register(new SpawnLightLevelFeature());
     }
 
     private static <T extends Feature> T register(T feature) {
