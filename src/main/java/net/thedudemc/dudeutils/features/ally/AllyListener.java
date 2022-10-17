@@ -36,7 +36,7 @@ public class AllyListener extends FeatureListener {
     }
 
     private boolean isAlly(UUID owner, UUID target) {
-        AllySaveData data = (AllySaveData) feature.getSaveData();
+        AllySaveData data = feature.getSaveData();
         return data.getAllies(owner).contains(target);
     }
 

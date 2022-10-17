@@ -33,6 +33,7 @@ public class FeaturesConfig extends Config {
         ENABLED.put("slime_chunk_check", true);
         ENABLED.put("fast_xp", true);
         ENABLED.put("spawn_light_level", true);
+        ENABLED.put("xp_storage", true);
     }
 
     public void setEnabled(String name, boolean value) {
