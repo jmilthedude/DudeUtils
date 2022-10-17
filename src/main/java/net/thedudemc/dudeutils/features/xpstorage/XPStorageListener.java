@@ -20,24 +20,17 @@ public class XPStorageListener extends FeatureListener {
         if (event.getHand() != EquipmentSlot.HAND) return;
 
         Block block = event.getClickedBlock();
-        if (block == null || block.getType() != Material.ENCHANTING_TABLE) {
-
-            System.out.println(event.getPlayer().getExp());
-            System.out.println(event.getPlayer().getTotalExperience());
-            System.out.println(event.getPlayer().getExpToLevel());
-            System.out.println(event.getPlayer().getLevel());
-            return;
-        }
+        if (block == null || block.getType() != Material.ENCHANTING_TABLE) return;
 
         Player player = event.getPlayer();
         Material itemMaterial = event.getMaterial();
 
-        if (handleXPStorage(event, player, itemMaterial)) {
+        if (handleXPStorage(player, itemMaterial)) {
             event.setCancelled(true);
         }
     }
 
-    private boolean handleXPStorage(PlayerInteractEvent event, Player player, Material itemMaterial) {
+    private boolean handleXPStorage(Player player, Material itemMaterial) {
         if (itemMaterial.isAir() && player.isSneaking()) {
             ((XPStorageData) feature.getSaveData()).query(player);
             return true;

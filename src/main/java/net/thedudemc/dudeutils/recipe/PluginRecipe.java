@@ -47,4 +47,13 @@ public abstract class PluginRecipe {
         return recipe;
     }
 
+    public Recipe getAnvilRecipe(NamespacedKey key, ItemStack stack, Ingredient[] ingredients, String... shape) {
+        ShapedRecipe recipe = new ShapedRecipe(key, stack);
+        recipe.shape(shape);
+        for (Ingredient ingredient : ingredients) {
+            recipe.setIngredient(ingredient.getKey(), ingredient.getMaterial());
+        }
+        return recipe;
+    }
+
 }

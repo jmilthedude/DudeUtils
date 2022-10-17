@@ -8,6 +8,7 @@ import net.thedudemc.dudeutils.features.blacklist.BlacklistFeature;
 import net.thedudemc.dudeutils.features.chatnamecolor.ChatNameColorFeature;
 import net.thedudemc.dudeutils.features.deathpoint.DeathpointFeature;
 import net.thedudemc.dudeutils.features.disableendermengriefing.DisableEndermanGriefingFeature;
+import net.thedudemc.dudeutils.features.elytra.HardenedElytraFeature;
 import net.thedudemc.dudeutils.features.fastxp.FastXPFeature;
 import net.thedudemc.dudeutils.features.inventorysort.InventorySortFeature;
 import net.thedudemc.dudeutils.features.magnet.MagnetFeature;
@@ -47,6 +48,7 @@ public class PluginFeatures {
     public static FastXPFeature FAST_XP;
     public static SpawnLightLevelFeature SPAWN_LIGHT_LEVEL;
     public static XPStorageFeature XP_STORAGE;
+    public static HardenedElytraFeature HARDENED_ELYTRA;
 
     public static void init() {
         Log.info("Initializing Features");
@@ -68,6 +70,7 @@ public class PluginFeatures {
         FAST_XP = register(new FastXPFeature());
         SPAWN_LIGHT_LEVEL = register(new SpawnLightLevelFeature());
         XP_STORAGE = register(new XPStorageFeature());
+        HARDENED_ELYTRA = register(new HardenedElytraFeature());
     }
 
     private static <T extends Feature> T register(T feature) {
