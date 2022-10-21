@@ -22,6 +22,7 @@ public class HardenedElytraListener extends FeatureListener {
 
     @EventHandler
     public void onAnvilCombine(PrepareAnvilEvent event) {
+        if (!feature.isEnabled()) return;
         AnvilInventory anvilInventory = event.getInventory();
         String name = anvilInventory.getRenameText();
         ItemStack left = anvilInventory.getItem(0);
@@ -64,7 +65,7 @@ public class HardenedElytraListener extends FeatureListener {
 
     private boolean validIngredients(ItemStack left, ItemStack right) {
         if (left == null || right == null) return false;
-        if (left.getType() == Material.ELYTRA && right.getType() == Material.NETHERITE_CHESTPLATE) return false;
+        if (left.getType() != Material.ELYTRA && right.getType() != Material.NETHERITE_CHESTPLATE) return false;
 
         return validChestplate(right);
     }

@@ -4,7 +4,6 @@ import net.thedudemc.dudeutils.features.Feature;
 import net.thedudemc.dudeutils.features.FeatureListener;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -23,9 +22,9 @@ public class SpawnLightLevelListener extends FeatureListener {
         if (!event.getEntity().getWorld().getEnvironment().equals(World.Environment.NETHER)) return;
         if (!getAffected().contains(event.getEntity().getType())) return;
 
-        Entity e = event.getEntity();
-        Location location = e.getLocation();
-        if (e.getWorld().getBlockAt(location).getLightLevel() > 0) {
+        Location location = event.getLocation();
+        int light = location.getBlock().getLightLevel();
+        if (light > 0) {
             event.setCancelled(true);
         }
     }
