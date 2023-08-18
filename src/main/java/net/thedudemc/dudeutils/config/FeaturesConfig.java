@@ -28,7 +28,6 @@ public class FeaturesConfig extends Config {
         ENABLED.put("shulker_drops_two", true);
         ENABLED.put("disable_enderman_griefing", true);
         ENABLED.put("villager_utility", true);
-        ENABLED.put("single_player_sleep", true);
         ENABLED.put("inventory_sort", true);
         ENABLED.put("slime_chunk_check", true);
         ENABLED.put("fast_xp", true);

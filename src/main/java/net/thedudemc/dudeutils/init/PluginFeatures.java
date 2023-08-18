@@ -15,7 +15,6 @@ import net.thedudemc.dudeutils.features.magnet.MagnetFeature;
 import net.thedudemc.dudeutils.features.netherwater.NetherWaterFeature;
 import net.thedudemc.dudeutils.features.portalutility.PortalUtilityFeature;
 import net.thedudemc.dudeutils.features.shulkerdropstwo.ShulkerDropsTwoFeature;
-import net.thedudemc.dudeutils.features.singleplayersleep.SinglePlayerSleepFeature;
 import net.thedudemc.dudeutils.features.slimechunkcheck.SlimeChunkCheckFeature;
 import net.thedudemc.dudeutils.features.spawnlight.SpawnLightLevelFeature;
 import net.thedudemc.dudeutils.features.veinminer.VeinminerFeature;
@@ -42,7 +41,6 @@ public class PluginFeatures {
     public static DisableEndermanGriefingFeature DISABLE_ENDERMAN_GRIEFING;
     public static ShulkerDropsTwoFeature SHULKER_DROPS_TWO;
     public static VillagerUtilityFeature VILLAGER_UTILITY;
-    public static SinglePlayerSleepFeature SINGLE_PLAYER_SLEEP;
     public static InventorySortFeature INVENTORY_SORT;
     public static SlimeChunkCheckFeature SLIME_CHUNK_CHECK;
     public static FastXPFeature FAST_XP;
@@ -64,7 +62,6 @@ public class PluginFeatures {
         DISABLE_ENDERMAN_GRIEFING = register(new DisableEndermanGriefingFeature());
         SHULKER_DROPS_TWO = register(new ShulkerDropsTwoFeature());
         VILLAGER_UTILITY = register(new VillagerUtilityFeature());
-        SINGLE_PLAYER_SLEEP = register(new SinglePlayerSleepFeature());
         INVENTORY_SORT = register(new InventorySortFeature());
         SLIME_CHUNK_CHECK = register(new SlimeChunkCheckFeature());
         FAST_XP = register(new FastXPFeature());
