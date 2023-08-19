@@ -10,7 +10,6 @@ import java.util.UUID;
 
 public class BlacklistFeature extends Feature {
 
-
     public static final HashMap<UUID, BlacklistGui> openedInventoryMap = new HashMap<>();
 
     public static boolean hasBlacklistOpen(Player player) {

@@ -2,9 +2,9 @@ package net.thedudemc.dudeutils.init;
 
 import net.thedudemc.dudeutils.DudeUtils;
 import net.thedudemc.dudeutils.features.Feature;
+import net.thedudemc.dudeutils.tasks.PluginTask;
 import net.thedudemc.dudeutils.util.Log;
 import net.thedudemc.dudeutils.util.Tickable;
-import net.thedudemc.dudeutils.tasks.PluginTask;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 

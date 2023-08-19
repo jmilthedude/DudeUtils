@@ -2,7 +2,10 @@ package net.thedudemc.dudeutils.data;
 
 import com.google.gson.annotations.Expose;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class AllySaveData extends SaveData {
 
