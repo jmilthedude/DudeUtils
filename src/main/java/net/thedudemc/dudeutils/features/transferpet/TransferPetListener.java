@@ -1,12 +1,13 @@
-package net.thedudemc.dudeutils.event;
+package net.thedudemc.dudeutils.features.transferpet;
 
+import net.thedudemc.dudeutils.features.Feature;
+import net.thedudemc.dudeutils.features.FeatureListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Team;
@@ -15,7 +16,10 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
 
-public class PetTransferEvent implements Listener {
+public class TransferPetListener extends FeatureListener {
+    public TransferPetListener(Feature feature) {
+        super(feature);
+    }
 
     private static final HashMap<UUID, Tameable> selected = new HashMap<>();
 

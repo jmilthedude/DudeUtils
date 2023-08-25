@@ -17,6 +17,7 @@ import net.thedudemc.dudeutils.features.portalutility.PortalUtilityFeature;
 import net.thedudemc.dudeutils.features.shulkerdropstwo.ShulkerDropsTwoFeature;
 import net.thedudemc.dudeutils.features.slimechunkcheck.SlimeChunkCheckFeature;
 import net.thedudemc.dudeutils.features.spawnlight.SpawnLightLevelFeature;
+import net.thedudemc.dudeutils.features.transferpet.TransferPetFeature;
 import net.thedudemc.dudeutils.features.veinminer.VeinminerFeature;
 import net.thedudemc.dudeutils.features.villagerutility.VillagerUtilityFeature;
 import net.thedudemc.dudeutils.features.xpstorage.XPStorageFeature;
@@ -47,6 +48,7 @@ public class PluginFeatures {
     public static SpawnLightLevelFeature SPAWN_LIGHT_LEVEL;
     public static XPStorageFeature XP_STORAGE;
     public static HardenedElytraFeature HARDENED_ELYTRA;
+    public static TransferPetFeature TRANSFER_PET;
 
     public static void init() {
         Log.info("Initializing Features");
@@ -68,6 +70,7 @@ public class PluginFeatures {
         SPAWN_LIGHT_LEVEL = register(new SpawnLightLevelFeature());
         XP_STORAGE = register(new XPStorageFeature());
         HARDENED_ELYTRA = register(new HardenedElytraFeature());
+        TRANSFER_PET = register(new TransferPetFeature());
     }
 
     private static <T extends Feature> T register(T feature) {

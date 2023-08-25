@@ -34,6 +34,7 @@ public class FeaturesConfig extends Config {
         ENABLED.put("spawn_light_level", true);
         ENABLED.put("xp_storage", true);
         ENABLED.put("hardened_elytra", true);
+        ENABLED.put("transfer_pet", true);
     }
 
     public void setEnabled(String name, boolean value) {
